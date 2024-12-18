@@ -1,13 +1,9 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Gorditas:wght@400;700&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Gorditas:wght@400;700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-</style>
 <main>
-  <nav class="navbar">
-    <div class="container">
-      <div class="logo">
+  <nav class="navbar" #navbar>
+    <div class="navbar-container">
+      <a class="navbar-brand" href="#">
         <img src="/images/burq-logo.jpg" alt="Burq Logo" />
-      </div>
+      </a>
       <ul class="nav-links">
         <li class="dropdown">
           <a href="#">Use Cases <i class="arrow down"></i></a>
@@ -30,7 +26,7 @@
             <li><a href="#">Chat Now</a></li>
           </ul>
         </li>
-        <li><button class="cta-nav">Let&#39;s Get Started</button></li>
+        <li><button class="cta-nav">Let's Get Started</button></li>
       </ul>
     </div>
   </nav>
@@ -43,15 +39,48 @@
           Burq enables you to access multiple delivery providers under one
           platform. We make it easy for you to offer delivery to your customers.
         </p>
-        <button class="cta-hero">Let&#39;s Get Started</button>
+        <button class="cta-hero">Let's Get Started</button>
       </div>
       <div class="hero-video">
-        <video muted="muted" preload autoplay loop playsinline>
-          <source src="/images/3steps.mp4" type="video/mp4" />
-        </video>
+        <div class="video-container">
+          <video muted="muted" preload autoplay loop playsinline>
+            <source src="/images/3steps.mp4" type="video/mp4" />
+          </video>
+        </div>
       </div>
     </div>
   </header>
-</main>
 
+  <section id="features" class="features-section">
+    <div class="features-container" #featuresContainer>
+      <div class="features-heading" #featuresHeading>
+        <h2>Delivery with the push of a button</h2>
+        <img src="/images/lines.svg" alt="Underline" class="underline">
+      </div>
+      <div class="features-grid">
+        <div class="feature1-card" #feature1Card>
+          <div class="icon-container" style="background-color: #FFEBDB;">
+            <img src="/images/icon1.svg" alt="Powerful Icon">
+          </div>
+          <h3>Powerful Yet Easy</h3>
+          <p>Save months of building delivery infrastructure. Integrate Burq to get connected with multiple delivery providers.</p>
+        </div>
+        <div class="feature2-card" #feature2Card>
+          <div class="icon-container" style="background-color: #E0F8F8;">
+            <img src="/images/icon2.svg" alt="Scale Icon">
+          </div>
+          <h3>Scale Faster</h3>
+          <p>With a massive network of on-demand & same-day delivery providers, your business can scale to new markets within days.</p>
+        </div>
+        <div class="feature3-card" #feature3Card>
+          <div class="icon-container" style="background-color: #F7EDFF;">
+            <img src="/images/icon3.svg" alt="Integration Icon">
+          </div>
+          <h3>Quick Integration</h3>
+          <p>Tap into our documentation for simple integration and continuous support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 <router-outlet />

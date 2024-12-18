@@ -1,5 +1,7 @@
+import { NavbarComponent } from './../../../angular-ekart/src/app/navbar/navbar.component';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { NavbarComponent } from ''
 
 describe('AppComponent', () => {
   beforeEach(async () => {
