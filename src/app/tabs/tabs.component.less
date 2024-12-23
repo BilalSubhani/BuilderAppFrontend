@@ -1,10 +1,13 @@
 .tabbody {
     transform: translateY(350px);
     margin: 0px 100px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
-    width: 1500px;
+    width: 1400px;
     height: auto;
     background: #F6F9FC;
     border-radius: 10px;
@@ -33,14 +36,20 @@
 
 .tab {
     flex: 1;
-    padding: 40px 20px;
+    padding: 20px;
     font-size: 18px;
-    font-family:  Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     text-align: center;
     color: #C5C7CA;
     cursor: pointer;
     transition: background-color 0.3s;
+    padding-top: 40px;
     padding-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .tab.active {
@@ -55,7 +64,8 @@
 
 .icon {
     opacity: 0.2;
-    transform: translateY(5px);
+    transform: translateY(0px);
+    margin-right: 5px;
 }
 
 .icon.active {
@@ -64,7 +74,7 @@
 
 .content img {
     max-width: 100%;
-    height: 55vh;
+    height: 55%;
     display: none;
     margin: 0 auto;
 }
@@ -78,7 +88,7 @@
     width: 118px;
     height: 118px;
     right: -5%;
-    top: 3%;
+    top: 11%;
     background-color: #75F1D5;
     border-radius: 50%;
     transform: translateY(0);
