@@ -2,19 +2,20 @@
   background-color: #ffffff;
   font-family: sans-serif, 'Rubik';
   font-weight: normal;
-  padding: 45px 10px;
+  padding: 20px 10px;
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: none;
   transition: all 1s ease;
 }
-.navbar.shrink{
-  padding: 20px 10px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+
+.navbar.expand{
+  padding: 45px 10px;
+  box-shadow: none;
 }
 .navbar-container {
   display: flex;
@@ -29,6 +30,7 @@
 }
 
 .navbar-brand img {
+  width: 120px;
   height: 38px;
   transform: translateY(10px);
 }
@@ -71,7 +73,7 @@
   margin-left: 5px;
   transition: transform 0.3s;
   position: absolute;
-  top: 10px;
+  top: 9px;
 }
 
 .dropdown-menu {
@@ -92,9 +94,9 @@
 }
 
 .dropdown-menu li {
-  padding: 10px 15px;
+  padding: 3px 0px;
   white-space: nowrap;
-  margin: 0;
+  margin: 15px;
 }
 
 .dropdown-menu a {
@@ -102,12 +104,14 @@
   font-weight: 400;
   font-size: medium;
   display: block;
-  padding: 5px 0;
+  padding: 5px;
 }
 
 .dropdown-menu a:hover {
   background-color: #f8f9fa;
+  padding-left: 10px;
   color: #007bff;
+  transition: 0.3s;
 }
 
 .cta-nav {
@@ -134,7 +138,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 80px 0;
+  padding: 120px 0px 0px 0px;
   font-family: sans-serif;
   background-color: #FFFFFF;
   height: 100vh;
@@ -189,7 +193,7 @@
   }
 
   .cta-hero:hover {
-    background-color: #FEB913;
+    background-color: #F94F14;
   }
 }
 
@@ -264,11 +268,10 @@
 
 .feature1-card, .feature2-card, .feature3-card {
   background-color: #f9f9fc;
-  padding: 40px;
+  padding: 40px 50px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   text-align: left;
-  //transition: transform 0.3s;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -335,4 +338,8 @@
 
 .feature1-card:hover,.feature2-card:hover,.feature3-card:hover{
   border: 2px solid black;
+}
+
+.spacing{
+  margin: 200px 0px;
 }

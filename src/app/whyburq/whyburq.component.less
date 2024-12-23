@@ -1,0 +1,157 @@
+.whyburq-main-container {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 50px 0px 40px 0px;
+  }
+  .whyburq-container {
+    max-width: 1400px;
+    width: 100%; 
+    height: 80vh;
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between; 
+  }
+  .whyburq-left-column {
+    width: 70%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100px);
+    transition: 1s;
+    opacity: 0;
+  }
+  .whyburq-left-column.show{
+    transform: translateX(0);
+    opacity: 1;
+  }
+  .whyburq-left-column img {
+    max-width: 80%; 
+    height: auto; 
+  }
+  .whyburq-left-column img {
+    animation: moveUpDown 6s infinite;
+    // animation-delay: 0.15s;
+  }
+  @keyframes moveUpDown {
+    0%, 100% {
+        transform: translateY(-5%);
+    }
+    50% {
+        transform: translateY(-0%);
+    }
+  }
+
+  .whyburq-right-column {
+    width: 40%; 
+    padding: 50px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateX(100px);
+    transition: 1s;
+    opacity: 0;
+  }
+  .whyburq-right-column.show{
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .whyburq-right-column h2 {
+    margin-bottom: 10px;
+    font-size: 60px;
+  }
+
+  .heart-icon{
+      width: 72px;
+      height: auto;
+  }
+  .right-column p {
+    font-size: 20px;
+    color: #8C98A4;
+    letter-spacing: 1.2;
+    line-height: 1.75;
+  }
+  .decorative-lines {
+    width: 450px;
+    height: 90px;
+  }
+  .cta-whyburq {
+    background-color: #3066ED;
+    color: #ffffff;
+    border: none;
+    padding: 1rem 1rem;
+    margin: 35px 150px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+    transform: translateX(-145px);
+  }
+    .cta-whyburq:hover {
+    background-color: #F94F14;
+  }
+
+  .benefits-maincontainer {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    background-color: #FFFFFF;
+  }
+
+  .benefits-container {
+    max-width: 1200px;
+    width: 100%; 
+    height: 350px; 
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FCF7EA; 
+    border-radius: 45px;
+    transform: translateY(100px);
+    transition: 1s;
+    opacity: 0;
+  }
+  .benefits-container.show{
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .benefit {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+  }
+
+  .benefit img {
+    margin-bottom: 15px;
+  }
+
+  .benefit h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+
+  .benefit p {
+    color: #8C98A4;
+    font-size: 18px;
+    line-height: 1.75;
+    letter-spacing: 1.5;
+  }
