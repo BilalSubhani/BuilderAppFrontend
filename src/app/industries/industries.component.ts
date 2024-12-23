@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, Inject, OnInit, ViewChild, ElementRef, Renderer2, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { platformBrowser } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-industries',
