@@ -9,11 +9,13 @@ import { IntegrateComponent } from './integrate/integrate.component';
 import { IndustriesComponent } from './industries/industries.component';
 import { WhyburqComponent } from './whyburq/whyburq.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
+import { FooterComponent } from './footer/footer.component';
+import { BackingComponent } from './backing/backing.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ProviderComponent, TabsComponent, IntegrateComponent, IndustriesComponent, WhyburqComponent, TestimonialsComponent],
+  imports: [RouterOutlet, ProviderComponent, TabsComponent, IntegrateComponent, IndustriesComponent, WhyburqComponent, TestimonialsComponent, FooterComponent, BackingComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
