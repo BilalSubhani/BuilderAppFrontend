@@ -28,7 +28,7 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('feature1Card', { static: false }) feature1!: ElementRef;
   @ViewChild('feature2Card', { static: false }) feature2!: ElementRef;
   @ViewChild('feature3Card', { static: false }) feature3!: ElementRef;
-
+  @ViewChild('myBtn', { static: false }) myBtn!: ElementRef;
 
   constructor(
     private renderer: Renderer2,
@@ -42,6 +42,9 @@ export class AppComponent implements AfterViewInit {
           entries.forEach((entry) => {
             const action = entry.isIntersecting ? 'addClass' : 'removeClass';
             this.renderer[action](this.navbar.nativeElement, 'expand');
+            
+            const scrolled = entry.isIntersecting ? 'None' : 'Block';
+            this.renderer.setStyle(this.myBtn.nativeElement, 'display', scrolled);
           });
         }, { threshold: 0.7 });
 
@@ -68,5 +71,16 @@ export class AppComponent implements AfterViewInit {
         console.warn('IntersectionObserver is not supported in this environment.');
       }
     }
+  }
+
+  topFunction(): void {
+    const scrollStep = -window.scrollY / (2000 / 15);
+    const scrollInterval = setInterval(() => {
+      if (window.scrollY !== 0) {
+        window.scrollBy(0, scrollStep);
+      } else {
+        clearInterval(scrollInterval);
+      }
+    }, 15);
   }
 }
