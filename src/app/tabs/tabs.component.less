@@ -78,11 +78,16 @@
     display: none;
     margin: 0 auto;
 }
-
 .content img.active {
     display: block;
+    animation: fadeIn 1.5s ease-in-out;
 }
-
+@keyframes fadeIn {
+    0% { 
+        opacity: 0;
+     }
+    100% { opacity: 1; }
+}
 .roundImg {
     position: absolute;
     width: 118px;

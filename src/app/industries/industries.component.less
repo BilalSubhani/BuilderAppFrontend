@@ -73,6 +73,7 @@
 
 .ind-tab.active {
     background-color: #ffffff;
+    animation: fadeIn 0.35s ease-in;
 }
 
 .ind-icon {
@@ -111,10 +112,28 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: space-between;
+    animation: fadeOut 0.35s ease-out;
 }
 
 .ind-tabcontent.active {
     display: flex;
+    animation: fadeIn 0.35s ease-in;
+}
+@keyframes fadeIn {
+    0% { 
+        opacity: 0;
+     }
+   100%{
+    opacity:1;
+   }
+}
+@keyframes fadeOut {
+    0% { 
+        opacity: 1;
+     }
+   100%{
+    opacity: 0;
+   }
 }
 
 .ind-tabcontent img {
