@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './userlogin.service';
 import { Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   @ViewChild('loginForm') loginForm!: ElementRef;
   @ViewChild('signupForm') signupForm!: ElementRef;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router, private toastr: ToastrService) {}
 
   ngOnInit() {
     this.userService.getUsers().subscribe((data) => {
@@ -46,46 +46,91 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   sanitizeInput(input: string): string {
+    return input.replace(/[^a-zA-Z0-9 ]/g, '');
+  }
+
+  inputValues(input: string): string{
     const element = document.createElement('div');
     element.innerText = input;
     return element.innerHTML;
   }
 
   onSubmitLogin() {
-    const sanitizedEmail = this.sanitizeInput(this.email);
-    const sanitizedPassword = this.sanitizeInput(this.password);
+    const sanitizedEmail = this.inputValues(this.email);
+    const sanitizedPassword = this.inputValues(this.password);
     const user = this.users.find(user => user.email === sanitizedEmail && user.password === sanitizedPassword);
     if (user) {
       if (user.isAdmin) {
+        this.toastr.success( `${user.fname}, Welcome to the Dashboard`, 'Successful', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'increasing'
+        });
         this.router.navigate(['/admin-dashboard']);
       } else {
+        this.toastr.success(`${user.fname}, Welcome to Burq`, 'Successful', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'increasing'
+        });
         this.router.navigate(['/home']);
       }
     } else {
-      alert('Invalid credentials');
+      this.toastr.error('Invalid credentials', 'Error!', {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'decreasing'
+      });
     }
   }
 
   onSubmitSignUp() {
-    const sanitizedFirstName = this.sanitizeInput(this.firstName);
+    const sanitizedFirstName = this.sanitizeInput(this.firstName); 
     const sanitizedLastName = this.sanitizeInput(this.lastName);
-    const sanitizedEmailSignUp = this.sanitizeInput(this.emailSignUp);
-    const sanitizedPasswordSignUp = this.sanitizeInput(this.passwordSignUp);
+    const sanitizedEmailSignUp = this.inputValues(this.emailSignUp);
+    const sanitizedPasswordSignUp = this.inputValues(this.passwordSignUp);
 
     const newUser = {
-      firstName: sanitizedFirstName,
-      lastName: sanitizedLastName,
+      fname: sanitizedFirstName,
+      lname: sanitizedLastName,
       email: sanitizedEmailSignUp,
       password: sanitizedPasswordSignUp,
       isAdmin: 0
     };
-    // this.userService.addUser(newUser).subscribe(() => {
-    //   alert('User registered successfully');
-    //   this.emailSignUp = '';
-    //   this.passwordSignUp = '';
-    //   this.firstName = '';
-    //   this.lastName = '';
-    // });
+
+    const user = this.users.find(user => user.email === sanitizedEmailSignUp)
+    if(!user){
+      this.userService.createUser(newUser).subscribe(() => {
+        this.toastr.success(`${newUser.fname}, Welcome to Burq`, 'Registered Successfully! 🥳', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'increasing'
+        });
+
+        this.emailSignUp = '';
+        this.passwordSignUp = '';
+        this.firstName = '';
+        this.lastName = '';
+  
+        this.router.navigate(['/home']);
+
+      }, (error) => {
+        this.toastr.error('Invalid credentials', 'Error!', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'decreasing'
+        });
+      });
+    }
+    else{
+      this.toastr.warning( 'Redirected to login page.', 'Email already registered', {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'decreasing'
+      });
+      this.setActiveTab('login');
+    }
+    
   }
 
   setActiveTab(tab: 'login' | 'signup') {

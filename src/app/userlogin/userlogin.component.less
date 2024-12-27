@@ -57,6 +57,7 @@
   text-align: center;
   padding: 25px 0px 5px;
   cursor: pointer;
+  font-size: 20px;
   font-weight: bold;
   color: #8C98A4;
   transition: color 0.3s;
@@ -83,15 +84,27 @@
 }
 .form input {
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 15px;
   font-size: 16px;
-  border: 1px solid #f4f4f4;
+  box-sizing: border-box;
+  border: 1px solid #007bff;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
   border-radius: 5px;
   width: 100%;
+}
+
+#login-form input:focus{
+  border: 1px solid #FEB913;
+}
+#signup-form input:focus{
+  border: 1px solid #F94F14;
 }
 .form button {
   padding: 15px;
   font-size: 20px;
+  font-weight: bold;
   background: #007bff;
   color: white;
   border: none;

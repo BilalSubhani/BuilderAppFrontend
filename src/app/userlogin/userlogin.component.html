@@ -10,12 +10,12 @@
                 <div class="tab" id="signup-tab" #signupTab data-href="#signup">Signup</div>
             </div>
             <div class="form-container">
-                <form id="login-form" #loginForm class="form active" (ngSubmit)="onSubmitLogin()">
+                <form id="login-form" #loginForm class="form active" (ngSubmit)="onSubmitLogin()" autocomplete="off" method="post">
                     <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="Email">
                     <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="Enter Your Password"required>
                     <button type="submit">Login</button>
                 </form>
-                <form (ngSubmit)="onSubmitSignUp()" id="signup-form" #signupForm class="form">
+                <form (ngSubmit)="onSubmitSignUp()" id="signup-form" #signupForm class="form" method="POST" autocomplete="off">
                     <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" placeholder="First Name" required>
                     <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" placeholder="Last Name" required>
                     <input type="email" id="emailSignUp" [(ngModel)]="emailSignUp" name="emailSignUp" placeholder="Email" required>
