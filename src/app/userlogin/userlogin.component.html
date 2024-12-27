@@ -1,0 +1,28 @@
+<div class="divbody">
+    <div class="container">
+        <div class="left-section">
+            <img src="images/b.jpg" alt="Placeholder Image" />
+        </div>
+
+        <div class="right-section">
+            <div class="tabs">
+                <div class="tab active" id="login-tab" #loginTab data-href="#login">Login</div>
+                <div class="tab" id="signup-tab" #signupTab data-href="#signup">Signup</div>
+            </div>
+            <div class="form-container">
+                <form id="login-form" #loginForm class="form active" (ngSubmit)="onSubmitLogin()">
+                    <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="Email">
+                    <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="Enter Your Password"required>
+                    <button type="submit">Login</button>
+                </form>
+                <form (ngSubmit)="onSubmitSignUp()" id="signup-form" #signupForm class="form">
+                    <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" placeholder="First Name" required>
+                    <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" placeholder="Last Name" required>
+                    <input type="email" id="emailSignUp" [(ngModel)]="emailSignUp" name="emailSignUp" placeholder="Email" required>
+                    <input type="password" id="passwordSignUp" [(ngModel)]="passwordSignUp" name="passwordSignUp" placeholder="Password" required>
+                    <button type="submit">Signup</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
