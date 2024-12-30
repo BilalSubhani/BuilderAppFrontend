@@ -11,6 +11,9 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
 import { FooterComponent } from '../footer/footer.component';
 import { BackingComponent } from './backing/backing.component';
 
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -31,6 +34,8 @@ export class HomeComponent implements AfterViewInit {
 
   constructor(
     private renderer: Renderer2,
+    private authService: AuthService,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -83,5 +88,8 @@ export class HomeComponent implements AfterViewInit {
     }, 15);
   }
 
-  
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }

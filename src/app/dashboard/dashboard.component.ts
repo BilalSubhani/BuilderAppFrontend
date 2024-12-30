@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +16,11 @@ export class DashboardComponent implements OnInit {
   isLoading: boolean = false;
   error: string | null = null;
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchUsers();
@@ -64,5 +70,10 @@ export class DashboardComponent implements OnInit {
         console.error('Error deleting user:', err);
       },
     });
+  }
+
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

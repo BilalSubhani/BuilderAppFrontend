@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './userlogin.service';
+import { AuthService } from '../auth.service'; 
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -27,7 +28,12 @@ export class UserListComponent implements OnInit, AfterViewInit {
   @ViewChild('loginForm') loginForm!: ElementRef;
   @ViewChild('signupForm') signupForm!: ElementRef;
 
-  constructor(private userService: UserService, private router: Router, private toastr: ToastrService) {}
+  constructor(
+    private userService: UserService, 
+    private authService: AuthService,
+    private router: Router, 
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.userService.getUsers().subscribe((data) => {
@@ -62,6 +68,10 @@ export class UserListComponent implements OnInit, AfterViewInit {
       const sanitizedPassword = this.inputValues(this.password);
       const user = this.users.find(user => user.email === sanitizedEmail && user.password === sanitizedPassword);
       if (user) {
+
+        const token = this.authService.generateToken(user);
+        this.authService.saveToken(token); 
+
         if (user.isAdmin) {
           this.toastr.success(`${user.fname}, Welcome to the Dashboard`, 'Successful', {
             positionClass: 'toast-top-right',
@@ -103,8 +113,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
     const user = this.users.find(user => user.email === sanitizedEmailSignUp);
     if (!user) {
-      this.userService.createUser(newUser).subscribe(() => {
-        this.toastr.success(`${newUser.fname}, Welcome to Burq`, 'Registered Successfully! 🥳', {
+      this.userService.createUser(newUser).subscribe((res) => {
+        this.toastr.success(`${newUser.fname}, Registered Successfully! 🥳`, 'Please use your credentials to login', {
           positionClass: 'toast-top-right',
           progressBar: true,
           progressAnimation: 'increasing'
@@ -115,7 +125,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
         this.firstName = '';
         this.lastName = '';
 
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
+        this.setActiveTab('login');
       }, (error) => {
         this.toastr.error('Invalid credentials', 'Error!', {
           positionClass: 'toast-top-right',
