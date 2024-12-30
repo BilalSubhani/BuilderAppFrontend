@@ -49,43 +49,46 @@ export class UserListComponent implements OnInit, AfterViewInit {
     return input.replace(/[^a-zA-Z0-9 ]/g, '');
   }
 
-  inputValues(input: string): string{
+  inputValues(input: string): string {
     const element = document.createElement('div');
     element.innerText = input;
     return element.innerHTML;
   }
 
   onSubmitLogin() {
-    const sanitizedEmail = this.inputValues(this.email);
-    const sanitizedPassword = this.inputValues(this.password);
-    const user = this.users.find(user => user.email === sanitizedEmail && user.password === sanitizedPassword);
-    if (user) {
-      if (user.isAdmin) {
-        this.toastr.success( `${user.fname}, Welcome to the Dashboard`, 'Successful', {
-          positionClass: 'toast-top-right',
-          progressBar: true,
-          progressAnimation: 'increasing'
-        });
-        this.router.navigate(['/admin-dashboard']);
+    this.userService.getUsers().subscribe((data) => {
+      this.users = data;
+      const sanitizedEmail = this.inputValues(this.email);
+      const sanitizedPassword = this.inputValues(this.password);
+      const user = this.users.find(user => user.email === sanitizedEmail && user.password === sanitizedPassword);
+      if (user) {
+        if (user.isAdmin) {
+          this.toastr.success(`${user.fname}, Welcome to the Dashboard`, 'Successful', {
+            positionClass: 'toast-top-right',
+            progressBar: true,
+            progressAnimation: 'increasing'
+          });
+          this.router.navigate(['/admin-dashboard']);
+        } else {
+          this.toastr.success(`${user.fname}, Welcome to Burq`, 'Successful', {
+            positionClass: 'toast-top-right',
+            progressBar: true,
+            progressAnimation: 'increasing'
+          });
+          this.router.navigate(['/home']);
+        }
       } else {
-        this.toastr.success(`${user.fname}, Welcome to Burq`, 'Successful', {
+        this.toastr.error('Invalid credentials', 'Error!', {
           positionClass: 'toast-top-right',
           progressBar: true,
-          progressAnimation: 'increasing'
+          progressAnimation: 'decreasing'
         });
-        this.router.navigate(['/home']);
       }
-    } else {
-      this.toastr.error('Invalid credentials', 'Error!', {
-        positionClass: 'toast-top-right',
-        progressBar: true,
-        progressAnimation: 'decreasing'
-      });
-    }
+    });
   }
 
   onSubmitSignUp() {
-    const sanitizedFirstName = this.sanitizeInput(this.firstName); 
+    const sanitizedFirstName = this.sanitizeInput(this.firstName);
     const sanitizedLastName = this.sanitizeInput(this.lastName);
     const sanitizedEmailSignUp = this.inputValues(this.emailSignUp);
     const sanitizedPasswordSignUp = this.inputValues(this.passwordSignUp);
@@ -98,8 +101,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
       isAdmin: 0
     };
 
-    const user = this.users.find(user => user.email === sanitizedEmailSignUp)
-    if(!user){
+    const user = this.users.find(user => user.email === sanitizedEmailSignUp);
+    if (!user) {
       this.userService.createUser(newUser).subscribe(() => {
         this.toastr.success(`${newUser.fname}, Welcome to Burq`, 'Registered Successfully! 🥳', {
           positionClass: 'toast-top-right',
@@ -111,9 +114,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
         this.passwordSignUp = '';
         this.firstName = '';
         this.lastName = '';
-  
-        this.router.navigate(['/home']);
 
+        this.router.navigate(['/home']);
       }, (error) => {
         this.toastr.error('Invalid credentials', 'Error!', {
           positionClass: 'toast-top-right',
@@ -121,16 +123,14 @@ export class UserListComponent implements OnInit, AfterViewInit {
           progressAnimation: 'decreasing'
         });
       });
-    }
-    else{
-      this.toastr.warning( 'Redirected to login page.', 'Email already registered', {
+    } else {
+      this.toastr.warning('Redirected to login page.', 'Email already registered', {
         positionClass: 'toast-top-right',
         progressBar: true,
         progressAnimation: 'decreasing'
       });
       this.setActiveTab('login');
     }
-    
   }
 
   setActiveTab(tab: 'login' | 'signup') {
