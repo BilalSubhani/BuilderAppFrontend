@@ -16,7 +16,7 @@ export class PageNotFoundComponent {
 
   checkLoggedIn(){
     if(this.authService.getToken()){
-      this.router.navigate(['/home']);
+      this.router.navigate(['/burq']);
     }
     else{
       this.router.navigate(['/']);

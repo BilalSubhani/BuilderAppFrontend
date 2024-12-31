@@ -22,6 +22,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   emailSignUp: string = '';
   passwordSignUp: string = '';
   activeTab: 'login' | 'signup' = 'login';
+  SESSION_TIMEOUT = 60 * 60 * 1000;
+  timeoutId: any;
 
   @ViewChild('loginTab') loginTab!: ElementRef;
   @ViewChild('signupTab') signupTab!: ElementRef;
@@ -81,6 +83,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
                   progressBar: true,
                   progressAnimation: 'increasing'
                 });
+                this.startSessionTimeout();
                 this.router.navigate(['/admin-dashboard']);
               } else {
                 this.toastr.success(`${data._doc.fname}, Welcome to Burq`, 'Successful', {
@@ -88,7 +91,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
                   progressBar: true,
                   progressAnimation: 'increasing'
                 });
-                this.router.navigate(['/home']);
+                this.startSessionTimeout();
+                this.router.navigate(['/burq']);
               }
             },
             (error) => {
@@ -171,5 +175,15 @@ export class UserListComponent implements OnInit, AfterViewInit {
       this.signupForm.nativeElement.classList.add('active');
       this.loginForm.nativeElement.classList.remove('active');
     }
+  }
+
+
+  startSessionTimeout() {
+    clearTimeout(this.timeoutId);
+
+    this.timeoutId = setTimeout(() => {
+      this.authService.logout();
+      this.router.navigate(['/']);
+    }, this.SESSION_TIMEOUT);
   }
 }

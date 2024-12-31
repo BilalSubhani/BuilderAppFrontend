@@ -4,11 +4,13 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserListComponent } from './userlogin/userlogin.component';
 import { AuthGuard } from './guards/auth.guard';
+import { MainComponent } from './main/main.component';
 
 export const routes: Routes = [
     { path: 'login', component: UserListComponent},
+    { path: 'main', component: MainComponent},
     { path: '', redirectTo: '/login', pathMatch: 'full'},
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'burq', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'admin-dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: '**', component: PageNotFoundComponent}
 ];

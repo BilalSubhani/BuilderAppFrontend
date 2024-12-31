@@ -13,16 +13,20 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean {
     const admin = this.authService.getAdminStatus();
+    const adminRoutes = ['/admin-dashboard', '/burq', '/home'];
+    const userRoutes = ['/burq', '/home'];
+
     if (admin === 1) {
-      if (state.url.includes('/admin-dashboard'))
+      if (adminRoutes.some(route => state.url.includes(route))) {
         return true;
-    } 
-    else if (admin === 0) {
-      if (state.url.includes('/home'))
+      }
+    } else if (admin === 0) {
+      if (userRoutes.some(route => state.url.includes(route))) {
         return true;
+      }
     }
     
-    this.router.navigate(['/**']);
+    this.router.navigate(['/not-authorized']);
     return false;
   }
 }
