@@ -62,39 +62,53 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   onSubmitLogin() {
-    this.userService.getUsers().subscribe((data) => {
-      this.users = data;
-      const sanitizedEmail = this.inputValues(this.email);
-      const sanitizedPassword = this.inputValues(this.password);
-      const user = this.users.find(user => user.email === sanitizedEmail && user.password === sanitizedPassword);
-      if (user) {
+    const sanitizedEmail = this.inputValues(this.email);
+    const sanitizedPassword = this.inputValues(this.password);
 
-        const token = this.authService.generateToken(user);
-        this.authService.saveToken(token); 
+    this.userService.loginUser({ email: sanitizedEmail, password: sanitizedPassword }).subscribe(
+      (jwtToken) => {
+        if (jwtToken) {
+          localStorage.setItem("token", jwtToken.token);
 
-        if (user.isAdmin) {
-          this.toastr.success(`${user.fname}, Welcome to the Dashboard`, 'Successful', {
-            positionClass: 'toast-top-right',
-            progressBar: true,
-            progressAnimation: 'increasing'
-          });
-          this.router.navigate(['/admin-dashboard']);
-        } else {
-          this.toastr.success(`${user.fname}, Welcome to Burq`, 'Successful', {
-            positionClass: 'toast-top-right',
-            progressBar: true,
-            progressAnimation: 'increasing'
-          });
-          this.router.navigate(['/home']);
+          this.userService.getStatus(localStorage.getItem("token")).subscribe(
+            (data) => {
+              const adminStatus = data._doc.isAdmin;
+              this.authService.setAdminStatus(adminStatus);
+              
+              if (adminStatus) {
+                this.toastr.success(`${data._doc.fname}, Welcome to the Dashboard`, 'Successful', {
+                  positionClass: 'toast-top-right',
+                  progressBar: true,
+                  progressAnimation: 'increasing'
+                });
+                this.router.navigate(['/admin-dashboard']);
+              } else {
+                this.toastr.success(`${data._doc.fname}, Welcome to Burq`, 'Successful', {
+                  positionClass: 'toast-top-right',
+                  progressBar: true,
+                  progressAnimation: 'increasing'
+                });
+                this.router.navigate(['/home']);
+              }
+            },
+            (error) => {
+              this.toastr.error('Failed to retrieve user status', 'Error!', {
+                positionClass: 'toast-top-right',
+                progressBar: true,
+                progressAnimation: 'decreasing'
+              });
+            }
+          );
         }
-      } else {
-        this.toastr.error('Invalid credentials', 'Error!', {
+      },
+      (error) => {
+        this.toastr.error('Login failed', 'Error!', {
           positionClass: 'toast-top-right',
           progressBar: true,
           progressAnimation: 'decreasing'
         });
       }
-    });
+    );
   }
 
   onSubmitSignUp() {

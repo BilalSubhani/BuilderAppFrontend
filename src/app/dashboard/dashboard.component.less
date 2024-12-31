@@ -1,69 +1,108 @@
 .dashboard-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
-  }
-  
-  .dashboard-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #444;
-  }
-  
-  .table-container {
-    overflow-x: auto;
-    margin: 0 auto;
-    max-width: 800px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 10px 0;
-  }
-  
-  thead {
-    background-color: #f4f4f4;
-  }
-  
-  thead th {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 2px solid #ccc;
-  }
-  
-  tbody td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  tr:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .btn {
-    padding: 5px 10px;
-    font-size: 14px;
-    margin-right: 5px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  .toggle-btn {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .toggle-btn:hover {
-    background-color: #0056b3;
-  }
-  
-  .delete-btn {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .delete-btn:hover {
-    background-color: #b21f2d;
-  }
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.dashboard-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.loading, .error {
+  text-align: center;
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.loading {
+  color: #007bff;
+}
+
+.error {
+  color: #dc3545;
+}
+
+.cta-nav {
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+}
+
+.cta-nav button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-nav button:hover {
+  background-color: #218838;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin: 0 auto;
+  max-width: 800px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+thead th {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+}
+
+tbody td {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+.btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.toggle-btn:hover {
+  background-color: #0056b3;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #b21f2d;
+}

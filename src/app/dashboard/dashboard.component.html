@@ -1,6 +1,6 @@
 <div *ngIf="isLoading" class="loading">Loading users...</div>
 <div *ngIf="error" class="error">{{ error }}</div>
-<a href="/"><button class="cta-nav" (click)="onLogout()">Let's Get Started</button></a>
+<a href="/"><button class="cta-nav" (click)="onLogout()">Log out</button></a>
 <div *ngIf="!isLoading && !error" class="table-container">
   <table>
     <thead>

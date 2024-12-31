@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  private tokenKey = 'auth_token';
+  private tokenKey = 'token';
+  private isAdmin = 0;
 
   constructor() {}
 
@@ -12,28 +13,12 @@ export class AuthService {
     return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
 
-  generateToken(user: any): string {
-    const token = btoa(JSON.stringify(user));
-    return token;
+  setAdminStatus(a: number): void{
+    this.isAdmin = a;
   }
-  
-  getUserFromToken(): any {
-    const token = this.getToken();
-    if (token) {
-      try {
-        const decoded = atob(token);
-        return JSON.parse(decoded);
-      } catch (e) {
-        return null;
-      }
-    }
-    return null;
-  }
-  
-  saveToken(token: string): void {
-    if (this.isBrowser) {
-      localStorage.setItem(this.tokenKey, token);
-    }
+
+  getAdminStatus(): number{
+    return this.isAdmin;
   }
 
   getToken(): string | null {
