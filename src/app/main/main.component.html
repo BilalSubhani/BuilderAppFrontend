@@ -4,11 +4,15 @@
             <a class="navbar-brand">
                 <button id="openNav" (click)="openNav()"><img src="/images/burq-logo.jpg"></button>
             </a>
-            <ul class="nav-links">
-                <li><a href="/burq">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="/burq"><button class="cta-nav">Profile</button></a></li>
+            <ul class="nav-links" *ngIf="navbarData?.List && navbarData?.Button">
+                <li *ngFor="let key of objectKeys(navbarData.List)">
+                    <a [href]="navbarData.List[key].link">{{ navbarData.List[key].name }}</a>
+                </li>
+                <li>
+                    <a [href]="navbarData.Button.link">
+                        <button class="cta-nav">{{ navbarData.Button.name }}</button>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>  
@@ -18,114 +22,138 @@
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Navbar</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Logo</a>
+                <a href="/burq">Li Items</a>
+                <a href="/burq">Dropdown Items</a>
+                <a href="/burq">CTA Button</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Hero</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Heading</a>
+                <a href="/burq">Paragraph</a>
+                <a href="/burq">Button</a>
+                <a href="/burq">Video</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Features</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Heading</a>
+                <a href="/burq">Feature 1 Logo</a>
+                <a href="/burq">Feature 1 Heading</a>
+                <a href="/burq">Feature 1 Paragraph</a>
+                <a href="/burq">Feature 2 Logo</a>
+                <a href="/burq">Feature 2 Heading</a>
+                <a href="/burq">Feature 2 Paragraph</a>
+                <a href="/burq">Feature 3 Logo</a>
+                <a href="/burq">Feature 3 Heading</a>
+                <a href="/burq">Feature 3 Paragraph</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Provider</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Heading</a>
+                <a href="/burq">Paragraph</a>
+                <a href="/burq">List Items</a>
+                <a href="/burq">Video</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Counter</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Logo 1</a>
+                <a href="/burq">Numeric Value 1</a>
+                <a href="/burq">Heading 1</a>
+                <a href="/burq">Logo 2</a>
+                <a href="/burq">Numeric Value 2</a>
+                <a href="/burq">Heading 2</a>
+                <a href="/burq">Logo 3</a>
+                <a href="/burq">Numeric Value 3</a>
+                <a href="/burq">Heading 3</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Tab</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Tab Logo</a>
+                <a href="/burq">Tab Heading</a>
+                <a href="/burq">Tab Content Image</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Integrate</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Heading 6</a>
+                <a href="/burq">Heading 3</a>
+                <a href="/burq">Paragraph</a>
+                <a href="/burq">Button</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Industries</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Tab Icon</a>
+                <a href="/burq">Tab Content Image</a>
+                <a href="/burq">Tab Content Heading</a>
+                <a href="/burq">Tab Content Paragraph</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Why Burq?</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Image</a>
+                <a href="/burq">Heading</a>
+                <a href="/burq">Paragraph</a>
+                <a href="/burq">Button</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Selling Points</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Logo 1</a>
+                <a href="/burq">Heading 1</a>
+                <a href="/burq">Paragraph 1</a>
+                <a href="/burq">Logo 2</a>
+                <a href="/burq">Heading 2</a>
+                <a href="/burq">Paragraph 2</a>
+                <a href="/burq">Logo 3</a>
+                <a href="/burq">Heading 3</a>
+                <a href="/burq">Paragraph 3</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Testimonials</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Heading</a>
+                <a href="/burq">Comment</a>
+                <a href="/burq">Name</a>
+                <a href="/burq">Title</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Backing</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Heading</a>
+                <a href="/burq">Passage</a>
             </div>
         </div>
         <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Powering</a>
             <div class="dropdown-content">
-                <a href="/burq">Submenu 1</a>
-                <a href="/burq">Submenu 2</a>
-                <a href="/burq">Submenu 3</a>
+                <a href="/burq">Heading</a>
+                <a href="/burq">Button</a>
             </div>
         </div>
-        <div class="dropdown">
+        <!-- <div class="dropdown">
             <a href="javascript:void(0)" (click)="toggleDropdown($event)">Footer</a>
             <div class="dropdown-content">
                 <a href="/burq">Submenu 1</a>
                 <a href="/burq">Submenu 2</a>
                 <a href="/burq">Submenu 3</a>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

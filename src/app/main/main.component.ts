@@ -1,14 +1,20 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { MainService } from './main.service';
+import { OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-main',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
+  constructor(private mainService: MainService) {}
 
+  navbarData: any;
   @ViewChild('mySidenav') mySidenav!: ElementRef;
+  objectKeys = Object.keys;
 
   openNav() {
     console.log('button clicked');
@@ -28,4 +34,19 @@ export class MainComponent {
       dropdownContent.style.display = 'block';
     }
   }
+
+  ngOnInit() {
+    this.getNavbarData();
+  }
+
+  getNavbarData() {
+    this.mainService.getNavbar().subscribe(data => {
+      this.navbarData = data;
+      // this.displayNavbarData();
+    });
+  }
+
+  // displayNavbarData() {
+  //   console.log(this.navbarData);
+  // }
 }
