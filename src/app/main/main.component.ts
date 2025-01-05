@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+
 @Component({
   selector: 'app-main',
   imports: [CommonModule, RouterModule],
@@ -34,7 +35,7 @@ export class MainComponent implements OnInit {
       name: 'Features', 
       isOpen: false, 
       link: '/main/home', 
-      items: ['Feature 1 Logo', 'Feature 1 Heading', 'Feature 1 Paragraph', 'Feature 2 Logo', 'Feature 2 Heading'] 
+      items: ['Feature 1 Logo', 'Feature 1 Heading', 'Feature 1 Paragraph', 'Feature 2 Logo', 'Feature 2 Heading', 'Feature 2 Paragraph','Feature 3 Logo', 'Feature 3 Heading', 'Feature  Paragraph'] 
     },
     { 
       name: 'Provider', 
@@ -52,7 +53,7 @@ export class MainComponent implements OnInit {
       name: 'Tab', 
       isOpen: false, 
       link: '/main/tabs', 
-      items: ['Tab Logo', 'Tab Heading'] 
+      items: ['Tab Logo', 'Tab Heading', 'Tab Content'] 
     },
     { 
       name: 'Integrate', 
@@ -76,7 +77,7 @@ export class MainComponent implements OnInit {
       name: 'Selling Points', 
       isOpen: false, 
       link: '/main/whyburq', 
-      items: ['Logo 1', 'Heading 1'] 
+      items: ['Logo 1', 'Heading 1', 'Logo 2', 'Heading 2', 'Logo 3', 'Heading 3'] 
     },
     { 
       name: 'Testimonials', 

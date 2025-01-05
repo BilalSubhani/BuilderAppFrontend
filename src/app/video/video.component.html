@@ -1,0 +1,10 @@
+<div class="video-upload">
+  <h2>Upload Video</h2>
+  <input type="text" [(ngModel)]="publicId" placeholder="Enter Public ID" />
+  <div class="drop-area" (drop)="onFileDropped($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+    <p>Drag & Drop Video Here or Click to Select</p>
+  </div>
+  <input type="file" (change)="onFileSelected($event)" accept="video/*" />
+  <button (click)="onUpload()">Upload</button>
+  <p>{{ uploadStatus }}</p>
+</div>
