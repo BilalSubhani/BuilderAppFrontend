@@ -19,12 +19,12 @@ export class TextComponent {
 
   sendText() {
     if(this.textInput === '') {
-        this.toastr.warning('Text field cannot be empty', 'Error!', {
-          positionClass: 'toast-top-right',
-          progressBar: true,
-          progressAnimation: 'decreasing'
-        });
-        return;
+      this.toastr.warning('Text field cannot be empty', 'Error!', {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'decreasing'
+      });
+      return;
     }
 
     if (this.textInput.trim()) {

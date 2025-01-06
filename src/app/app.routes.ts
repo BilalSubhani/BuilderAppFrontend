@@ -5,9 +5,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { UserListComponent } from './userlogin/userlogin.component';
 import { AuthGuard } from './guards/auth.guard';
 import { MainComponent } from './main/main.component';
-import { ImageComponent } from './image/image.component';
-import { VideoComponent } from './video/video.component';
-import { TextComponent } from './text/text.component';
+import { ImageComponent } from './main/image/image.component';
+import { VideoComponent } from './main/video/video.component';
+import { TextComponent } from './main/text/text.component';
 
 export const routes: Routes = [
     { path: 'login', component: UserListComponent},

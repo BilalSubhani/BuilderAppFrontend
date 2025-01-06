@@ -1,17 +1,16 @@
-import { Component, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewContainerRef, ComponentRef } from '@angular/core';
 import { MainService } from './main.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TextComponent } from '../text/text.component';
-import { VideoComponent } from '../video/video.component';
-import { ImageComponent } from '../image/image.component';
-import { ToastrService } from 'ngx-toastr';
+import { TextComponent } from './text/text.component';
+import { VideoComponent } from './video/video.component';
+import { ImageComponent } from './image/image.component';
 
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, RouterModule, TextComponent, VideoComponent, ImageComponent],
+  imports: [CommonModule, RouterModule, TextComponent],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
@@ -22,11 +21,11 @@ export class MainComponent implements OnInit {
   ) {}
 
   navbarData: any;
+  textData: boolean = false;
+  textFromChild: string = '';
   @ViewChild('mySidenav') mySidenav!: ElementRef;
   objectKeys = Object.keys;
 
-  
-  textFromChild: string = '';
 
   dropdownSections = [
     { 
@@ -112,53 +111,46 @@ export class MainComponent implements OnInit {
   openNav() {
     this.mySidenav.nativeElement.style.width = '250px';
   }
-
   closeNav() {
     this.mySidenav.nativeElement.style.width = '0';
   }
-
   toggleDropdown(event: Event, sectionName: string) {
     const section = this.dropdownSections.find(sec => sec.name === sectionName);
     if (section) {
       section.isOpen = !section.isOpen;
     }
   }
-
   ngOnInit() {
     this.getNavbarData();
   }
-
   getNavbarData() {
     this.mainService.getNavbar().subscribe(data => {
       this.navbarData = data;
     });
   }
 
-  receiveText(event: string) {
-    this.textFromChild = event;
-    console.log(this.textFromChild);
-  }
-
   handleItemClick(link:string){
-    console.log(link);
     if(link === 'Image'){
+      this.textData=false;
       this.viewContainer.clear();
-      console.log('I');
       this.viewContainer.createComponent(ImageComponent);
       return;
     }
     if(link === 'Video'){
+      this.textData=false;
       this.viewContainer.clear();
-      console.log('V');
       this.viewContainer.createComponent(VideoComponent);
       return;
     }
     else{
       this.viewContainer.clear();
-      console.log('T');
-      this.viewContainer.createComponent(TextComponent);
+      this.textData=true;
       return;
     }
-
   }
+
+    receiveText(event: string) {
+      this.textFromChild = event;
+      console.log(this.textFromChild);
+    }
 }

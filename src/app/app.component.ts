@@ -8,11 +8,4 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent{
-  // textFromChild: string = '';
-
-  // receiveText(event: string) {
-  //   this.textFromChild = event;
-  //   console.log(this.textFromChild);
-  // }
-}
+export class AppComponent{}

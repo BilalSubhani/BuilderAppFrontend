@@ -27,5 +27,6 @@
             </div>
         </div>          
     </div>
+    <a *ngIf="textData"> <app-text (textSent)="receiveText($event)" /> </a>
     <router-outlet></router-outlet>
 </div>
