@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewContainerRef, ComponentRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewContainerRef, Output, EventEmitter } from '@angular/core';
 import { MainService } from './main.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,7 +23,10 @@ export class MainComponent implements OnInit {
   navbarData: any;
   textData: boolean = false;
   textFromChild: string = '';
+  fieldForText: string = '';
+  textObject: object = { "Field":'', "Text":'' };
   @ViewChild('mySidenav') mySidenav!: ElementRef;
+  @Output() textObjSent: EventEmitter<object> = new EventEmitter<object>();
   objectKeys = Object.keys;
 
 
@@ -129,7 +132,11 @@ export class MainComponent implements OnInit {
     });
   }
 
-  handleItemClick(link:string){
+  handleItemClick(link:string, name: string, item: string){
+    let str = name + item;
+    this.fieldForText = str.split(" ").join("");
+
+
     if(link === 'Image'){
       this.textData=false;
       this.viewContainer.clear();
@@ -149,8 +156,16 @@ export class MainComponent implements OnInit {
     }
   }
 
-    receiveText(event: string) {
-      this.textFromChild = event;
-      console.log(this.textFromChild);
+  receiveText(event: string) {
+    this.textFromChild = event;
+    // console.log(this.textFromChild);
+
+    this.textObject = { "Field": this.fieldForText, "Text": this.textFromChild }
+
+    if (this.textObject) {
+      // console.log(this.textObject);
+      this.textObjSent.emit(this.textObject);
+      this.textObject = {"Field":'', "Text":''};
     }
+  }
 }

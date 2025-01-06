@@ -3,7 +3,7 @@
         <div class="flex-container">
             <div #videoItem class="video-container">
                 <video class="video-element" autoplay loop muted>
-                    <source src="/images/provider.mp4" type="video/mp4">
+                    <source [src]="imageUrl" type="video/mp4">
                 </video>
             </div>
             <div #textItem class="text-container">

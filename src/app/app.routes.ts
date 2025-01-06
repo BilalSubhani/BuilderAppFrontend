@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './main/home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { UserListComponent } from './userlogin/userlogin.component';
 import { AuthGuard } from './guards/auth.guard';

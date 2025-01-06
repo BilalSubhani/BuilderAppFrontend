@@ -1,5 +1,6 @@
 import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 // Components
 import { ProviderComponent } from './provider/provider.component';
@@ -8,11 +9,12 @@ import { IntegrateComponent } from './integrate/integrate.component';
 import { IndustriesComponent } from './industries/industries.component';
 import { WhyburqComponent } from './whyburq/whyburq.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
-import { FooterComponent } from '../footer/footer.component';
+import { FooterComponent } from '../../footer/footer.component';
 import { BackingComponent } from './backing/backing.component';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -32,12 +34,32 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild('feature3Card', { static: false }) feature3!: ElementRef;
   @ViewChild('myBtn', { static: false }) myBtn!: ElementRef;
 
+  imageUrl: string = '';
+  public_id: string = '3steps';
+
   constructor(
     private renderer: Renderer2,
     private authService: AuthService,
     private router: Router,
+    private http: HttpClient,
+    private toastr: ToastrService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  ngOnInit() {
+    this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`).subscribe(
+      (response: any) => {
+        this.imageUrl = response.url;
+      },
+      (error) => {
+        this.toastr.error('Error fetching video', 'Error', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'decreasing'
+        });
+      }
+    );
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {

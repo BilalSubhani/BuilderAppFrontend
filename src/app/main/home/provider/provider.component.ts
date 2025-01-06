@@ -1,5 +1,7 @@
 import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-provider',
@@ -18,14 +20,34 @@ export class ProviderComponent implements AfterViewInit {
   @ViewChild('bottomItem2', { static: false }) bottomItem2!: ElementRef;
   @ViewChild('bottomItem3', { static: false }) bottomItem3!: ElementRef;
 
+  imageUrl: string = 'images/provider.mp4';
+  public_id: string = 'provider'
+
   private intervalId: any;
   private counterValue = 300;
   private updatedCounter: number = 300;
 
   constructor(
     private renderer: Renderer2,
+    private http: HttpClient,
+    private toastr: ToastrService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  ngOnChanges(){
+    this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`)
+    .subscribe(
+      (res) =>{
+        this.imageUrl = res.url;
+      }, (err) =>{
+        this.toastr.error('Error fetching video', 'Error', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'decreasing'
+        });
+      }
+    )
+  }
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
