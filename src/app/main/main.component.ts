@@ -1,100 +1,110 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { MainService } from './main.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TextComponent } from '../text/text.component';
+import { VideoComponent } from '../video/video.component';
+import { ImageComponent } from '../image/image.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TextComponent, VideoComponent, ImageComponent],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
-  constructor(private mainService: MainService) {}
+  constructor(
+    private mainService: MainService,
+    private viewContainer: ViewContainerRef
+  ) {}
 
   navbarData: any;
   @ViewChild('mySidenav') mySidenav!: ElementRef;
   objectKeys = Object.keys;
 
+  
+  textFromChild: string = '';
+
   dropdownSections = [
     { 
       name: 'Navbar', 
       isOpen: false, 
-      link: '/main/home', 
-      items: ['Logo', 'Li Items', 'Dropdown Items', 'CTA Button'] 
+      links: ['Image', 'Text', 'Text'], 
+      items: ['Logo', 'Li Items', 'CTA Button'] 
     },
     { 
       name: 'Hero', 
       isOpen: false, 
-      link: '/main/home', 
+      links: ['Text', 'Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Button', 'Video'] 
     },
     { 
       name: 'Features', 
       isOpen: false, 
-      link: '/main/home', 
-      items: ['Feature 1 Logo', 'Feature 1 Heading', 'Feature 1 Paragraph', 'Feature 2 Logo', 'Feature 2 Heading', 'Feature 2 Paragraph','Feature 3 Logo', 'Feature 3 Heading', 'Feature  Paragraph'] 
+      links: ['Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text'], 
+      items: ['Heading','Feature 1 Logo', 'Feature 1 Heading', 'Feature 1 Paragraph', 'Feature 2 Logo', 'Feature 2 Heading', 'Feature 2 Paragraph','Feature 3 Logo', 'Feature 3 Heading', 'Feature  Paragraph'] 
     },
     { 
       name: 'Provider', 
       isOpen: false, 
-      link: '/main/provider', 
+      links: ['Text', 'Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'List Items', 'Video'] 
     },
     { 
       name: 'Counter', 
       isOpen: false, 
-      link: '/main/provider', 
-      items: ['Logo 1', 'Numeric Value 1', 'Heading 1'] 
+      links: ['Image', 'Text', 'Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text'], 
+      items: ['Logo 1', 'Numeric Value 1', 'Heading 1', 'Logo 2', 'Numeric Value 2', 'Heading 2', 'Logo 3', 'Numeric Value 3', 'Heading 3'] 
     },
     { 
       name: 'Tab', 
       isOpen: false, 
-      link: '/main/tabs', 
-      items: ['Tab Logo', 'Tab Heading', 'Tab Content'] 
+      links: ['Image', 'Text','Image', 'Image', 'Text','Image', 'Image', 'Text','Image'], 
+      items: ['Tab Logo 1', 'Tab Heading 1', 'Tab Content 1', 'Tab Logo 2', 'Tab Heading 2', 'Tab Content 2', 'Tab Logo 3', 'Tab Heading 3', 'Tab Content 3'] 
     },
     { 
       name: 'Integrate', 
       isOpen: false, 
-      link: '/main/integrate', 
-      items: ['Heading 6', 'Heading 3'] 
+      links: ['Text', 'Text', 'Text', 'Text'], 
+      items: ['Heading 6', 'Heading 3', 'Paragraph', 'Button'] 
     },
-    { 
-      name: 'Industries', 
-      isOpen: false, 
-      link: '/main/industries', 
-      items: ['Tab Icon', 'Tab Content Heading'] 
-    },
+    // { 
+    //   name: 'Industries', 
+    //   isOpen: false, 
+    //   links: ['Image', 'Image', 'Text', 'Text'], 
+    //   items: ['Tab Icon', 'Tab Content', 'Tab Content Heading', 'Tab Content Paragraph'] 
+    // },
     { 
       name: 'Why Burq?', 
       isOpen: false, 
-      link: '/main/whyburq', 
-      items: ['Image', 'Heading', 'Paragraph'] 
+      links: ['Text', 'Text', 'Text'], 
+      items: ['Heading', 'Paragraph', 'Button'] 
     },
     { 
       name: 'Selling Points', 
       isOpen: false, 
-      link: '/main/whyburq', 
-      items: ['Logo 1', 'Heading 1', 'Logo 2', 'Heading 2', 'Logo 3', 'Heading 3'] 
+      links: ['Image', 'Text', 'Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text'], 
+      items: ['Logo 1', 'Heading 1', 'Paragraph 1', 'Logo 2', 'Heading 2', 'Paragraph 2', 'Logo 3', 'Heading 3', 'Paragraph 3'] 
     },
     { 
       name: 'Testimonials', 
       isOpen: false, 
-      link: '/main/testimonials', 
+      links: ['Text', 'Text'], 
       items: ['Heading', 'Comment'] 
     },
     { 
       name: 'Backing', 
       isOpen: false, 
-      link: '/main/backing', 
-      items: ['Heading', 'Passage'] 
+      links: ['Text', 'Text', 'Text'], 
+      items: ['Heading', 'Title', 'Comment'] 
     },
     { 
       name: 'Powering', 
       isOpen: false, 
-      link: '/main/backing', 
+      links: ['Text', 'Text'], 
       items: ['Heading', 'Button'] 
     }
   ];
@@ -122,5 +132,33 @@ export class MainComponent implements OnInit {
     this.mainService.getNavbar().subscribe(data => {
       this.navbarData = data;
     });
+  }
+
+  receiveText(event: string) {
+    this.textFromChild = event;
+    console.log(this.textFromChild);
+  }
+
+  handleItemClick(link:string){
+    console.log(link);
+    if(link === 'Image'){
+      this.viewContainer.clear();
+      console.log('I');
+      this.viewContainer.createComponent(ImageComponent);
+      return;
+    }
+    if(link === 'Video'){
+      this.viewContainer.clear();
+      console.log('V');
+      this.viewContainer.createComponent(VideoComponent);
+      return;
+    }
+    else{
+      this.viewContainer.clear();
+      console.log('T');
+      this.viewContainer.createComponent(TextComponent);
+      return;
+    }
+
   }
 }

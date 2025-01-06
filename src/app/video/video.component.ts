@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-video',
@@ -14,7 +15,10 @@ export class VideoComponent {
   publicId: string = '';
   uploadStatus: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private toastr: ToastrService
+  ) {}
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0] || null;
@@ -39,8 +43,21 @@ export class VideoComponent {
   }
 
   onUpload() {
-    if (!this.selectedFile || !this.publicId) {
-      this.uploadStatus = 'Please select a file and enter a public ID';
+    if (!this.selectedFile) {
+      this.toastr.warning('Please Select a File', 'Error uploading image', {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'decreasing'
+      });
+      return;
+    }
+
+    if (!this.publicId) {
+      this.toastr.warning('Please enter a public ID', 'Error uploading image', {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'decreasing'
+      });
       return;
     }
   
@@ -50,11 +67,18 @@ export class VideoComponent {
   
     this.http.post('http://localhost:3000/media/upload/video', formData).subscribe(
       (response: any) => {
-        this.uploadStatus = `Video uploaded successfully: ${response.secure_url}`;
+        this.toastr.success('', 'Video uploaded successfully', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'increasing'
+        });
       },
       (error) => {
-        console.error('Error uploading video:', error);
-        this.uploadStatus = 'Failed to upload video';
+        this.toastr.error(error, 'Error uploading image', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'decreasing'
+        });
       }
     );
   }

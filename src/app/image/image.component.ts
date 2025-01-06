@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-image',
@@ -11,11 +12,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class ImageComponent {
   selectedFile: File | null = null;
-  uploadStatus: string = '';
   publicId: string = '';
   isHovering: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,     
+    private toastr: ToastrService
+  ) {}
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0] || null;
@@ -38,12 +41,20 @@ export class ImageComponent {
 
   onUpload() {
     if (!this.selectedFile) {
-      this.uploadStatus = 'Please select a file to upload';
+      this.toastr.warning('Please Select a File', 'Error uploading image', {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'decreasing'
+      });
       return;
     }
 
     if (!this.publicId) {
-      this.uploadStatus = 'Please enter a public ID';
+      this.toastr.warning('Please enter a public ID', 'Error uploading image', {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'decreasing'
+      });
       return;
     }
 
@@ -53,11 +64,18 @@ export class ImageComponent {
 
     this.http.post('http://localhost:3000/media/upload/image', formData).subscribe(
       (response: any) => {
-        this.uploadStatus = `Image uploaded successfully: ${response.secure_url}`;
+        this.toastr.success('', 'Image uploaded successfully', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'increasing'
+        });
       },
       (error) => {
-        console.error('Error uploading image:', error);
-        this.uploadStatus = 'Failed to upload image';
+        this.toastr.error(error, 'Error uploading image', {
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          progressAnimation: 'decreasing'
+        });
       }
     );
   }
