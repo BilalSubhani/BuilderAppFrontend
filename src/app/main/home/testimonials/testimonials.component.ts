@@ -1,31 +1,47 @@
 import { Component, AfterViewInit, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-testimonials',
   templateUrl: './testimonials.component.html',
-  styleUrls: ['./testimonials.component.less']
+  styleUrls: ['./testimonials.component.less'],
+  imports:[CommonModule]
 })
 export class TestimonialsComponent implements AfterViewInit {
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
+
+  testimonialData: any;
+  objectKeys = Object.keys;
+
+  ngOnInit(){
+    this.http.get<any>("http://localhost:3000/data/component/testimonials").subscribe((res)=>{
+      this.testimonialData = res.data;
+    }, (err)=>{
+      console.log(err);
+    });
+  }
 
   currentSlide = 0;
   slides: HTMLElement[] = [];
   totalSlides: number = 0;
-    ngAfterViewInit() {
-      this.slides = Array.from(this.document.querySelectorAll('.slide'));
-      this.totalSlides = this.slides.length;
-      const nextButton = this.document.getElementById('next');
-      const prevButton = this.document.getElementById('prev');
-      // this.currentSlide = 0;
-      this.showSlide(this.currentSlide);
-      if (nextButton) {
-        nextButton.addEventListener('click', () => this.nextSlide());
-      }
-      if (prevButton) {
-        prevButton.addEventListener('click', () => this.prevSlide());
-      }
+  ngAfterViewInit() {
+    this.slides = Array.from(this.document.querySelectorAll('.slide'));
+    this.totalSlides = this.slides.length;
+    const nextButton = this.document.getElementById('next');
+    const prevButton = this.document.getElementById('prev');
+    // this.currentSlide = 0;
+    this.showSlide(this.currentSlide);
+    if (nextButton) {
+      nextButton.addEventListener('click', () => this.nextSlide());
     }
+    if (prevButton) {
+      prevButton.addEventListener('click', () => this.prevSlide());
+    }
+  }
 
   showSlide(index: number) {
     this.slides.forEach((slide, i) => {

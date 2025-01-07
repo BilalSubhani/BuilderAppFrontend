@@ -1,9 +1,10 @@
 import { Component, ViewChild, ElementRef, Renderer2, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-whyburq',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './whyburq.component.html',
   styleUrl: './whyburq.component.less'
 })
@@ -14,10 +15,33 @@ export class WhyburqComponent {
   @ViewChild('whyburqRightDiv', { static: false }) whyburqRightDiv!: ElementRef;
   @ViewChild('benefitsContainer', {static: false}) benefitsContainer!: ElementRef;
 
+  whyBurqData: any;
+  benefitsData: any;
+
   constructor(
     private renderer: Renderer2,
+    private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: object
   ) {}
+
+  dataFunctions(): void{
+    this.http.get<any>("http://localhost:3000/data/component/whyBurq").subscribe((res)=>{
+      this.whyBurqData = res.data;
+    }, (err)=>{
+      console.log(err);
+    });
+
+    this.http.get<any>("http://localhost:3000/data/component/sellingPoints").subscribe((res)=>{
+      this.benefitsData = res.data;
+    }, (err)=>{
+      console.log(err);
+    });
+  }
+
+
+  ngOnInit(){
+    this.dataFunctions();
+  }
 
   ngAfterViewInit(): void {
       if(isPlatformBrowser(this.platformId)){

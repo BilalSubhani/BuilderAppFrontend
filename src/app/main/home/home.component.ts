@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 // Components
@@ -19,7 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ProviderComponent, TabsComponent, IntegrateComponent, IndustriesComponent, WhyburqComponent, TestimonialsComponent, FooterComponent, BackingComponent],
+  imports: [ProviderComponent, TabsComponent, IntegrateComponent, IndustriesComponent, WhyburqComponent, TestimonialsComponent, FooterComponent, BackingComponent, CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less']
 })
@@ -33,9 +33,13 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild('feature2Card', { static: false }) feature2!: ElementRef;
   @ViewChild('feature3Card', { static: false }) feature3!: ElementRef;
   @ViewChild('myBtn', { static: false }) myBtn!: ElementRef;
-
+  objectKeys = Object.keys;
   imageUrl: string = '';
   public_id: string = '3steps';
+
+  navbarData: any;
+  heroSectionData: any;
+  featuresData: any;
 
   constructor(
     private renderer: Renderer2,
@@ -46,7 +50,7 @@ export class HomeComponent implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit() {
+  dataController(): void{
     this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`).subscribe(
       (response: any) => {
         this.imageUrl = response.url;
@@ -59,9 +63,38 @@ export class HomeComponent implements AfterViewInit {
         });
       }
     );
+
+    this.http.get<any>('http://localhost:3000/data/component/navbar').subscribe(
+      (res: any)=>{
+        this.navbarData={...this.navbarData, ...res.data};
+      }, (err) =>{
+        console.log(err);
+      }
+    );
+
+    this.http.get<any>('http://localhost:3000/data/component/heroSection').subscribe(
+      (res: any)=>{
+        this.heroSectionData= {...this.heroSectionData, ...res.data};
+      }, (err) =>{
+        console.log(err);
+      }
+    );
+
+    this.http.get<any>('http://localhost:3000/data/component/features').subscribe(
+      (res: any)=>{
+        this.featuresData=res.data;
+      }, (err) =>{
+      }
+    );
+  }
+
+
+  ngOnInit() {
+    this.dataController();
   }
 
   ngAfterViewInit(): void {
+
     if (isPlatformBrowser(this.platformId)) {
       if ('IntersectionObserver' in window) {
         const observerNavbar = new IntersectionObserver((entries) => {

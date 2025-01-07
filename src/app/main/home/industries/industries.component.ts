@@ -1,10 +1,12 @@
 import { Component, AfterViewInit, Inject, OnInit, ViewChild, ElementRef, Renderer2, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-industries',
   templateUrl: './industries.component.html',
   styleUrls: ['./industries.component.less'],
+  imports: [CommonModule]
 })
 export class IndustriesComponent implements AfterViewInit, OnInit {
   tabImages = {
@@ -21,9 +23,12 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
   @ViewChild('indTabContainer', {static: false}) indTabContainer!: ElementRef;
   @ViewChild('indTabContent', {static: false}) indTabContent!: ElementRef;
 
+  tabContentData: any;
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
+    private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
@@ -43,6 +48,13 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
       firstTabIcon.src = this.tabImages[10].active;
       firstTabIcon.classList.add('active');
     }
+
+
+    this.http.get<any>("http://localhost:3000/data/component/industries").subscribe((res)=>{
+      this.tabContentData = res.data;
+    }, (err)=>{
+      console.log(err);
+    });
   }
 
   ngAfterViewInit(): void {

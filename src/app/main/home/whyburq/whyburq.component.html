@@ -4,34 +4,34 @@
       <img src="images/whyburq/whyburq.png" alt="Image">
     </div>
 
-    <div class="whyburq-right-column" #whyburqRightDiv>
+    <div class="whyburq-right-column" #whyburqRightDiv *ngIf="whyBurqData?.title && whyBurqData?.body && whyBurqData?.button">
       <img src="images/whyburq/heart.svg" alt="heart icon" class="heart-icon">
-      <h2>Why Burq?</h2>
+      <h2>{{whyBurqData?.title}}</h2>
       <img src="images/whyburq/lines.svg" alt="Decorative lines" class="decorative-lines">
-      <p>Rather than spending months building your own delivery infrastructure, Burq connects you to a network of on-demand & same-day delivery providers. When you want to deliver, we determine the best delivery option and your customers get their orders promptly. That's what we call a win-win!</p>
-      <button class="cta-whyburq">Let's Get Started</button>
+      <p>{{whyBurqData?.body}}</p>
+      <button class="cta-whyburq">{{whyBurqData?.button}}</button>
     </div>
   </div>
 </div>
 
-<div class="benefits-maincontainer">
+<div class="benefits-maincontainer" *ngIf="benefitsData">
   <div class="benefits-container" #benefitsContainer>
     <div class="benefit">
       <img src="images/whyburq/location.svg" style="width:55px; height: 52px;" alt="On-demand delivery">
-      <h3>On-demand delivery</h3>
-      <p>Build your reputation as a reliable company that customers can turn to in a pinch.</p>
+      <h3>{{benefitsData?.sp1[0]}}</h3>
+      <p>{{benefitsData?.sp1[1]}}</p>
     </div>
 
     <div class="benefit">
       <img src="images/whyburq/check.svg" style="width:52px; height: 52px;" alt="No commission">
-      <h3>No commission</h3>
-      <p>We don't charge commission, so you'll always get the optimal delivery options.</p>
+      <h3>{{benefitsData?.sp2[0]}}</h3>
+      <p>{{benefitsData?.sp2[1]}}</p>
     </div>
 
     <div class="benefit">
       <img src="images/whyburq/tracking.svg" style="width:52px; height: 55px;" alt="Advanced tracking technology">
-      <h3>Advanced tracking technology</h3>
-      <p>Our up-to-the-minute tracking links and SMS updates keep you in the loop.</p>
+      <h3>{{benefitsData?.sp3[0]}}</h3>
+      <p>{{benefitsData?.sp3[1]}}</p>
     </div>
   </div>
 </div>

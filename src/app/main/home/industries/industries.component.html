@@ -1,6 +1,6 @@
 <div class="ind-main-container">
-    <div class="ind-container" #indContainer>
-        <h3 class="tab-heading" #indHeading>We work with all industries</h3>
+    <div class="ind-container" #indContainer *ngIf="tabContentData?.title && tabContentData?.tabContent">
+        <h3 class="tab-heading" #indHeading>{{tabContentData?.title}}</h3>
         <div class="tab-container" #indTabContainer>
             <div class="ind-tabs">
                 <div class="ind-tab active" data-tab="10"><img src="/images/tabIcons/ecommerce-blue.svg" class="ind-icon active" data-tab="10"></div>
@@ -16,50 +16,50 @@
             <div class="ind-tabcontent active" data-tab="10">
                 <img src="/images/tabImages/ecom-delivery.webp" alt="E-commerce">
                 <div class="ind-tabdetails">
-                    <h3>E-commerce</h3>
-                    <p>Deliver your products to your customers with our delivery management system.</p>
+                    <h3>{{tabContentData?.tabContent.tc1[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc1[1]}}</p>
                 </div>
             </div>
             <div class="ind-tabcontent inactive" data-tab="11">
                 <img src="/images/tabImages/catering.webp" alt="Food">
                 <div class="ind-tabdetails">
-                    <h3>Food</h3>
-                    <p>Streamline your catering and delivery services effectively.</p>
+                    <h3>{{tabContentData?.tabContent.tc2[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc2[1]}}</p>
                 </div>
             </div>
             <div class="ind-tabcontent inactive" data-tab="12">
                 <img src="/images/tabImages/flower-shop.webp" alt="Flower Shop">
                 <div class="ind-tabdetails">
-                    <h3>Flower Shop</h3>
-                    <p>Manage your floral deliveries with precision and care.</p>
+                    <h3>{{tabContentData?.tabContent.tc3[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc3[1]}}</p>
                 </div>
             </div>
             <div class="ind-tabcontent inactive" data-tab="13">
                 <img src="/images/tabImages/pharmacy.webp" alt="Pharmacy">
                 <div class="ind-tabdetails">
-                    <h3>Pharmacy</h3>
-                    <p>Deliver medications to your customers efficiently and safely.</p>
+                    <h3>{{tabContentData?.tabContent.tc4[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc4[1]}}</p>
                 </div>
             </div>
             <div class="ind-tabcontent inactive" data-tab="14">
                 <img src="/images/tabImages/tools.webp" alt="Construction">
                 <div class="ind-tabdetails">
-                    <h3>Construction</h3>
-                    <p>Optimize your tools and equipment delivery process.</p>
+                    <h3>{{tabContentData?.tabContent.tc5[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc5[1]}}</p>
                 </div>
             </div>
             <div class="ind-tabcontent inactive" data-tab="15">
                 <img src="/images/tabImages/grocery.webp" alt="Grocery">
                 <div class="ind-tabdetails">
-                    <h3>Grocery</h3>
-                    <p>Ensure timely delivery of groceries to your customers.</p>
+                    <h3>{{tabContentData?.tabContent.tc6[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc6[1]}}</p>
                 </div>
             </div>
             <div class="ind-tabcontent inactive" data-tab="16">
                 <img src="/images/tabImages/retailer.webp" alt="Retailer">
                 <div class="ind-tabdetails">
-                    <h3>Retailer</h3>
-                    <p>Manage your retail deliveries with ease and efficiency.</p>
+                    <h3>{{tabContentData?.tabContent.tc7[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc7[1]}}</p>
                 </div>
             </div>
         </div>

@@ -1,12 +1,13 @@
 import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-provider',
   templateUrl: './provider.component.html',
-  styleUrls: ['./provider.component.less']
+  styleUrls: ['./provider.component.less'],
+  imports: [CommonModule]
 })
 export class ProviderComponent implements AfterViewInit {
 
@@ -22,10 +23,11 @@ export class ProviderComponent implements AfterViewInit {
 
   imageUrl: string = 'images/provider.mp4';
   public_id: string = 'provider'
-
+  providersData: any;
   private intervalId: any;
   private counterValue = 300;
   private updatedCounter: number = 300;
+  objectKeys  = Object.keys;
 
   constructor(
     private renderer: Renderer2,
@@ -47,6 +49,16 @@ export class ProviderComponent implements AfterViewInit {
         });
       }
     )
+  }
+
+  ngOnInit(){
+    this.http.get<any>('http://localhost:3000/data/component/providers').subscribe(
+      (res: any)=>{
+        this.providersData= {...this.providersData, ...res.data};
+      }, (err) =>{
+        console.log(err);
+      }
+    );
   }
 
   ngAfterViewInit(): void {

@@ -23,7 +23,7 @@
         <div class="dropdown" *ngFor="let section of dropdownSections">
             <a href="javascript:void(0)" (click)="toggleDropdown($event, section.name)"> {{ section.name }} </a>
             <div class="dropdown-content" [ngClass]="{'open': section.isOpen}"> 
-              <a *ngFor="let item of section.items let i = index" (click)="handleItemClick(section.links[i], section.name, item)"> {{ item }} </a>
+              <a *ngFor="let item of section.items let i = index" (click)="handleItemClick(section.links[i], section.comp, section.url[i])"> {{ item }} </a>
             </div>
         </div>          
     </div>

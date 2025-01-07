@@ -1,13 +1,30 @@
 import { Component, AfterViewInit, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.less']
+  styleUrls: ['./tabs.component.less'],
+  imports:[CommonModule]
 })
 export class TabsComponent implements AfterViewInit {
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private http : HttpClient
+  ) {}
+
+  tabData: any;
+
+  ngOnInit(){
+    this.http.get<any>('http://localhost:3000/data/component/tabs').subscribe(
+      (res: any)=>{
+        this.tabData= res;
+      }, (err) =>{
+        console.log(err);
+      }
+    );
+  }
 
   ngAfterViewInit(): void {
     const tabs = Array.from(this.document.querySelectorAll('.tab')) as HTMLElement[];

@@ -3,42 +3,26 @@
     <a class="navbar-brand" href="/main">
       <img src="/images/burq-logo.jpg" alt="Burq Logo" />
     </a>
-    <ul class="nav-links">
-      <li class="dropdown">
-        <a href="/burq">Use Cases <i class="arrow down"></i></a>
-        <ul class="dropdown-menu">
-          <li><a href="/burq">E-Commerce</a></li>
-          <li><a href="/burq">Food</a></li>
-          <li><a href="/burq">Flower</a></li>
-          <li><a href="/burq">Health & Wellness</a></li>
-          <li><a href="/burq">Construction</a></li>
-          <li><a href="/burq">Grocery</a></li>
-          <li><a href="/burq">Retailer</a></li>
-          <li><a href="/burq">Laundromat</a></li>
+    <ul class="nav-links" *ngIf="navbarData?.listItems && navbarData?.buttonText">
+      <li class="dropdown" *ngFor="let key of objectKeys(navbarData.listItems)">
+        <a href="/burq">{{key}}<i class="arrow down" *ngIf="navbarData.listItems[key].length"></i></a>
+        <ul class="dropdown-menu" *ngIf="navbarData.listItems[key].length">
+          <li>
+            <a href="/burq" *ngFor="let item of navbarData.listItems[key]">{{ item }}</a>
+          </li>
         </ul>
       </li>
-      <li><a href="/burq">Integrations</a></li>
-      <li class="dropdown">
-        <a href="/burq">Developers <i class="arrow down"></i></a>
-        <ul class="dropdown-menu">
-          <li><a href="/burq">Documentation</a></li>
-          <li><a href="/burq">Chat Now</a></li>
-        </ul>
-      </li>
-      <li><a href="/"><button class="cta-nav" (click)="onLogout()">Let's Get Started</button></a></li>
+      <li><a href="/"><button class="cta-nav" (click)="onLogout()">{{ navbarData.buttonText }}</button></a></li>
     </ul>
   </div>
 </nav>
 
 <header class="hero-section" #heroSection>
   <div class="container">
-    <div class="hero-content">
-      <h1>Offer On-Demand Delivery, instantly!</h1>
-      <p>
-        Burq enables you to access multiple delivery providers under one
-        platform. We make it easy for you to offer delivery to your customers.
-      </p>
-      <button class="cta-hero">Let's Get Started</button>
+    <div class="hero-content" *ngIf="heroSectionData?.heading && heroSectionData?.paragraph && heroSectionData?.buttonText">
+      <h1>{{ heroSectionData.heading }}</h1>
+      <p>{{ heroSectionData.paragraph }}</p>
+      <button class="cta-hero">{{ heroSectionData.buttonText }}</button>
     </div>
     <div class="hero-video">
       <div class="video-container">
@@ -52,9 +36,9 @@
 <button #myBtn (click)="topFunction()" id="myBtn" title="Back to Top"><i class="arrowTop up"></i></button>
 
 <section id="features" class="features-section">
-  <div class="features-container" #featuresContainer>
+  <div class="features-container" #featuresContainer *ngIf="featuresData?.title && featuresData?.featureTiles">
     <div class="features-heading" #featuresHeading>
-      <h2>Delivery with the push of a button</h2>
+      <h2>{{ featuresData.title}}</h2>
       <img src="/images/lines.svg" alt="Underline" class="underline">
     </div>
     <div class="features-grid">
@@ -62,26 +46,27 @@
         <div class="icon-container" style="background-color: #FFEBDB;">
           <img src="/images/icon1.svg" alt="Powerful Icon">
         </div>
-        <h3>Powerful Yet Easy</h3>
-        <p>Save months of building delivery infrastructure. Integrate Burq to get connected with multiple delivery providers.</p>
+        <h3>{{ featuresData.featureTiles.tile1[0] }}</h3>
+        <p>{{ featuresData.featureTiles.tile1[1] }}</p>
       </div>
       <div class="feature2-card" #feature2Card>
         <div class="icon-container" style="background-color: #E0F8F8;">
           <img src="/images/icon2.svg" alt="Scale Icon">
         </div>
-        <h3>Scale Faster</h3>
-        <p>With a massive network of on-demand & same-day delivery providers, your business can scale to new markets within days.</p>
+        <h3>{{ featuresData.featureTiles.tile2[0] }}</h3>
+        <p>{{ featuresData.featureTiles.tile2[1] }}</p>
       </div>
       <div class="feature3-card" #feature3Card>
         <div class="icon-container" style="background-color: #F7EDFF;">
           <img src="/images/icon3.svg" alt="Integration Icon">
         </div>
-        <h3>Quick Integration</h3>
-        <p>Tap into our documentation for simple integration and continuous support.</p>
+        <h3>{{ featuresData.featureTiles.tile3[0] }}</h3>
+        <p>{{ featuresData.featureTiles.tile3[1] }}</p>
       </div>
     </div>
   </div>
 </section>
+
 <app-provider />
 <app-tabs />
 <app-integrate />

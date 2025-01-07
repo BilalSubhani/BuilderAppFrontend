@@ -11,6 +11,19 @@ export class MainService {
   constructor(private http: HttpClient) {}
 
   getNavbar(): Observable<any> {
+    return this.http.get<any>( `${this.apiUrl}/main`);
+  }
+
+  getAllData(): Observable<any>{
     return this.http.get<any>(this.apiUrl);
+  }
+
+  createData(data: any): Observable<any>{
+    // console.log(data)
+    // console.log(this.apiUrl)
+    const res = this.http.post<any>(this.apiUrl, data);
+
+    console.log(res);
+    return res;
   }
 }

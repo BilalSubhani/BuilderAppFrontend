@@ -6,22 +6,13 @@
                     <source [src]="imageUrl" type="video/mp4">
                 </video>
             </div>
-            <div #textItem class="text-container">
-                <h3 class="header-text">Access a powerful network of delivery providers</h3>
+            <div #textItem class="text-container" *ngIf="providersData?.title && providersData?.body && providersData?.listItems">
+                <h3 class="header-text">{{ providersData?.title }}</h3>
                 <img class="line-image" src="/images/lines.svg">
-                <p class="paragraph-text">Burq partners with multiple leading delivery providers, making it easy to find a driver for your next delivery order.</p>
-                <ul class="list-container">
+                <p class="paragraph-text">{{ providersData?.body }}</p>
+                <ul class="list-container" *ngFor="let key of objectKeys(providersData?.listItems)">
                     <li class="list-item">
-                        <img src="/images/tick.svg" alt="Tick"> One Integration
-                    </li>
-                    <li class="list-item">
-                        <img src="/images/tick.svg" alt="Tick"> Multiple Providers
-                    </li>
-                    <li class="list-item">
-                        <img src="/images/tick.svg" alt="Tick"> Commission Free
-                    </li>
-                    <li class="list-item">
-                        <img src="/images/tick.svg" alt="Tick"> Real-time Tracking
+                        <img src="/images/tick.svg" alt="Tick"> {{ providersData?.listItems[key]}} 
                     </li>
                 </ul>
             </div>

@@ -1,11 +1,11 @@
 <div class="main-container">
     <div class="flex-container" #observeContainer>
-        <div class="left-div" #leftDiv>
-            <h6>QUICK INTEGRATION</h6>
-            <h3>Easily integrate with your existing technology</h3>
+        <div class="left-div" #leftDiv *ngIf="integrateData?.smallHeading && integrateData?.title && integrateData?.body && integrateData?.button">
+            <h6>{{integrateData?.smallHeading}}</h6>
+            <h3>{{integrateData?.title}}</h3>
             <img src="/images/lines.svg" alt="Image">
-            <p>Whether your business uses an ecommerce platform or a custom technology, our quick and simple integration process can be completed in under an hour.</p>
-            <button class="cta-hero">Let's Get Started</button>
+            <p>{{integrateData?.body}}</p>
+            <button class="cta-hero">{{integrateData?.button}}</button>
         </div>
         <div class="right-div" #rightDiv>
 

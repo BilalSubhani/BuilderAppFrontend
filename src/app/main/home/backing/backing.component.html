@@ -7,31 +7,24 @@
       <img src="images/backing/LB1.webp" class="leftbottom" alt="">
       <img src="images/backing/BR1.webp" class="bottomright" alt="">
     </div>
-    <div class="container">
+    <div class="container" *ngIf="backingData">
       <div class="heading-section">
-        <h2>Who's Backing Us?</h2>
+        <h2>{{backingData.title}}</h2>
       </div>
-      <div class="text-section">
-        <p>
-          Burq is backed by 
-          <a href="https://onewayvc.com/">One Way Ventures</a> and 
-          <a href="https://www.villageglobal.vc/">Village Global</a>, 
-          the fund whose investors include Bill Gates, Jeff Bezos, Mark Zuckerberg, Reid Hoffman, and Sara Blakely. 
-          We're also a proud member of the 
-          <a href="https://innovationlabs.harvard.edu/">Harvard Innovation Labs</a>.
-        </p>
+      <div class="text-section" >
+        <p>{{backingData.body}}</p>
       </div>
       <div class="investors">INVESTORS</div>
     </div>
   </div>
 
   <div class="fancy-short-banner">
-    <div class="container">
+    <div class="container" *ngIf="poweringData">
       <div class="title">
-        <h2>Start powering your deliveries with Burq today!</h2>
+        <h2>{{poweringData.body}}</h2>
       </div>
       <div class="cta">
-          <button class="cta-backing">Let's Get Started</button>
+          <button class="cta-backing">{{poweringData.button}}</button>
       </div>
       <div class="fancy-image-topright">
         <img src="images/backing/redCircles.svg" alt="">
