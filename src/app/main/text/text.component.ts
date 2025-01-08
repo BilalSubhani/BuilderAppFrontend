@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
@@ -16,6 +16,13 @@ export class TextComponent {
   ){}
   textInput: string = '';
   @Output() textSent: EventEmitter<string> = new EventEmitter<string>();
+
+  onKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.sendText();
+    }
+  }
 
   sendText() {
     if(this.textInput === '') {

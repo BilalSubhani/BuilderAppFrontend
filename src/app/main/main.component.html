@@ -19,7 +19,6 @@
 
     <div id="mySidenav" class="sidenav" #mySidenav>
         <a  class="closebtn" (click)="closeNav()">&times;</a>
-
         <div class="dropdown" *ngFor="let section of dropdownSections">
             <a href="javascript:void(0)" (click)="toggleDropdown($event, section.name)"> {{ section.name }} </a>
             <div class="dropdown-content" [ngClass]="{'open': section.isOpen}"> 

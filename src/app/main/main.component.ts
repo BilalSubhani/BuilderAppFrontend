@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewContainerRef, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { MainService } from './main.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -76,7 +76,7 @@ export class MainComponent implements OnInit {
       name: 'Tab', 
       comp: 'tabs',
       isOpen: false, 
-      links: ['Image', 'Text','Image', 'Image', 'Text','Image', 'Image', 'Text','Image'], 
+      links: ['Text','Image', 'Text', 'Image', 'Text','Image'], 
       items: ['Tab Heading 1', 'Tab Content 1', 'Tab Heading 2', 'Tab Content 2', 'Tab Heading 3', 'Tab Content 3'],
       url: [ '0', '', '1', '', '2', '' ]
     },
@@ -116,7 +116,7 @@ export class MainComponent implements OnInit {
       name: 'Testimonials', 
       comp: 'testimonials',
       isOpen: false, 
-      links: ['Text', 'Text'], 
+      links: ['Text'], 
       items: ['Title'],
       url: ['title']
     },
@@ -183,12 +183,14 @@ export class MainComponent implements OnInit {
     }
     if(link === 'Video'){
       this.textData=false;
+      this.imageData=false;
       this.viewContainer.clear();
       this.videoData=true;
       return;
     }
     else{
       this.videoData=false;
+      this.imageData=false;
       this.viewContainer.clear();
       this.textData=true;
       return;
