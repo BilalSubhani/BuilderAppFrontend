@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,9 @@ export class ImageComponent {
   selectedFile: File | null = null;
   publicId: string = '';
   isHovering: boolean = false;
+
+    imageChanged: boolean = false;
+    @Output() imageSent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private http: HttpClient,     
@@ -69,6 +72,8 @@ export class ImageComponent {
           progressBar: true,
           progressAnimation: 'increasing'
         });
+
+        this.changed();
       },
       (error) => {
         this.toastr.error(error, 'Error uploading image', {
@@ -78,5 +83,13 @@ export class ImageComponent {
         });
       }
     );
+  }
+  changed(){
+    this.imageChanged = true;
+
+    if (this.imageChanged) {
+      this.imageSent.emit(this.imageChanged);
+      this.imageChanged = false;
+    }
   }
 }

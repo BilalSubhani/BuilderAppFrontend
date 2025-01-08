@@ -10,7 +10,7 @@ import { ImageComponent } from './image/image.component';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, RouterModule, TextComponent, VideoComponent],
+  imports: [CommonModule, RouterModule, TextComponent, VideoComponent, ImageComponent],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
@@ -110,7 +110,7 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Image', 'Text', 'Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text'], 
       items: ['Logo 1', 'Heading 1', 'Paragraph 1', 'Logo 2', 'Heading 2', 'Paragraph 2', 'Logo 3', 'Heading 3', 'Paragraph 3'],
-      url: ['', 'sp1[0]', 'sp1[1]', 'sp2[0]', 'sp2[1]', 'sp3[0]', 'sp3[1]']
+      url: ['', 'sp1', 'sp1', 'sp2', 'sp2', 'sp3', 'sp3']
     },
     { 
       name: 'Testimonials', 
@@ -178,7 +178,7 @@ export class MainComponent implements OnInit {
       this.videoData=false;
       this.textData=false;
       this.viewContainer.clear();
-      this.viewContainer.createComponent(ImageComponent);
+      this.imageData=true;
       return;
     }
     if(link === 'Video'){
@@ -200,6 +200,15 @@ export class MainComponent implements OnInit {
 
     if (this.textFromChild) {
       this.updateData();
+    }
+  }
+
+  receiveImage(event: boolean){
+    this.imageChanged = event;
+
+    if(this.imageChanged){
+      this.mainService.notifyDataChange(this.imageChanged);
+      this.imageChanged = false;
     }
   }
 

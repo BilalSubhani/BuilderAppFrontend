@@ -1,7 +1,7 @@
 <nav class="navbar" #navbar>
   <div class="navbar-container">
     <a class="navbar-brand" href="/main">
-      <img src="/images/burq-logo.jpg" alt="Burq Logo" />
+      <img [src]="imageUrl[0]" alt="Burq Logo" />
     </a>
     <ul class="nav-links" *ngIf="navbarData?.listItems && navbarData?.buttonText">
       <li class="dropdown" *ngFor="let key of objectKeys(navbarData.listItems)">
@@ -39,26 +39,26 @@
   <div class="features-container" #featuresContainer *ngIf="featuresData?.title && featuresData?.featureTiles">
     <div class="features-heading" #featuresHeading>
       <h2>{{ featuresData.title}}</h2>
-      <img src="/images/lines.svg" alt="Underline" class="underline">
+      <img [src]="imageUrl[1]" alt="Underline" class="underline">
     </div>
     <div class="features-grid">
       <div class="feature1-card" #feature1Card>
         <div class="icon-container" style="background-color: #FFEBDB;">
-          <img src="/images/icon1.svg" alt="Powerful Icon">
+          <img [src]="imageUrl[2]" alt="Powerful Icon">
         </div>
         <h3>{{ featuresData.featureTiles.tile1[0] }}</h3>
         <p>{{ featuresData.featureTiles.tile1[1] }}</p>
       </div>
       <div class="feature2-card" #feature2Card>
         <div class="icon-container" style="background-color: #E0F8F8;">
-          <img src="/images/icon2.svg" alt="Scale Icon">
+          <img [src]="imageUrl[3]" alt="Scale Icon">
         </div>
         <h3>{{ featuresData.featureTiles.tile2[0] }}</h3>
         <p>{{ featuresData.featureTiles.tile2[1] }}</p>
       </div>
       <div class="feature3-card" #feature3Card>
         <div class="icon-container" style="background-color: #F7EDFF;">
-          <img src="/images/icon3.svg" alt="Integration Icon">
+          <img [src]="imageUrl[4]" alt="Integration Icon">
         </div>
         <h3>{{ featuresData.featureTiles.tile3[0] }}</h3>
         <p>{{ featuresData.featureTiles.tile3[1] }}</p>

@@ -19,6 +19,8 @@ export class WhyburqComponent {
 
   whyBurqData: any;
   benefitsData: any;
+  imagePublicUrl: string[] = ['whyburq', 'sp1', 'sp2', 'sp3']
+  imageUrl: string[] = [];
   private subscription?: Subscription;
 
   constructor(
@@ -29,6 +31,17 @@ export class WhyburqComponent {
   ) {}
 
   dataFunctions(): void{
+    this.imagePublicUrl.forEach((p_id)=>{
+      this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
+        (response: any) => {
+          this.imageUrl.push(response.url);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+
     this.http.get<any>("http://localhost:3000/data/component/whyBurq").subscribe((res)=>{
       this.whyBurqData = res.data;
     }, (err)=>{

@@ -36,6 +36,10 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild('feature3Card', { static: false }) feature3!: ElementRef;
   @ViewChild('myBtn', { static: false }) myBtn!: ElementRef;
   objectKeys = Object.keys;
+
+  imagePublicUrl: string[] = ['burq-logo', 'lines', 'featureTile1', 'featureTile2', 'featureTile3'];
+  imageUrl: string[] = [];
+
   videoUrl: string = '';
   public_id: string = '3steps';
 
@@ -68,6 +72,22 @@ export class HomeComponent implements AfterViewInit {
         });
       }
     );
+
+
+    this.imagePublicUrl.forEach((p_id)=>{
+      this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
+        (response: any) => {
+          this.imageUrl.push(response.url);
+        },
+        (error) => {
+          this.toastr.error('Error fetching video', 'Error', {
+            positionClass: 'toast-top-right',
+            progressBar: true,
+            progressAnimation: 'decreasing'
+          });
+        }
+      );
+    })
 
     this.http.get<any>('http://localhost:3000/data/component/navbar').subscribe(
       (res: any)=>{

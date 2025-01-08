@@ -8,28 +8,28 @@
             </div>
             <div #textItem class="text-container" *ngIf="providersData?.title && providersData?.body && providersData?.listItems">
                 <h3 class="header-text">{{ providersData?.title }}</h3>
-                <img class="line-image" src="/images/lines.svg">
+                <img class="line-image" [src]="imageUrl[0]">
                 <p class="paragraph-text">{{ providersData?.body }}</p>
                 <ul class="list-container" *ngFor="let key of objectKeys(providersData?.listItems)">
                     <li class="list-item">
-                        <img src="/images/tick.svg" alt="Tick"> {{ providersData?.listItems[key]}} 
+                        <img [src]="imageUrl[1]" alt="Tick"> {{ providersData?.listItems[key]}} 
                     </li>
                 </ul>
             </div>
         </div>
         <div #counterSection class="bottom-container">
             <div #bottomItem1 class="bottom-item1">
-                <img src="/images/image1.svg" style="width: 49px; height: 56px" alt="Image 1">
+                <img [src]="imageUrl[2]" style="width: 49px; height: 56px" alt="Image 1">
                 <h3>1</h3>
                 <p>Integration</p>
             </div>
             <div #bottomItem2 class="bottom-item2">
-                <img src="/images/image2.svg" style="width: 58px; height: 58px" alt="Image 2">
+                <img [src]="imageUrl[3]" style="width: 58px; height: 58px" alt="Image 2">
                 <h3 #counterCities id="counterCities">300</h3>
                 <p>Cities Covered</p>
             </div>
             <div #bottomItem3 class="bottom-item3">
-                <img src="/images/image3.svg" alt="Image 3">
+                <img [src]="imageUrl[4]" alt="Image 3">
                 <h3>1M+</h3>
                 <p>Drivers In-Network</p>
             </div>

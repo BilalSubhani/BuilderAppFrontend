@@ -1,7 +1,7 @@
 <div class="whyburq-main-container">
   <div class="whyburq-container" #whyburqContainer>
     <div class="whyburq-left-column" #whyburqLeftDiv>
-      <img src="images/whyburq/whyburq.png" alt="Image">
+      <img [src]="imageUrl[0]" alt="Image">
     </div>
 
     <div class="whyburq-right-column" #whyburqRightDiv *ngIf="whyBurqData?.title && whyBurqData?.body && whyBurqData?.button">
@@ -17,19 +17,19 @@
 <div class="benefits-maincontainer" *ngIf="benefitsData">
   <div class="benefits-container" #benefitsContainer>
     <div class="benefit">
-      <img src="images/whyburq/location.svg" style="width:55px; height: 52px;" alt="On-demand delivery">
+      <img [src]="imageUrl[1]" style="width:55px; height: 52px;" alt="On-demand delivery">
       <h3>{{benefitsData?.sp1[0]}}</h3>
       <p>{{benefitsData?.sp1[1]}}</p>
     </div>
 
     <div class="benefit">
-      <img src="images/whyburq/check.svg" style="width:52px; height: 52px;" alt="No commission">
+      <img [src]="imageUrl[2]" style="width:52px; height: 52px;" alt="No commission">
       <h3>{{benefitsData?.sp2[0]}}</h3>
       <p>{{benefitsData?.sp2[1]}}</p>
     </div>
 
     <div class="benefit">
-      <img src="images/whyburq/tracking.svg" style="width:52px; height: 55px;" alt="Advanced tracking technology">
+      <img [src]="imageUrl[3]" style="width:52px; height: 55px;" alt="Advanced tracking technology">
       <h3>{{benefitsData?.sp3[0]}}</h3>
       <p>{{benefitsData?.sp3[1]}}</p>
     </div>

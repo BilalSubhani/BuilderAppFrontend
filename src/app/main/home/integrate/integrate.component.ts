@@ -17,6 +17,7 @@ export class IntegrateComponent implements AfterViewInit {
   @ViewChild('rightDiv', { static: false }) rightDiv!: ElementRef;
 
   integrateData: any;
+  imageUrl: string = '';
   private subscription?: Subscription;
 
   constructor(
@@ -27,6 +28,15 @@ export class IntegrateComponent implements AfterViewInit {
   ) {}
 
   dataController(){
+    this.http.get<any>(`http://localhost:3000/media/images/lines`).subscribe(
+      (response: any) => {
+        this.imageUrl = response.url;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    
     this.http.get<any>('http://localhost:3000/data/component/integrate').subscribe(
       (res)=>{
         this.integrateData=res.data;

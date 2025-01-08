@@ -19,9 +19,22 @@ export class TabsComponent implements AfterViewInit {
     private http : HttpClient
   ) {}
 
+  imagePublicUrl: string[] = ['tab1', 'tab2', 'tab3', 'tabContent1', 'tabContent2', 'tabContent3'];
+  imageUrl: string[] = [];
   tabData: any;
 
-  ngOnInit(){
+  dataFunction(){
+    this.imagePublicUrl.forEach((p_id)=>{
+      this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
+        (response: any) => {
+          this.imageUrl.push(response.url);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
+
     this.http.get<any>('http://localhost:3000/data/component/tabs').subscribe(
       (res: any)=>{
         this.tabData= res;
@@ -29,16 +42,14 @@ export class TabsComponent implements AfterViewInit {
         console.log(err);
       }
     );
+  }
+
+  ngOnInit(){
+    this.dataFunction();
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
-        this.http.get<any>('http://localhost:3000/data/component/tabs').subscribe(
-          (res: any)=>{
-            this.tabData= res;
-          }, (err) =>{
-            console.log(err);
-          }
-        );
+        this.dataFunction();
       }
     });
   }

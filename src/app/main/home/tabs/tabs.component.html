@@ -6,15 +6,15 @@
     
         <div class="tab-container">
             <div class="tabs" *ngIf="tabData?.data">
-                <div class="tab active" data-tab="1"><img src="/images/api-icon.svg" style="width: 25px; height: 22px;" class="icon active" data-tab="1"> {{tabData?.data[0]}}</div>
-                <div class="tab" data-tab="2"><img src="/images/dashboard-icon.svg" style="width: 20px; height: 20px;" class="icon" data-tab="2">{{tabData?.data[1]}}</div>
-                <div class="tab" data-tab="3"><img src="/images/track-icon.svg" style="width: 22px; height: 22px;" class="icon" data-tab="3">{{tabData?.data[2]}}</div>
+                <div class="tab active" data-tab="1"><img [src]="imageUrl[0]" style="width: 25px; height: 22px;" class="icon active" data-tab="1"> {{tabData?.data[0]}}</div>
+                <div class="tab" data-tab="2"><img [src]="imageUrl[1]" style="width: 20px; height: 20px;" class="icon" data-tab="2">{{tabData?.data[1]}}</div>
+                <div class="tab" data-tab="3"><img [src]="imageUrl[2]" style="width: 22px; height: 22px;" class="icon" data-tab="3">{{tabData?.data[2]}}</div>
             </div>
         </div>
         <div class="content">
-            <img src="/images/api.webp" alt="Image 1" data-tab="1" class="active">
-            <img src="/images/dashboard.png" alt="Image 2" data-tab="2">
-            <img src="/images/track.png" alt="Image 3" data-tab="3">
+            <img [src]="imageUrl[3]" alt="Image 1" data-tab="1" class="active">
+            <img [src]="imageUrl[4]" alt="Image 2" data-tab="2">
+            <img [src]="imageUrl[5]" alt="Image 3" data-tab="3">
         </div>
     </div>
 </div>

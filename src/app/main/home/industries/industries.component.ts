@@ -27,6 +27,8 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
 
   private subscription?: Subscription;
   tabContentData: any;
+  imagePublicUrl: string[] = ['industriesContent1', 'industriesContent2', 'industriesContent3', 'industriesContent4','industriesContent5','industriesContent6','industriesContent7'];
+  imageUrl: string[] = [];
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -35,6 +37,25 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
     private mainService: MainService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {}
+
+  dataFunction(){
+    this.imagePublicUrl.forEach((p_id)=>{
+      this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
+        (response: any) => {
+          this.imageUrl.push(response.url);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    })
+
+    this.http.get<any>("http://localhost:3000/data/component/industries").subscribe((res)=>{
+      this.tabContentData = res.data;
+    }, (err)=>{
+      console.log(err);
+    });
+  }
 
   ngOnInit(): void {
     const firstTab = this.document.querySelector('.ind-tab[data-tab="10"]');
@@ -53,20 +74,12 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
       firstTabIcon.classList.add('active');
     }
 
-
-    this.http.get<any>("http://localhost:3000/data/component/industries").subscribe((res)=>{
-      this.tabContentData = res.data;
-    }, (err)=>{
-      console.log(err);
-    });
+    this.dataFunction();
+    
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
-        this.http.get<any>("http://localhost:3000/data/component/industries").subscribe((res)=>{
-          this.tabContentData = res.data;
-        }, (err)=>{
-          console.log(err);
-        });
+        this.dataFunction();
       }
     });
   }

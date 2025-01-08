@@ -1,5 +1,6 @@
 import { Component, ElementRef, Renderer2, ViewChild, Inject, PLATFORM_ID, ViewChildren, QueryList } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-footer',
@@ -11,6 +12,7 @@ export class FooterComponent {
   @ViewChild('footerContainer', {static: false}) footerContainer!: ElementRef;
   @ViewChild('footerLogo', {static: false}) footerLogo!: ElementRef;
   @ViewChildren('footerSection') footerSection!: QueryList<ElementRef<HTMLDivElement>>;
+  imageUrl: string = '';
   // @ViewChild('footerSection1', { static: false}) footerSection1!: ElementRef;
   // @ViewChild('footerSection2', { static: false}) footerSection2!: ElementRef;
   // @ViewChild('footerSection3', { static: false}) footerSection3!: ElementRef;
@@ -18,8 +20,21 @@ export class FooterComponent {
 
   constructor(
     private renderer: Renderer2,
+    private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ){}
+
+  ngOnInit(){
+    this.http.get<any>(`http://localhost:3000/media/images/footerLogo`).subscribe(
+      (response: any) => {
+        this.imageUrl = response.url;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+  }
 
   ngAfterViewInit(): void{
     if(isPlatformBrowser(this.platformId)){
