@@ -1,108 +1,147 @@
-.dashboard-container {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  color: #333;
+.navbar-admin {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #343a40;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transform: translateX(30px);
 }
 
-.dashboard-container h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #444;
+.admin-navbar-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.loading, .error {
-  text-align: center;
-  font-size: 18px;
-  margin: 20px 0;
+.navbar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.loading {
-  color: #007bff;
+.navbar-buttons {
+  display: flex;
+  gap: 1rem;
 }
 
-.error {
-  color: #dc3545;
+.navbar-buttons a {
+  text-decoration: none;
 }
 
-.cta-nav {
-  display: block;
-  text-align: center;
-  margin: 20px auto;
-}
-
-.cta-nav button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #28a745;
-  color: white;
+.btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.cta-nav button:hover {
-  background-color: #218838;
+.btn:hover {
+  opacity: 0.9;
+}
+
+.main-btn {
+  background-color: #17a2b8;
+  color: #ffffff;
+}
+
+.burq-btn {
+  background-color: #ffc107;
+  color: #343a40;
+}
+
+.logout-btn {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #007bff;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.error {
+  font-size: 1.2rem;
+  color: #dc3545;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .table-container {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
-  margin: 0 auto;
-  max-width: 800px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  transform: translateX(30px);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 10px 0;
 }
 
 thead {
-  background-color: #f4f4f4;
+  background-color: #343a40;
+  color: #ffffff;
 }
 
 thead th {
-  padding: 15px;
+  padding: 1rem;
   text-align: left;
-  border-bottom: 2px solid #ccc;
-  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+  background-color: #e9ecef;
 }
 
 tbody td {
-  padding: 15px;
-  border-bottom: 1px solid #ddd;
-}
-
-tr:hover {
-  background-color: #f9f9f9;
-}
-
-.btn {
-  padding: 8px 12px;
-  font-size: 14px;
-  margin-right: 5px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .toggle-btn {
-  background-color: #007bff;
-  color: white;
-}
-
-.toggle-btn:hover {
-  background-color: #0056b3;
+  background-color: #28a745;
+  color: #ffffff;
 }
 
 .delete-btn {
   background-color: #dc3545;
-  color: white;
+  color: #ffffff;
+  margin: 0px 30px;
 }
 
+.toggle-btn:hover,
 .delete-btn:hover {
-  background-color: #b21f2d;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .navbar-admin {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-buttons {
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .table-container {
+    margin: 1rem;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
 }

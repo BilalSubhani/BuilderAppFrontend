@@ -1,6 +1,15 @@
+<nav class="navbar-admin">
+  <div class="admin-navbar-content">
+    <div class="navbar-title">Dashboard</div>
+    <div class="navbar-buttons">
+      <a href="/main"><button class="btn main-btn">Main</button></a>
+      <a href="/burq"><button class="btn burq-btn">Burq</button></a>
+      <button class="btn logout-btn" (click)="onLogout()">Logout</button>
+    </div>
+  </div>
+</nav>
 <div *ngIf="isLoading" class="loading">Loading users...</div>
 <div *ngIf="error" class="error">{{ error }}</div>
-<a href="/"><button class="cta-nav" (click)="onLogout()">Log out</button></a>
 <div *ngIf="!isLoading && !error" class="table-container">
   <table>
     <thead>
