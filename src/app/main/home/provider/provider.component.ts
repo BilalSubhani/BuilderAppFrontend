@@ -2,6 +2,8 @@ import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLA
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { MainService } from '../../main.service';
 
 @Component({
   selector: 'app-provider',
@@ -21,6 +23,8 @@ export class ProviderComponent implements AfterViewInit {
   @ViewChild('bottomItem2', { static: false }) bottomItem2!: ElementRef;
   @ViewChild('bottomItem3', { static: false }) bottomItem3!: ElementRef;
 
+  private subscription?: Subscription;
+
   imageUrl: string = 'images/provider.mp4';
   public_id: string = 'provider'
   providersData: any;
@@ -33,6 +37,7 @@ export class ProviderComponent implements AfterViewInit {
     private renderer: Renderer2,
     private http: HttpClient,
     private toastr: ToastrService,
+    private mainService: MainService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -59,6 +64,18 @@ export class ProviderComponent implements AfterViewInit {
         console.log(err);
       }
     );
+
+    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
+      if (hasChanged) {
+        this.http.get<any>('http://localhost:3000/data/component/providers').subscribe(
+          (res: any)=>{
+            this.providersData= {...this.providersData, ...res.data};
+          }, (err) =>{
+            console.log(err);
+          }
+        );
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -113,6 +130,10 @@ export class ProviderComponent implements AfterViewInit {
         console.warn('IntersectionObserver is not supported in this environment.');
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   private updateCounter(): void {

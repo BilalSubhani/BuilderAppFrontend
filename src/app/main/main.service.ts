@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainService {
   private apiUrl = 'http://localhost:3000/data';
+  private dataChange: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+  public dataChange$: Observable<boolean> = this.dataChange.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -18,12 +21,15 @@ export class MainService {
     return this.http.get<any>(this.apiUrl);
   }
 
-  createData(data: any): Observable<any>{
-    // console.log(data)
-    // console.log(this.apiUrl)
-    const res = this.http.post<any>(this.apiUrl, data);
+  createData(data: any): Observable<any> {
+    return this.http.post<any>('http://localhost:3000/data', data).pipe(
+      tap(() => {
+        this.notifyDataChange(true);
+      })
+    );
+  }
 
-    console.log(res);
-    return res;
+  notifyDataChange(hasChanged: boolean) {
+    this.dataChange.next(hasChanged);
   }
 }

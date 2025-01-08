@@ -15,6 +15,8 @@ import { BackingComponent } from './backing/backing.component';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { MainService } from '../main.service';
 
 @Component({
   selector: 'app-home',
@@ -41,12 +43,15 @@ export class HomeComponent implements AfterViewInit {
   heroSectionData: any;
   featuresData: any;
 
+  private subscription?: Subscription;
+
   constructor(
     private renderer: Renderer2,
     private authService: AuthService,
     private router: Router,
     private http: HttpClient,
     private toastr: ToastrService,
+    private mainService: MainService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -86,15 +91,22 @@ export class HomeComponent implements AfterViewInit {
       }, (err) =>{
       }
     );
+
+    this.mainService.notifyDataChange(false);
   }
 
 
   ngOnInit() {
     this.dataController();
+
+    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
+      if (hasChanged) {
+        this.dataController();
+      }
+    });
   }
 
   ngAfterViewInit(): void {
-
     if (isPlatformBrowser(this.platformId)) {
       if ('IntersectionObserver' in window) {
         const observerNavbar = new IntersectionObserver((entries) => {
@@ -130,6 +142,10 @@ export class HomeComponent implements AfterViewInit {
         console.warn('IntersectionObserver is not supported in this environment.');
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   topFunction(): void {

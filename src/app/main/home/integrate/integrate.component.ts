@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, Renderer2, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { MainService } from '../../main.service';
 
 @Component({
   selector: 'app-integrate',
@@ -15,14 +17,16 @@ export class IntegrateComponent implements AfterViewInit {
   @ViewChild('rightDiv', { static: false }) rightDiv!: ElementRef;
 
   integrateData: any;
+  private subscription?: Subscription;
 
   constructor(
     private renderer: Renderer2,
     private http: HttpClient,
+    private mainService: MainService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit(){
+  dataController(){
     this.http.get<any>('http://localhost:3000/data/component/integrate').subscribe(
       (res)=>{
         this.integrateData=res.data;
@@ -30,6 +34,16 @@ export class IntegrateComponent implements AfterViewInit {
       (err)=>{
         console.log(err);
       });
+  }
+
+  ngOnInit(){
+    this.dataController();
+
+    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
+      if (hasChanged) {
+        this.dataController();
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -51,5 +65,8 @@ export class IntegrateComponent implements AfterViewInit {
         console.warn('IntersectionObserver is not supported in this environment.');
       }
     }
+  }
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }

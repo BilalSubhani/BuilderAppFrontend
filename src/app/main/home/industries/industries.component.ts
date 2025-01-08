@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, Inject, OnInit, ViewChild, ElementRef, Renderer2, PLATFORM_ID } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { MainService } from '../../main.service';
 
 @Component({
   selector: 'app-industries',
@@ -23,12 +25,14 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
   @ViewChild('indTabContainer', {static: false}) indTabContainer!: ElementRef;
   @ViewChild('indTabContent', {static: false}) indTabContent!: ElementRef;
 
+  private subscription?: Subscription;
   tabContentData: any;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private http: HttpClient,
+    private mainService: MainService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
@@ -54,6 +58,16 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
       this.tabContentData = res.data;
     }, (err)=>{
       console.log(err);
+    });
+
+    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
+      if (hasChanged) {
+        this.http.get<any>("http://localhost:3000/data/component/industries").subscribe((res)=>{
+          this.tabContentData = res.data;
+        }, (err)=>{
+          console.log(err);
+        });
+      }
     });
   }
 
@@ -134,5 +148,9 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
           console.warn('IntersectionObserver is not supported in this environment ');
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }

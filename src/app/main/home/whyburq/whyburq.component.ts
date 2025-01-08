@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, Renderer2, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { MainService } from '../../main.service';
 
 @Component({
   selector: 'app-whyburq',
@@ -17,10 +19,12 @@ export class WhyburqComponent {
 
   whyBurqData: any;
   benefitsData: any;
+  private subscription?: Subscription;
 
   constructor(
     private renderer: Renderer2,
     private http: HttpClient,
+    private mainService: MainService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
@@ -41,6 +45,12 @@ export class WhyburqComponent {
 
   ngOnInit(){
     this.dataFunctions();
+
+    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
+      if (hasChanged) {
+        this.dataFunctions();
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -71,5 +81,9 @@ export class WhyburqComponent {
           console.warn('IntersectionObserver is not supported in this environment.');
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }

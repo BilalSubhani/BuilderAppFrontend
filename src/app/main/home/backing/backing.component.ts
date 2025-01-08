@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MainService } from '../../main.service';
 
 @Component({
   selector: 'app-backing',
@@ -9,8 +11,11 @@ import { Component } from '@angular/core';
   styleUrl: './backing.component.less'
 })
 export class BackingComponent {
-
-  constructor(private http: HttpClient){}
+  private subscription?: Subscription;
+  constructor(
+    private http: HttpClient,
+    private mainService: MainService,
+  ){}
 
   backingData: any;
   poweringData: any;
@@ -31,5 +36,15 @@ export class BackingComponent {
 
   ngOnInit(){
     this.dataFunctions();
+
+    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
+      if (hasChanged) {
+        this.dataFunctions();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }

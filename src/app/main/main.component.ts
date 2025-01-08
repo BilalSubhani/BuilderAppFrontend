@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { TextComponent } from './text/text.component';
 import { VideoComponent } from './video/video.component';
 import { ImageComponent } from './image/image.component';
-import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -18,8 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class MainComponent implements OnInit {
   constructor(
     private mainService: MainService,
-    private viewContainer: ViewContainerRef,
-    private http: HttpClient
+    private viewContainer: ViewContainerRef
   ) {}
 
   navbarData: any;
@@ -29,9 +27,7 @@ export class MainComponent implements OnInit {
 
   textFromChild: string = '';
   fieldForText: string = '';
-  textObject: object = { "Field":'', "Text":'' };
   @ViewChild('mySidenav') mySidenav!: ElementRef;
-  @Output() textObjSent: EventEmitter<object> = new EventEmitter<object>();
   objectKeys = Object.keys;
 
   fieldClicked: string = '';
@@ -61,23 +57,23 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text'], 
       items: ['Heading','Feature 1 Logo', 'Feature 1 Heading', 'Feature 1 Paragraph', 'Feature 2 Logo', 'Feature 2 Heading', 'Feature 2 Paragraph','Feature 3 Logo', 'Feature 3 Heading', 'Feature 3 Paragraph'],
-      url: ['title', '', 'featureTiles', 'featureTiles', 'title', '', 'featureTiles', 'featureTiles', 'title', '', 'featureTiles', 'featureTiles']
+      url: ['title', '', 'featureTiles', 'featureTiles', '', 'featureTiles', 'featureTiles', '', 'featureTiles', 'featureTiles']
     },
     { 
       name: 'Provider',
       comp: 'providers', 
       isOpen: false, 
       links: ['Text', 'Text', 'Text', 'Video'], 
-      items: ['Heading', 'Paragraph', 'List Items', 'Video'],
-      url: ['title', 'body', 'listItems']
+      items: ['Heading', 'Paragraph', 'Video'],
+      url: ['title', 'body', '']
     },
     { 
       name: 'Tab', 
       comp: 'tabs',
       isOpen: false, 
       links: ['Image', 'Text','Image', 'Image', 'Text','Image', 'Image', 'Text','Image'], 
-      items: ['Tab Logo 1', 'Tab Heading 1', 'Tab Content 1', 'Tab Logo 2', 'Tab Heading 2', 'Tab Content 2', 'Tab Logo 3', 'Tab Heading 3', 'Tab Content 3'],
-      url: [ '', '0', '', '', '1', '', '', '2', '' ]
+      items: ['Tab Heading 1', 'Tab Content 1', 'Tab Heading 2', 'Tab Content 2', 'Tab Heading 3', 'Tab Content 3'],
+      url: [ '0', '', '1', '', '2', '' ]
     },
     { 
       name: 'Integrate', 
@@ -197,15 +193,8 @@ export class MainComponent implements OnInit {
   receiveText(event: string) {
     this.textFromChild = event;
 
-    this.textObject = { "Field": this.fieldForText, "Text": this.textFromChild }
-    this.navbarData.Button.name = this.textFromChild;
-
-
-    if (this.textObject) {
-      console.log(this.textObject);
+    if (this.textFromChild) {
       this.updateData();
-      this.textObjSent.emit(this.textObject);
-      this.textObject = {"Field":'', "Text":''};
     }
   }
 
@@ -219,6 +208,14 @@ export class MainComponent implements OnInit {
       "components": newData
     };
 
-    this.mainService.createData(body);
+
+    this.mainService.createData(body).subscribe({
+      next: (response) => {
+        console.log('API Response:', response);
+      },
+      error: (err) => {
+        console.error('Error occurred:', err);
+      },
+    });
   }
 }

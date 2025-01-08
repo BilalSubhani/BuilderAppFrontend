@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, Inject } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { MainService } from '../../main.service';
 
 @Component({
   selector: 'app-testimonials',
@@ -9,8 +11,11 @@ import { HttpClient } from '@angular/common/http';
   imports:[CommonModule]
 })
 export class TestimonialsComponent implements AfterViewInit {
+
+  private subscription?: Subscription;
   constructor(
     private http: HttpClient,
+    private mainService: MainService,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -18,6 +23,12 @@ export class TestimonialsComponent implements AfterViewInit {
   objectKeys = Object.keys;
 
   ngOnInit(){
+    this.http.get<any>("http://localhost:3000/data/component/testimonials").subscribe((res)=>{
+      this.testimonialData = res.data;
+    }, (err)=>{
+      console.log(err);
+    });
+
     this.http.get<any>("http://localhost:3000/data/component/testimonials").subscribe((res)=>{
       this.testimonialData = res.data;
     }, (err)=>{
@@ -41,6 +52,10 @@ export class TestimonialsComponent implements AfterViewInit {
     if (prevButton) {
       prevButton.addEventListener('click', () => this.prevSlide());
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   showSlide(index: number) {

@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, Inject } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { MainService } from '../../main.service';
 
 @Component({
   selector: 'app-tabs',
@@ -9,8 +11,11 @@ import { HttpClient } from '@angular/common/http';
   imports:[CommonModule]
 })
 export class TabsComponent implements AfterViewInit {
+
+  private subscription?: Subscription;
   constructor(
     @Inject(DOCUMENT) private document: Document,
+    private mainService: MainService,
     private http : HttpClient
   ) {}
 
@@ -24,6 +29,18 @@ export class TabsComponent implements AfterViewInit {
         console.log(err);
       }
     );
+
+    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
+      if (hasChanged) {
+        this.http.get<any>('http://localhost:3000/data/component/tabs').subscribe(
+          (res: any)=>{
+            this.tabData= res;
+          }, (err) =>{
+            console.log(err);
+          }
+        );
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -54,5 +71,9 @@ export class TabsComponent implements AfterViewInit {
         }
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 }
