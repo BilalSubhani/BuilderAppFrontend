@@ -27,6 +27,7 @@
             </div>
         </div>          
     </div>
-    <a *ngIf="textData"> <app-text (textSent)="receiveText($event)" /> </a>
+    <app-video *ngIf="videoData" (videoSent)="receiveVideo($event)" />
+    <app-text *ngIf="textData" (textSent)="receiveText($event)" />
     <router-outlet></router-outlet>
 </div>

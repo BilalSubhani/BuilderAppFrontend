@@ -36,7 +36,7 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild('feature3Card', { static: false }) feature3!: ElementRef;
   @ViewChild('myBtn', { static: false }) myBtn!: ElementRef;
   objectKeys = Object.keys;
-  imageUrl: string = '';
+  videoUrl: string = '';
   public_id: string = '3steps';
 
   navbarData: any;
@@ -58,7 +58,7 @@ export class HomeComponent implements AfterViewInit {
   dataController(): void{
     this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`).subscribe(
       (response: any) => {
-        this.imageUrl = response.url;
+        this.videoUrl = response.url;
       },
       (error) => {
         this.toastr.error('Error fetching video', 'Error', {

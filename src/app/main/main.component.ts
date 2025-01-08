@@ -10,7 +10,7 @@ import { ImageComponent } from './image/image.component';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, RouterModule, TextComponent],
+  imports: [CommonModule, RouterModule, TextComponent, VideoComponent],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
@@ -24,8 +24,13 @@ export class MainComponent implements OnInit {
   existingData: any;
 
   textData: boolean = false;
+  videoData: boolean = false;
+  imageData: boolean = false;
 
   textFromChild: string = '';
+  videoChanged: string = '0';
+  imageChanged: boolean=false;
+
   fieldForText: string = '';
   @ViewChild('mySidenav') mySidenav!: ElementRef;
   objectKeys = Object.keys;
@@ -39,7 +44,7 @@ export class MainComponent implements OnInit {
       name: 'Navbar', 
       comp: 'navbar',
       isOpen: false, 
-      links: ['Image', 'Text', 'Text'], 
+      links: ['Image', 'Text'], 
       items: ['Logo', 'buttonText'],
       url: ['', 'buttonText']
     },
@@ -55,15 +60,15 @@ export class MainComponent implements OnInit {
       name: 'Features', 
       comp: 'features',
       isOpen: false, 
-      links: ['Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text'], 
-      items: ['Heading','Feature 1 Logo', 'Feature 1 Heading', 'Feature 1 Paragraph', 'Feature 2 Logo', 'Feature 2 Heading', 'Feature 2 Paragraph','Feature 3 Logo', 'Feature 3 Heading', 'Feature 3 Paragraph'],
-      url: ['title', '', 'featureTiles', 'featureTiles', '', 'featureTiles', 'featureTiles', '', 'featureTiles', 'featureTiles']
+      links: ['Text'], 
+      items: ['Heading'],
+      url: ['title']
     },
     { 
       name: 'Provider',
       comp: 'providers', 
       isOpen: false, 
-      links: ['Text', 'Text', 'Text', 'Video'], 
+      links: ['Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Video'],
       url: ['title', 'body', '']
     },
@@ -112,14 +117,14 @@ export class MainComponent implements OnInit {
       comp: 'testimonials',
       isOpen: false, 
       links: ['Text', 'Text'], 
-      items: ['Title', 'Comment', 'Designation', 'Company'],
+      items: ['Title'],
       url: ['title']
     },
     { 
       name: 'Backing', 
       comp: 'backing',
       isOpen: false, 
-      links: ['Text', 'Text', 'Text'], 
+      links: ['Text', 'Text'], 
       items: ['Title', 'Button'] ,
       url: ['title', 'button']
     },
@@ -170,20 +175,20 @@ export class MainComponent implements OnInit {
     this.elementClicked = item;
 
     if(link === 'Image'){
+      this.videoData=false;
       this.textData=false;
       this.viewContainer.clear();
       this.viewContainer.createComponent(ImageComponent);
-      this.updateData();
       return;
     }
     if(link === 'Video'){
       this.textData=false;
       this.viewContainer.clear();
-      this.viewContainer.createComponent(VideoComponent);
-      this.updateData();
+      this.videoData=true;
       return;
     }
     else{
+      this.videoData=false;
       this.viewContainer.clear();
       this.textData=true;
       return;
@@ -198,16 +203,25 @@ export class MainComponent implements OnInit {
     }
   }
 
+  receiveVideo(event: string){
+    this.videoChanged = event;
+
+    if(this.videoChanged === '1'){
+      this.mainService.notifyDataChange(true);
+      this.videoChanged = '0';
+    }
+  }
+
   updateData(){
-    // console.log(this.existingData.components[this.fieldClicked][this.elementClicked]);
     this.existingData.components[this.fieldClicked][this.elementClicked] = this.textFromChild;
-    // const id = this.existingData._id;
+    const id = this.existingData._id;
 
     const {_id, ...newData} = this.existingData.components;
     const body = {
       "components": newData
     };
 
+    // console.log(body);
 
     this.mainService.createData(body).subscribe({
       next: (response) => {

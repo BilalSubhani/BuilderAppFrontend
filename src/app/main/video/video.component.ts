@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,9 @@ export class VideoComponent {
   selectedFile: File | null = null;
   publicId: string = '';
   uploadStatus: string = '';
+
+  videoChanged: string = '0';
+  @Output() videoSent: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private http: HttpClient,
@@ -72,6 +75,8 @@ export class VideoComponent {
           progressBar: true,
           progressAnimation: 'increasing'
         });
+
+        this.changed();
       },
       (error) => {
         this.toastr.error(error, 'Error uploading image', {
@@ -81,5 +86,14 @@ export class VideoComponent {
         });
       }
     );
+  }
+
+  changed(){
+    this.videoChanged = '1';
+
+    if (this.videoChanged) {
+      this.videoSent.emit(this.videoChanged);
+      this.videoChanged = '0';
+    }
   }
 }

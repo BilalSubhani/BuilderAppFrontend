@@ -25,8 +25,9 @@ export class ProviderComponent implements AfterViewInit {
 
   private subscription?: Subscription;
 
-  imageUrl: string = 'images/provider.mp4';
-  public_id: string = 'provider'
+  videoUrl: string = '';
+  public_id: string = 'provider';
+
   providersData: any;
   private intervalId: any;
   private counterValue = 300;
@@ -41,22 +42,20 @@ export class ProviderComponent implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnChanges(){
-    this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`)
-    .subscribe(
-      (res) =>{
-        this.imageUrl = res.url;
-      }, (err) =>{
+  dataFunction(){
+    this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`).subscribe(
+      (response: any) => {
+        this.videoUrl = response.url;
+      },
+      (error) => {
         this.toastr.error('Error fetching video', 'Error', {
           positionClass: 'toast-top-right',
           progressBar: true,
           progressAnimation: 'decreasing'
         });
       }
-    )
-  }
+    );
 
-  ngOnInit(){
     this.http.get<any>('http://localhost:3000/data/component/providers').subscribe(
       (res: any)=>{
         this.providersData= {...this.providersData, ...res.data};
@@ -64,16 +63,14 @@ export class ProviderComponent implements AfterViewInit {
         console.log(err);
       }
     );
+  }
+
+  ngOnInit(){
+    this.dataFunction();
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
-        this.http.get<any>('http://localhost:3000/data/component/providers').subscribe(
-          (res: any)=>{
-            this.providersData= {...this.providersData, ...res.data};
-          }, (err) =>{
-            console.log(err);
-          }
-        );
+        this.dataFunction();
       }
     });
   }
