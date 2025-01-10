@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { TextComponent } from './text/text.component';
 import { VideoComponent } from './video/video.component';
 import { ImageComponent } from './image/image.component';
+// import { WebSocketService } from '../websocket.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { ImageComponent } from './image/image.component';
 export class MainComponent implements OnInit {
   constructor(
     private mainService: MainService,
+    // private websocketService: WebSocketService, 
     private viewContainer: ViewContainerRef
   ) {}
 
@@ -38,6 +40,7 @@ export class MainComponent implements OnInit {
   fieldClicked: string = '';
   elementClicked: string = '';
 
+  isLoading = true;
 
   dropdownSections = [
     { 
@@ -242,5 +245,12 @@ export class MainComponent implements OnInit {
         console.error('Error occurred:', err);
       },
     });
+
+    // this.onChangeDetected();
   }
+
+  // onChangeDetected() {
+  //   const comp = this.fieldClicked;
+  //   this.websocketService.sendMessage(comp);
+  // }
 }

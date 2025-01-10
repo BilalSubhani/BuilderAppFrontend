@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, Input, OnChanges, OnInit } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { MainService } from '../main.service';
+import { WebSocketService } from '../../websocket.service';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ import { MainService } from '../main.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less']
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   @ViewChild('navbar', { static: false }) navbar!: ElementRef;
   @ViewChild('featuresHeading', { static: false }) cards!: ElementRef;
@@ -56,6 +57,7 @@ export class HomeComponent implements AfterViewInit {
     private http: HttpClient,
     private toastr: ToastrService,
     private mainService: MainService,
+    //private websocketService: WebSocketService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -72,7 +74,6 @@ export class HomeComponent implements AfterViewInit {
         });
       }
     );
-
 
     this.imagePublicUrl.forEach((p_id)=>{
       this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
@@ -111,7 +112,7 @@ export class HomeComponent implements AfterViewInit {
       }, (err) =>{
       }
     );
-
+    
     this.mainService.notifyDataChange(false);
   }
 
@@ -119,11 +120,11 @@ export class HomeComponent implements AfterViewInit {
   ngOnInit() {
     this.dataController();
 
-    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
-      if (hasChanged) {
-        this.dataController();
-      }
-    });
+    // this.websocketService.startListening();
+
+    // this.websocketService.messageSource.subscribe((data) => {
+    //   console.log('Message received:', data);
+    // });
   }
 
   ngAfterViewInit(): void {
