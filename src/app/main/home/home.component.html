@@ -1,6 +1,6 @@
 <nav class="navbar" #navbar>
   <div class="navbar-container">
-    <a class="navbar-brand" href="/main">
+    <a class="navbar-brand" (click)="openNav()">
       <img [src]="imageUrl[0]" alt="Burq Logo" />
     </a>
     <ul class="nav-links" *ngIf="navbarData?.listItems && navbarData?.buttonText">
@@ -12,10 +12,17 @@
           </li>
         </ul>
       </li>
-      <li><a href="/"><button class="cta-nav" (click)="onLogout()">{{ navbarData.buttonText }}</button></a></li>
+      <li><a ><button class="cta-nav" (click)="onLogout()">{{ navbarData.buttonText }}</button></a></li>
     </ul>
   </div>
 </nav>
+
+<div id="mySidenav" class="sidenav" #mySidenav>
+  <a  class="sidenav-closebtn" (click)="closeNav()">&times;</a>
+  <div class="sidenav-dropdown" *ngFor="let section of dropdownSections">
+      <a href="javascript:void(0)" (click)="scrollTo(section.comp)"> {{ section.name }} </a>
+  </div>          
+</div>
 
 <header class="hero-section" #heroSection>
   <div class="container">
@@ -67,11 +74,11 @@
   </div>
 </section>
 
-<app-provider />
-<app-tabs />
-<app-integrate />
-<app-industries />
-<app-whyburq />
-<app-testimonials />
-<app-backing />
-<app-footer />
+<app-provider #provider/>
+<app-tabs #tabs/>
+<app-integrate #integrate/>
+<app-industries #industries/>
+<app-whyburq #whyburq/>
+<app-testimonials #testimonials/>
+<app-backing #backing/>
+<app-footer #footer/>

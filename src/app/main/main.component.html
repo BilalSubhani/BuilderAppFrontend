@@ -26,6 +26,7 @@
             </div>
         </div>          
     </div>
+    
     <app-image *ngIf="imageData" (imageSent)="receiveImage($event)" />
     <app-video *ngIf="videoData" (videoSent)="receiveVideo($event)" />
     <app-text *ngIf="textData" (textSent)="receiveText($event)" />

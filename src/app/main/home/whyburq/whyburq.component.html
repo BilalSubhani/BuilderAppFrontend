@@ -1,4 +1,4 @@
-<div class="whyburq-main-container">
+<div class="whyburq-main-container" id="whyburq">
   <div class="whyburq-container" #whyburqContainer>
     <div class="whyburq-left-column" #whyburqLeftDiv>
       <img [src]="imageUrl[0]" alt="Image">
@@ -14,7 +14,7 @@
   </div>
 </div>
 
-<div class="benefits-maincontainer" *ngIf="benefitsData">
+<div class="benefits-maincontainer" *ngIf="benefitsData" id="whyburq">
   <div class="benefits-container" #benefitsContainer>
     <div class="benefit">
       <img [src]="imageUrl[1]" style="width:55px; height: 52px;" alt="On-demand delivery">

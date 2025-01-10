@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('feature2Card', { static: false }) feature2!: ElementRef;
   @ViewChild('feature3Card', { static: false }) feature3!: ElementRef;
   @ViewChild('myBtn', { static: false }) myBtn!: ElementRef;
+  @ViewChild('mySidenav') mySidenav!: ElementRef;
   objectKeys = Object.keys;
 
   imagePublicUrl: string[] = ['burq-logo', 'lines', 'featureTile1', 'featureTile2', 'featureTile3'];
@@ -60,6 +61,76 @@ export class HomeComponent implements OnInit, AfterViewInit {
     //private websocketService: WebSocketService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  // Side Navbar
+
+  dropdownSections = [
+    { 
+      name: 'Navbar', 
+      comp: 'navbar',
+    },
+    { 
+      name: 'Hero', 
+      comp: 'heroSection',
+    },
+    { 
+      name: 'Features', 
+      comp: 'featuresContainer',
+    },
+    { 
+      name: 'Provider',
+      comp: 'provider', 
+    },
+    { 
+      name: 'Tab', 
+      comp: 'tabs',
+    },
+    { 
+      name: 'Integrate', 
+      comp: 'integrate',
+
+    },
+    { 
+      name: 'Industries', 
+      comp: 'industries',
+    },
+    { 
+      name: 'Why Burq?', 
+      comp: 'whyBurq'
+    },
+    { 
+      name: 'Selling Points', 
+      comp: 'whyBurq',
+    },
+    { 
+      name: 'Testimonials', 
+      comp: 'testimonials',
+    },
+    { 
+      name: 'Backing', 
+      comp: 'backing',
+    },
+    { 
+      name: 'Powering', 
+      comp: 'backing',
+    }
+  ];
+
+  openNav() {
+    this.mySidenav.nativeElement.style.width = '250px';
+  }
+  closeNav() {
+    this.mySidenav.nativeElement.style.width = '0';
+  }
+  scrollTo(componentId: any) {
+    this.closeNav();
+    const childElement = document.getElementById(componentId);
+     
+    if (childElement) {
+      childElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
 
   dataController(): void{
     this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`).subscribe(
@@ -184,4 +255,5 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
 }
