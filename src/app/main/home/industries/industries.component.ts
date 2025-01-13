@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, OnInit, ViewChild, ElementRef, Renderer2, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, Inject, OnInit, ViewChild, ElementRef, Renderer2, PLATFORM_ID, Input } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -24,6 +24,8 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
   @ViewChild('indHeading', {static: false}) indHeading!: ElementRef;
   @ViewChild('indTabContainer', {static: false}) indTabContainer!: ElementRef;
   @ViewChild('indTabContent', {static: false}) indTabContent!: ElementRef;
+
+  @Input() message: string = '';
 
   private subscription?: Subscription;
   tabContentData: any;
@@ -82,6 +84,14 @@ export class IndustriesComponent implements AfterViewInit, OnInit {
         this.dataFunction();
       }
     });
+  }
+
+  ngOnChannges(){
+    if(this.message === 'industries'){
+      // console.log(`${this.message}`);
+      this.dataFunction();
+    }
+    window.location.reload();
   }
 
   ngAfterViewInit(): void {

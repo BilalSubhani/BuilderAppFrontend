@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 
@@ -11,6 +11,8 @@ import { MainService } from '../../main.service';
   styleUrl: './backing.component.less'
 })
 export class BackingComponent {
+
+  @Input() message: string = '';
   private subscription?: Subscription;
   constructor(
     private http: HttpClient,
@@ -42,6 +44,14 @@ export class BackingComponent {
         this.dataFunctions();
       }
     });
+  }
+
+  ngOnChannges(){
+    if(this.message === 'backing' || this.message === 'startPowering'){
+      // console.log(`${this.message}`);
+      this.dataFunctions();
+    }
+    window.location.reload();
   }
 
   ngOnDestroy() {

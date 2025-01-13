@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, Input, OnChanges, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { MainService } from '../main.service';
-import { WebSocketService } from '../../websocket.service';
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-home',
@@ -39,6 +39,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('mySidenav') mySidenav!: ElementRef;
   objectKeys = Object.keys;
 
+  private socket: any;
+  messageReceived:string = '';
+
   imagePublicUrl: string[] = ['burq-logo', 'lines', 'featureTile1', 'featureTile2', 'featureTile3'];
   imageUrl: string[] = [];
 
@@ -58,7 +61,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private http: HttpClient,
     private toastr: ToastrService,
     private mainService: MainService,
-    //private websocketService: WebSocketService,
+    private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -191,11 +194,40 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dataController();
 
-    // this.websocketService.startListening();
+    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
+      if (hasChanged) {
+        this.dataController();
+      }
+    });
+  }
 
-    // this.websocketService.messageSource.subscribe((data) => {
-    //   console.log('Message received:', data);
-    // });
+  connectToSocket(): void {
+    this.socket = io('http://localhost:3001', {
+      transports: ['websocket', 'polling']
+    });
+
+    this.socket.on('connect', () => {
+      // console.log('Connected to server with ID:', this.socket.id);
+    });
+
+    this.socket.on('handleChange', (data: any) => {
+      // console.log('Message received from server:', data);
+      this.messageReceived = data;
+      this.implementation();
+      this.cdr.detectChanges();
+    });
+
+    this.socket.on('connect_error', (err: any) => {
+      console.error('Connection error:', err);
+    });
+  }
+
+  implementation(){
+    if(this.messageReceived === 'navbar' || this.messageReceived === 'heroSection' || this.messageReceived === 'features'){
+        this.dataController();
+      }
+
+      window.location.reload();
   }
 
   ngAfterViewInit(): void {

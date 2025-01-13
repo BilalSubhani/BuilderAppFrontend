@@ -21,7 +21,8 @@
   <a  class="sidenav-closebtn" (click)="closeNav()">&times;</a>
   <div class="sidenav-dropdown" *ngFor="let section of dropdownSections">
       <a href="javascript:void(0)" (click)="scrollTo(section.comp)"> {{ section.name }} </a>
-  </div>          
+  </div>
+  <li><a ><button class="cta-nav" (click)="connectToSocket()">Connect</button></a></li>          
 </div>
 
 <header class="hero-section" #heroSection>
@@ -74,11 +75,11 @@
   </div>
 </section>
 
-<app-provider #provider/>
-<app-tabs #tabs/>
-<app-integrate #integrate/>
-<app-industries #industries/>
-<app-whyburq #whyburq/>
-<app-testimonials #testimonials/>
-<app-backing #backing/>
-<app-footer #footer/>
+<app-provider #provider />
+<app-tabs #tabs [message]="messageReceived"/>
+<app-integrate #integrate [message]="messageReceived"/>
+<app-industries #industries [message]="messageReceived"/>
+<app-whyburq #whyburq [message]="messageReceived"/>
+<app-testimonials #testimonials [message]="messageReceived"/>
+<app-backing #backing [message]="messageReceived"/>
+<app-footer #footer />

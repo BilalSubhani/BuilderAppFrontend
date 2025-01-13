@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject } from '@angular/core';
+import { Component, AfterViewInit, Inject, Input } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -19,10 +19,12 @@ export class TestimonialsComponent implements AfterViewInit {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
+  @Input() message: string = '';
+
   testimonialData: any;
   objectKeys = Object.keys;
 
-  ngOnInit(){
+  dataFunction(){
     this.http.get<any>("http://localhost:3000/data/component/testimonials").subscribe((res)=>{
       this.testimonialData = res.data;
     }, (err)=>{
@@ -34,6 +36,18 @@ export class TestimonialsComponent implements AfterViewInit {
     }, (err)=>{
       console.log(err);
     });
+  }
+
+  ngOnInit(){
+    this.dataFunction();
+  }
+
+  ngOnChannges(){
+    if(this.message === 'testimonials'){
+      // console.log(`${this.message}`);
+      this.dataFunction();
+    }
+    window.location.reload();
   }
 
   currentSlide = 0;

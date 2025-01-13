@@ -9,6 +9,9 @@
                     <a [href]="navbarData.List[key].link">{{ navbarData.List[key].name }}</a>
                 </li>
                 <li>
+                    <a (click)="connectToSocket()">
+                        <button class="cta-nav">Connect to WebSocket</button>
+                    </a>
                     <a [href]="navbarData.Button.link">
                         <button class="cta-nav">{{ navbarData.Button.name }}</button>
                     </a>

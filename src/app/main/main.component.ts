@@ -8,6 +8,7 @@ import { VideoComponent } from './video/video.component';
 import { ImageComponent } from './image/image.component';
 // import { WebSocketService } from '../websocket.service';
 
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-main',
@@ -22,6 +23,8 @@ export class MainComponent implements OnInit {
     private viewContainer: ViewContainerRef
   ) {}
 
+  private socket: any;
+  componentChanged: string = '';
   navbarData: any;
   existingData: any;
 
@@ -214,6 +217,7 @@ export class MainComponent implements OnInit {
     if(this.imageChanged){
       this.mainService.notifyDataChange(this.imageChanged);
       this.imageChanged = false;
+      this.onSubmit(this.fieldClicked);
     }
   }
 
@@ -223,6 +227,7 @@ export class MainComponent implements OnInit {
     if(this.videoChanged === '1'){
       this.mainService.notifyDataChange(true);
       this.videoChanged = '0';
+      this.onSubmit(this.fieldClicked);
     }
   }
 
@@ -239,18 +244,39 @@ export class MainComponent implements OnInit {
 
     this.mainService.createData(body).subscribe({
       next: (response) => {
-        console.log('API Response:', response);
+        // console.log('API Response:', response);
       },
       error: (err) => {
         console.error('Error occurred:', err);
       },
     });
 
+    this.onSubmit(this.fieldClicked);
     // this.onChangeDetected();
   }
 
-  // onChangeDetected() {
-  //   const comp = this.fieldClicked;
-  //   this.websocketService.sendMessage(comp);
-  // }
+  connectToSocket(): void {
+    this.socket = io('http://localhost:3001', {
+      transports: ['websocket', 'polling']
+    });
+
+    this.socket.on('connect', () => {
+      // console.log('Connected to server with ID:', this.socket.id);
+    });
+
+    this.socket.on('connect_error', (err: any) => {
+      console.error('Connection error:', err);
+    });
+  }
+
+  onSubmit(comp: any) {
+    this.componentChanged = comp;
+    // console.log('Sending message:', this.componentChanged);
+  
+    if (this.socket && this.socket.connected) {
+      this.socket.emit('changeDetected', this.componentChanged);
+    } else {
+      console.error('Socket is not connected');
+    }
+  }
 }
