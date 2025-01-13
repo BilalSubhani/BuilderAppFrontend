@@ -8,10 +8,11 @@ import { VideoComponent } from './video/video.component';
 import { ImageComponent } from './image/image.component';
 
 import { io } from 'socket.io-client';
+import { HomeComponent } from './home/home.component';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, RouterModule, TextComponent, VideoComponent, ImageComponent],
+  imports: [CommonModule, RouterModule, HomeComponent],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
@@ -26,6 +27,7 @@ export class MainComponent implements OnInit {
   private socket: any;
   fieldClicked: string = '';
   elementClicked: string = '';
+  videoUrl: string ='';
 
   // Variables for data to be displayed or edited
   navbarData: any;
@@ -60,7 +62,7 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Button', 'Video'],
-      url: ['heading', 'paragraph', 'buttonText', '']
+      url: ['heading', 'paragraph', 'buttonText', '3steps']
     },
     { 
       name: 'Features', 
@@ -76,7 +78,7 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Video'],
-      url: ['title', 'body', '']
+      url: ['title', 'body', 'provider']
     },
     { 
       name: 'Tab', 
@@ -176,6 +178,7 @@ export class MainComponent implements OnInit {
   handleItemClick(link:string, name: string, item: string){
     this.fieldClicked = name;
     this.elementClicked = item;
+    this.videoUrl=item;
 
     if(link === 'Image'){
       this.videoData=false;

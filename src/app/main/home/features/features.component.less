@@ -1,0 +1,127 @@
+.features-section {
+    padding: 80px 0px;
+    background-color: #F3F8FF;
+    overflow: hidden;
+    border-radius: 50px;
+    max-width: 1450px;
+    margin: 40px 20px 0px 80px;
+  }
+  
+  .features-container {
+    padding: 0 10px;
+    text-align: left;
+    border-radius: 20px;
+    margin: 0 auto;
+  }
+  
+  .features-heading {
+    margin-bottom: 60px;
+    padding-left: 40px;
+    transform: translateX(-100px);
+    opacity: 0;
+    transition: 1s;
+    
+    h2 {
+      font-weight: normal;
+      font-size: 40px;
+      color: #000;
+      margin-bottom: 10px;
+      width: calc(100% - 40px);
+    }
+  
+    .underline {
+      width: 34%;
+      display: block;
+    }
+  }
+  .features-heading.show{
+    transform:translateX(30px);
+    opacity: 1;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
+    padding: 0 20px;
+  }
+  
+  .feature1-card, .feature2-card, .feature3-card {
+    background-color: #f9f9fc;
+    padding: 40px 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+  
+    .icon-container {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+  
+    img {
+      max-height: 30px;
+      max-width: 30px;
+    }
+  
+    h3 {
+      font-size: 20px;
+      font-weight: 550;
+      color: #000;
+      margin-bottom: 10px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  
+    p {
+      font-size: 18px;
+      font-weight: normal;
+      color: #666;
+      line-height: 1.6;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  }
+  .feature3-card{
+    .icon-container, h3, p{
+      transform: translateY(-29px);
+    }
+  }
+  .feature1-card{
+    transform: translateY(100px);
+    transition: 1s;
+    opacity: 0;
+  }
+  .feature1-card.show{
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .feature2-card{
+    transform: translateY(100px);
+    transition: 1.5s;
+    opacity: 0;
+  }
+  .feature2-card.show{
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .feature3-card{
+    transform: translateY(100px);
+    transition: 2s;
+    opacity: 0;
+  }
+  .feature3-card.show{
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .feature1-card:hover,.feature2-card:hover, .feature3-card:hover {
+    padding: 38px 48px;
+    border: 2px solid black;
+  }

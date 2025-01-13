@@ -25,9 +25,15 @@
             </div>
         </div>          
     </div>
+
+    <div class="dashboard-container">
+        <div class="home-viewport">
+          <app-home></app-home>
+        </div>
+    </div>
     
-    <app-image *ngIf="imageData" (imageSent)="receiveImage($event)" />
-    <app-video *ngIf="videoData" (videoSent)="receiveVideo($event)" />
-    <app-text *ngIf="textData" (textSent)="receiveText($event)" />
+    <!-- <app-image *ngIf="imageData" (imageSent)="receiveImage($event)" />
+    <app-video *ngIf="videoData" (videoSent)="receiveVideo($event)" [pID]="videoUrl"/>
+    <app-text *ngIf="textData" (textSent)="receiveText($event)" /> -->
     <router-outlet></router-outlet>
 </div>

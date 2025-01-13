@@ -1,0 +1,45 @@
+<nav class="navbar" #navbar>
+    <div class="navbar-container">
+      <a class="navbar-brand" (click)="openNav()">
+        <img [src]="imageUrl[0]" alt="Burq Logo" />
+      </a>
+      <ul class="nav-links" *ngIf="navbarData?.listItems && navbarData?.buttonText">
+        <li class="dropdown" *ngFor="let key of objectKeys(navbarData.listItems)">
+          <a href="/burq">{{key}}<i class="arrow down" *ngIf="navbarData.listItems[key].length"></i></a>
+          <ul class="dropdown-menu" *ngIf="navbarData.listItems[key].length">
+            <li>
+              <a href="/burq" *ngFor="let item of navbarData.listItems[key]">{{ item }}</a>
+            </li>
+          </ul>
+        </li>
+        <li><a ><button class="cta-nav" (click)="onLogout()">{{ navbarData.buttonText }}</button></a></li>
+      </ul>
+    </div>
+</nav>
+
+<div id="mySidenav" class="sidenav" #mySidenav>
+    <a><button class="cta-nav" (click)="connectToSocket()">Connect</button></a>  
+    <a  class="sidenav-closebtn" (click)="closeNav()">&times;</a>
+    <div class="sidenav-dropdown" *ngFor="let section of dropdownSections">
+        <a href="javascript:void(0)" (click)="scrollTo(section.comp)"> {{ section.name }} </a>
+    </div>    
+</div>
+  
+<header class="hero-section" #heroSection>
+<div class="container">
+    <div class="hero-content" *ngIf="heroSectionData?.heading && heroSectionData?.paragraph && heroSectionData?.buttonText">
+    <h1>{{ heroSectionData.heading }}</h1>
+    <p>{{ heroSectionData.paragraph }}</p>
+    <button class="cta-hero">{{ heroSectionData.buttonText }}</button>
+    </div>
+    <div class="hero-video">
+    <div class="video-container">
+        <video autoplay loop muted preload playsinline>
+        <source [src]="videoUrl" type="video/mp4" />
+        </video>
+    </div>
+    </div>
+</div>
+</header>
+<button #myBtn (click)="topFunction()" id="myBtn" title="Back to Top"><i class="arrowTop up"></i></button>
+  
