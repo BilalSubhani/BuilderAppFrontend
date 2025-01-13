@@ -89,6 +89,7 @@ export class ImageComponent {
 
     if (this.imageChanged) {
       this.imageSent.emit(this.imageChanged);
+      this.publicId='';
       this.imageChanged = false;
     }
   }

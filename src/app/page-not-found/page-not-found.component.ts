@@ -24,11 +24,16 @@ export class PageNotFoundComponent {
 
 
   checkLoggedIn(){
-    if(this.authService.getToken()){
-      this.router.navigate(['/burq']);
+    if(this.authService.getAdminStatus() === 0) {
+      if(this.authService.getToken()){
+        this.router.navigate(['/burq']);
+      }
+      else{
+        this.router.navigate(['/']);
+      }
     }
     else{
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
     }
   }
 }

@@ -93,6 +93,7 @@ export class VideoComponent {
 
     if (this.videoChanged) {
       this.videoSent.emit(this.videoChanged);
+      this.publicId='';
       this.videoChanged = '0';
     }
   }

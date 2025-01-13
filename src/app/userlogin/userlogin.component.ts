@@ -84,7 +84,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
                   progressAnimation: 'increasing'
                 });
                 this.startSessionTimeout();
-                this.router.navigate(['/admin-dashboard']);
+                this.router.navigate(['/dashboard']);
               } else {
                 this.toastr.success(`${data._doc.fname}, Welcome to Burq`, 'Successful', {
                   positionClass: 'toast-top-right',

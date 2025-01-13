@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, Input } from '@angular/core';
+import { Component, AfterViewInit, Inject } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -18,8 +18,6 @@ export class TabsComponent implements AfterViewInit {
     private mainService: MainService,
     private http : HttpClient
   ) {}
-
-  @Input() message: string = '';
 
   imagePublicUrl: string[] = ['tab1', 'tab2', 'tab3', 'tabContent1', 'tabContent2', 'tabContent3'];
   imageUrl: string[] = [];
@@ -54,14 +52,6 @@ export class TabsComponent implements AfterViewInit {
         this.dataFunction();
       }
     });
-  }
-
-  ngOnChannges(){
-    if(this.message === 'tabs'){
-      // console.log(`${this.message}`);
-      this.dataFunction();
-    }
-    window.location.reload();
   }
 
   ngAfterViewInit(): void {

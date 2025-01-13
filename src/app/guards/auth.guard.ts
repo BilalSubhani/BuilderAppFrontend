@@ -8,25 +8,28 @@ import { AuthService } from '../auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const admin = this.authService.getAdminStatus();
-    const adminRoutes = ['/admin-dashboard', '/burq', '/home'];
-    const userRoutes = ['/burq', '/home'];
-
-    if (admin === 1) {
-      if (adminRoutes.some(route => state.url.includes(route))) {
-        return true;
-      }
-    } else if (admin === 0) {
-      if (userRoutes.some(route => state.url.includes(route))) {
-        return true;
-      }
+    const adminRoutes = [
+      '/dashboard',
+      '/dashboard/users',
+      '/dashboard/changetext',
+      '/dashboard/uploadvideo',
+      '/dashboard/uploadimage',
+      '/burq',
+    ];
+    const userRoutes = ['/burq'];
+  
+    if (admin === 1 && adminRoutes.some(route => state.url.startsWith(route))) {
+      return true;
     }
-    
+  
+    if (admin === 0 && userRoutes.some(route => state.url.startsWith(route))) {
+      return true;
+    }
+
     this.router.navigate(['/not-authorized']);
     return false;
   }
+  
 }

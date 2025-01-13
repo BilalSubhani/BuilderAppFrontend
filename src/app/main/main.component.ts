@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { TextComponent } from './text/text.component';
 import { VideoComponent } from './video/video.component';
 import { ImageComponent } from './image/image.component';
-// import { WebSocketService } from '../websocket.service';
 
 import { io } from 'socket.io-client';
 
@@ -23,25 +22,26 @@ export class MainComponent implements OnInit {
     private viewContainer: ViewContainerRef
   ) {}
 
+  // Variables for data uploading
   private socket: any;
-  componentChanged: string = '';
+  fieldClicked: string = '';
+  elementClicked: string = '';
+
+  // Variables for data to be displayed or edited
   navbarData: any;
   existingData: any;
 
+  // Variables to detect changes in video, image and text from children component
   textData: boolean = false;
   videoData: boolean = false;
   imageData: boolean = false;
-
   textFromChild: string = '';
   videoChanged: string = '0';
   imageChanged: boolean=false;
 
-  fieldForText: string = '';
+  // Sidenav variables
   @ViewChild('mySidenav') mySidenav!: ElementRef;
   objectKeys = Object.keys;
-
-  fieldClicked: string = '';
-  elementClicked: string = '';
 
   isLoading = true;
 
@@ -174,9 +174,6 @@ export class MainComponent implements OnInit {
   }
 
   handleItemClick(link:string, name: string, item: string){
-    let str = name + item;
-    this.fieldForText = str.split(" ").join("");
-
     this.fieldClicked = name;
     this.elementClicked = item;
 
@@ -217,7 +214,6 @@ export class MainComponent implements OnInit {
     if(this.imageChanged){
       this.mainService.notifyDataChange(this.imageChanged);
       this.imageChanged = false;
-      this.onSubmit(this.fieldClicked);
     }
   }
 
@@ -227,12 +223,14 @@ export class MainComponent implements OnInit {
     if(this.videoChanged === '1'){
       this.mainService.notifyDataChange(true);
       this.videoChanged = '0';
-      this.onSubmit(this.fieldClicked);
     }
   }
 
   updateData(){
     this.existingData.components[this.fieldClicked][this.elementClicked] = this.textFromChild;
+  }
+
+  onPublish(){
     const id = this.existingData._id;
 
     const {_id, ...newData} = this.existingData.components;
@@ -251,8 +249,7 @@ export class MainComponent implements OnInit {
       },
     });
 
-    this.onSubmit(this.fieldClicked);
-    // this.onChangeDetected();
+    this.onSubmit();
   }
 
   connectToSocket(): void {
@@ -262,6 +259,7 @@ export class MainComponent implements OnInit {
 
     this.socket.on('connect', () => {
       // console.log('Connected to server with ID:', this.socket.id);
+      this.onPublish();
     });
 
     this.socket.on('connect_error', (err: any) => {
@@ -269,12 +267,9 @@ export class MainComponent implements OnInit {
     });
   }
 
-  onSubmit(comp: any) {
-    this.componentChanged = comp;
-    // console.log('Sending message:', this.componentChanged);
-  
+  onSubmit() {
     if (this.socket && this.socket.connected) {
-      this.socket.emit('changeDetected', this.componentChanged);
+      this.socket.emit('changeDetected', "Data Changed!");
     } else {
       console.error('Socket is not connected');
     }

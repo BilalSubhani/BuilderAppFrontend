@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private tokenKey = 'token';
-  private isAdmin = 0;
+  private adminKey = 'isAdmin';
 
   constructor() {}
 
@@ -13,12 +13,18 @@ export class AuthService {
     return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
   }
 
-  setAdminStatus(a: number): void{
-    this.isAdmin = a;
+  setAdminStatus(a: number): void {
+    if (this.isBrowser) {
+      localStorage.setItem(this.adminKey, a.toString());
+    }
   }
 
-  getAdminStatus(): number{
-    return this.isAdmin;
+  getAdminStatus(): number {
+    if (this.isBrowser) {
+      const adminStatus = localStorage.getItem(this.adminKey);
+      return adminStatus ? parseInt(adminStatus, 10) : 0;
+    }
+    return 0;
   }
 
   getToken(): string | null {
@@ -35,6 +41,7 @@ export class AuthService {
   logout(): void {
     if (this.isBrowser) {
       localStorage.removeItem(this.tokenKey);
+      localStorage.removeItem(this.adminKey);
     }
   }
 }

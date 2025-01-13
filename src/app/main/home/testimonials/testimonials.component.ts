@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, Input } from '@angular/core';
+import { Component, AfterViewInit, Inject } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -19,8 +19,6 @@ export class TestimonialsComponent implements AfterViewInit {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
-  @Input() message: string = '';
-
   testimonialData: any;
   objectKeys = Object.keys;
 
@@ -40,14 +38,6 @@ export class TestimonialsComponent implements AfterViewInit {
 
   ngOnInit(){
     this.dataFunction();
-  }
-
-  ngOnChannges(){
-    if(this.message === 'testimonials'){
-      // console.log(`${this.message}`);
-      this.dataFunction();
-    }
-    window.location.reload();
   }
 
   currentSlide = 0;

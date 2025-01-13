@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, Input, OnChanges, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
@@ -9,7 +9,7 @@ import { IntegrateComponent } from './integrate/integrate.component';
 import { IndustriesComponent } from './industries/industries.component';
 import { WhyburqComponent } from './whyburq/whyburq.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
-import { FooterComponent } from '../../footer/footer.component';
+import { FooterComponent } from './footer/footer.component';
 import { BackingComponent } from './backing/backing.component';
 
 import { AuthService } from '../../auth.service';
@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private http: HttpClient,
     private toastr: ToastrService,
     private mainService: MainService,
-    private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -116,6 +115,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     { 
       name: 'Powering', 
       comp: 'backing',
+    },
+    {
+      name: 'Footer', 
+      comp: 'footer',
     }
   ];
 
@@ -125,6 +128,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   closeNav() {
     this.mySidenav.nativeElement.style.width = '0';
   }
+
   scrollTo(componentId: any) {
     this.closeNav();
     const childElement = document.getElementById(componentId);
@@ -132,8 +136,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (childElement) {
       childElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+    else
+      this.topFunction();
   }
-
 
   dataController(): void{
     this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`).subscribe(
@@ -214,7 +219,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       // console.log('Message received from server:', data);
       this.messageReceived = data;
       this.implementation();
-      this.cdr.detectChanges();
     });
 
     this.socket.on('connect_error', (err: any) => {
@@ -223,10 +227,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   implementation(){
-    if(this.messageReceived === 'navbar' || this.messageReceived === 'heroSection' || this.messageReceived === 'features'){
-        this.dataController();
-      }
-
       window.location.reload();
   }
 

@@ -2,7 +2,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a class="navbar-brand">
-                <button id="openNav" (click)="openNav()"><img src="/images/burq-logo.jpg"></button>
+                <img src="/images/burq-logo.jpg">
             </a>
             <ul class="nav-links" *ngIf="navbarData?.List && navbarData?.Button">
                 <li *ngFor="let key of objectKeys(navbarData.List)">
@@ -10,10 +10,7 @@
                 </li>
                 <li>
                     <a (click)="connectToSocket()">
-                        <button class="cta-nav">Connect to WebSocket</button>
-                    </a>
-                    <a [href]="navbarData.Button.link">
-                        <button class="cta-nav">{{ navbarData.Button.name }}</button>
+                        <button class="cta-nav">Publish</button>
                     </a>
                 </li>
             </ul>
@@ -21,7 +18,6 @@
     </nav>
 
     <div id="mySidenav" class="sidenav" #mySidenav>
-        <a  class="closebtn" (click)="closeNav()">&times;</a>
         <div class="dropdown" *ngFor="let section of dropdownSections">
             <a href="javascript:void(0)" (click)="toggleDropdown($event, section.name)"> {{ section.name }} </a>
             <div class="dropdown-content" [ngClass]="{'open': section.isOpen}"> 

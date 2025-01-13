@@ -11,13 +11,12 @@ import { TextComponent } from './main/text/text.component';
 
 export const routes: Routes = [
     { path: 'login', component: UserListComponent},
-    { path: 'main', component: MainComponent},
+    { path: 'dashboard', component: MainComponent, canActivate: [AuthGuard]},
     { path: '', redirectTo: '/login', pathMatch: 'full'},
     { path: 'burq', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'admin-dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-    { path: 'main', component: MainComponent },
-    { path: 'main/uploadimage', component: ImageComponent },
-    { path: 'main/uploadvideo', component: VideoComponent },
-    { path: 'main/changetext', component: TextComponent },
+    { path: 'dashboard/users', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'dashboard/uploadimage', component: ImageComponent, canActivate: [AuthGuard] },
+    { path: 'dashboard/uploadvideo', component: VideoComponent, canActivate: [AuthGuard] },
+    { path: 'dashboard/changetext', component: TextComponent, canActivate: [AuthGuard] },
     { path: '**', component: PageNotFoundComponent},
 ];

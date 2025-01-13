@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, Input, OnChanges } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -24,8 +24,6 @@ export class ProviderComponent implements AfterViewInit {
   @ViewChild('bottomItem3', { static: false }) bottomItem3!: ElementRef;
 
   private subscription?: Subscription;
-
-  @Input() message: string = '';
 
   videoUrl: string = '';
   imageUrl: string[] = [];
@@ -92,14 +90,6 @@ export class ProviderComponent implements AfterViewInit {
         this.dataFunction();
       }
     });
-  }
-
-  ngOnChannges(){
-    if(this.message === 'providers'){
-      // console.log(`${this.message}`);
-      this.dataFunction();
-    }
-    window.location.reload();
   }
 
   ngAfterViewInit(): void {

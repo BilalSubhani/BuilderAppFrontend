@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Renderer2, AfterViewInit, Inject, PLATFORM_ID, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -22,8 +22,6 @@ export class WhyburqComponent {
   imagePublicUrl: string[] = ['whyburq', 'sp1', 'sp2', 'sp3']
   imageUrl: string[] = [];
   private subscription?: Subscription;
-
-  @Input() message: string = '';
 
   constructor(
     private renderer: Renderer2,
@@ -66,14 +64,6 @@ export class WhyburqComponent {
         this.dataFunctions();
       }
     });
-  }
-
-  ngOnChannges(){
-    if(this.message === 'whyburq'){
-      // console.log(`${this.message}`);
-      this.dataFunctions();
-    }
-    window.location.reload();
   }
 
   ngAfterViewInit(): void {

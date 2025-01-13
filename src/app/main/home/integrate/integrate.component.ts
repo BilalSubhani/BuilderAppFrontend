@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Renderer2, AfterViewInit, Inject, PLATFORM_ID, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -15,8 +15,6 @@ export class IntegrateComponent implements AfterViewInit {
   @ViewChild('observeContainer', { static: false }) observeContainer!: ElementRef;
   @ViewChild('leftDiv', { static: false }) leftDiv!: ElementRef;
   @ViewChild('rightDiv', { static: false }) rightDiv!: ElementRef;
-
-  @Input() message: string = '';
 
   integrateData: any;
   imageUrl: string = '';
@@ -56,14 +54,6 @@ export class IntegrateComponent implements AfterViewInit {
         this.dataController();
       }
     });
-  }
-
-  ngOnChannges(){
-    if(this.message === 'integrate'){
-      // console.log(`${this.message}`);
-      this.dataController();
-    }
-    window.location.reload();
   }
 
   ngAfterViewInit(): void {
