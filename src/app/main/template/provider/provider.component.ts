@@ -168,7 +168,7 @@ export class ProviderTemplateComponent implements AfterViewInit {
     this.updatedTitle = null;
     this.updatedBody = null;
     this.updatedList = {};
-    console.log('Updated Providers Data:', this.providersData);
+    //console.log('Updated Providers Data:', this.providersData);
   }
 
   cancelEditing() {

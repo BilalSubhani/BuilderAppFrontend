@@ -8,24 +8,76 @@
             <img src="images/backing/BR1.webp" class="bottomright" alt="">
         </div>
         <div class="container" *ngIf="backingData">
-        <div class="heading-section">
-            <h2>{{backingData.title}}</h2>
-        </div>
-        <div class="text-section" >
-            <p>{{backingData.body}}</p>
-        </div>
+            <div class="heading-section">
+                <h2 (click)="startEditing('title')">
+                  <ng-container *ngIf="editingField !== 'title'; else editTitleTemplate">
+                    {{ backingData.title }}
+                  </ng-container>
+                  <ng-template #editTitleTemplate>
+                    <input
+                      type="text"
+                      [(ngModel)]="updatedValue"
+                      (keyup)="handleKeyUp($event)"
+                      (blur)="saveField()"
+                      autofocus
+                    />
+                  </ng-template>
+                </h2>
+              </div>
+              
+              <div class="text-section">
+                <p (click)="startEditing('body')">
+                  <ng-container *ngIf="editingField !== 'body'; else editBodyTemplate">
+                    {{ backingData.body }}
+                  </ng-container>
+                  <ng-template #editBodyTemplate>
+                    <textarea
+                      [(ngModel)]="updatedValue"
+                      (keyup)="handleKeyUp($event)"
+                      (blur)="saveField()"
+                      autofocus
+                    ></textarea>
+                  </ng-template>
+                </p>
+              </div>
+              
     <div class="investors">INVESTORS</div>
     </div>
 </div>
   
 <div class="fancy-short-banner">
     <div class="container" *ngIf="poweringData">
-    <div class="title">
-        <h2>{{poweringData.body}}</h2>
-    </div>
-    <div class="cta">
-        <button class="cta-backing">{{poweringData.button}}</button>
-    </div>
+        <div class="title" (click)="startPoweringEditing('body')">
+            <ng-container *ngIf="editingPoweringField !== 'body'; else editPoweringBodyTemplate">
+              <h2>{{ poweringData.body }}</h2>
+            </ng-container>
+            <ng-template #editPoweringBodyTemplate>
+              <input
+                type="text"
+                [(ngModel)]="updatedPoweringValue"
+                (keyup)="handlePoweringKeyUp($event)"
+                (blur)="savePoweringField()"
+                autofocus
+              />
+            </ng-template>
+          </div>
+          
+          <div class="cta" (click)="startPoweringEditing('button')">
+            <ng-container *ngIf="editingPoweringField !== 'button'; else editPoweringButtonTemplate">
+              <button class="cta-backing">{{ poweringData.button }}</button>
+            </ng-container>
+            <ng-template #editPoweringButtonTemplate>
+              <input
+                type="text"
+                [(ngModel)]="updatedPoweringValue"
+                (keyup)="handlePoweringKeyUp($event)"
+                (blur)="savePoweringField()"
+                autofocus
+              />
+            </ng-template>
+          </div>
+          
+        
     <div class="fancy-image-topright">
         <img src="images/backing/redCircles.svg" alt="">
     </div>

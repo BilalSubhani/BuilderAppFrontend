@@ -6,10 +6,52 @@
   
       <div class="whyburq-right-column show" #whyburqRightDiv *ngIf="whyBurqData?.title && whyBurqData?.body && whyBurqData?.button">
         <img src="images/whyburq/heart.svg" alt="heart icon" class="heart-icon">
-        <h2>{{whyBurqData?.title}}</h2>
+        <h2 (click)="startEditingWhyBurq('title')">
+          <ng-container *ngIf="editingWhyBurqField !== 'title'; else editWhyBurqTitleTemplate">
+            {{ whyBurqData?.title }}
+          </ng-container>
+          <ng-template #editWhyBurqTitleTemplate>
+            <input
+              type="text"
+              [(ngModel)]="whyBurqUpdatedValue"
+              (keyup)="handleWhyBurqKeyUp($event)"
+              (blur)="saveWhyBurqField()"
+              autofocus
+            />
+          </ng-template>
+        </h2>
+        
         <img src="images/whyburq/lines.svg" alt="Decorative lines" class="decorative-lines">
-        <p>{{whyBurqData?.body}}</p>
-        <button class="cta-whyburq">{{whyBurqData?.button}}</button>
+        
+        <p (click)="startEditingWhyBurq('body')">
+          <ng-container *ngIf="editingWhyBurqField !== 'body'; else editWhyBurqBodyTemplate">
+            {{ whyBurqData?.body }}
+          </ng-container>
+          <ng-template #editWhyBurqBodyTemplate>
+            <textarea
+              [(ngModel)]="whyBurqUpdatedValue"
+              (keyup)="handleWhyBurqKeyUp($event)"
+              (blur)="saveWhyBurqField()"
+              autofocus
+            ></textarea>
+          </ng-template>
+        </p>
+        
+        <div *ngIf="editingWhyBurqField !== 'button'; else editWhyBurqButtonTemplate">
+          <button class="cta-whyburq" (click)="startEditingWhyBurq('button')">
+            {{ whyBurqData?.button }}
+          </button>
+        </div>
+        <ng-template #editWhyBurqButtonTemplate>
+          <input
+            type="text"
+            [(ngModel)]="whyBurqUpdatedValue"
+            (keyup)="handleWhyBurqKeyUp($event)"
+            (blur)="saveWhyBurqField()"
+            autofocus
+          />
+        </ng-template>
+        
       </div>
     </div>
 </div>
@@ -18,20 +60,95 @@
     <div class="benefits-container show" #benefitsContainer>
       <div class="benefit">
         <img [src]="imageUrl[1]" style="width:55px; height: 52px;" alt="On-demand delivery">
-        <h3>{{benefitsData?.sp1[0]}}</h3>
-        <p>{{benefitsData?.sp1[1]}}</p>
+        <h3 (click)="startEditingBenefit('sp1', 0)">
+          <ng-container *ngIf="editingBenefitField !== 'sp1-0'; else editSp1TitleTemplate">
+            {{ benefitsData?.sp1[0] }}
+          </ng-container>
+          <ng-template #editSp1TitleTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedBenefitValue"
+              (keyup)="handleBenefitKeyUp($event)"
+              (blur)="saveBenefitField()"
+              autofocus
+            />
+          </ng-template>
+        </h3>
+        <p (click)="startEditingBenefit('sp1', 1)">
+          <ng-container *ngIf="editingBenefitField !== 'sp1-1'; else editSp1BodyTemplate">
+            {{ benefitsData?.sp1[1] }}
+          </ng-container>
+          <ng-template #editSp1BodyTemplate>
+            <textarea
+              [(ngModel)]="updatedBenefitValue"
+              (keyup)="handleBenefitKeyUp($event)"
+              (blur)="saveBenefitField()"
+              autofocus
+            ></textarea>
+          </ng-template>
+        </p>
       </div>
-  
+      
       <div class="benefit">
         <img [src]="imageUrl[2]" style="width:52px; height: 52px;" alt="No commission">
-        <h3>{{benefitsData?.sp2[0]}}</h3>
-        <p>{{benefitsData?.sp2[1]}}</p>
+        <h3 (click)="startEditingBenefit('sp2', 0)">
+          <ng-container *ngIf="editingBenefitField !== 'sp2-0'; else editSp2TitleTemplate">
+            {{ benefitsData?.sp2[0] }}
+          </ng-container>
+          <ng-template #editSp2TitleTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedBenefitValue"
+              (keyup)="handleBenefitKeyUp($event)"
+              (blur)="saveBenefitField()"
+              autofocus
+            />
+          </ng-template>
+        </h3>
+        <p (click)="startEditingBenefit('sp2', 1)">
+          <ng-container *ngIf="editingBenefitField !== 'sp2-1'; else editSp2BodyTemplate">
+            {{ benefitsData?.sp2[1] }}
+          </ng-container>
+          <ng-template #editSp2BodyTemplate>
+            <textarea
+              [(ngModel)]="updatedBenefitValue"
+              (keyup)="handleBenefitKeyUp($event)"
+              (blur)="saveBenefitField()"
+              autofocus
+            ></textarea>
+          </ng-template>
+        </p>
       </div>
-  
+      
       <div class="benefit">
         <img [src]="imageUrl[3]" style="width:52px; height: 55px;" alt="Advanced tracking technology">
-        <h3>{{benefitsData?.sp3[0]}}</h3>
-        <p>{{benefitsData?.sp3[1]}}</p>
+        <h3 (click)="startEditingBenefit('sp3', 0)">
+          <ng-container *ngIf="editingBenefitField !== 'sp3-0'; else editSp3TitleTemplate">
+            {{ benefitsData?.sp3[0] }}
+          </ng-container>
+          <ng-template #editSp3TitleTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedBenefitValue"
+              (keyup)="handleBenefitKeyUp($event)"
+              (blur)="saveBenefitField()"
+              autofocus
+            />
+          </ng-template>
+        </h3>
+        <p (click)="startEditingBenefit('sp3', 1)">
+          <ng-container *ngIf="editingBenefitField !== 'sp3-1'; else editSp3BodyTemplate">
+            {{ benefitsData?.sp3[1] }}
+          </ng-container>
+          <ng-template #editSp3BodyTemplate>
+            <textarea
+              [(ngModel)]="updatedBenefitValue"
+              (keyup)="handleBenefitKeyUp($event)"
+              (blur)="saveBenefitField()"
+              autofocus
+            ></textarea>
+          </ng-template>
+        </p>
       </div>
     </div>
 </div>

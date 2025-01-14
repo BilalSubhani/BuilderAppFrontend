@@ -198,3 +198,47 @@
     width: 150px;
     height: auto;
   }
+
+
+
+input[type="text"], textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: #000000;
+  width: 90%;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid #3066ED;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  resize: none;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:focus, textarea:focus {
+  border-color: #F94F14;
+  box-shadow: 0 0 6px rgba(249, 79, 20, 0.5);
+}
+
+textarea {
+  min-height: 100px;
+}
+
+input[type="text"] {
+  height: 40px;
+}
+
+h2{
+  input[type="text"] {
+    font-size: 24px;
+    font-weight: normal;
+  }
+}
+
+.cta {
+  input{
+    width: 60%;
+  }
+}

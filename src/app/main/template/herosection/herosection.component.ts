@@ -151,7 +151,7 @@ export class HerosectionTemplateComponent {
   saveField() {
     this.editingHeroSectionField = null;
     this.originalHeroSectionValue = null;
-    console.log('Updated Hero Section Data:', this.heroSectionData);
+    // console.log('Updated Hero Section Data:', this.heroSectionData);
   }
 
   cancelEditing() {

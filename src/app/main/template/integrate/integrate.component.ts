@@ -71,7 +71,7 @@ export class IntegrateTemplateComponent {
   saveField() {
     if (this.editingField) {
       this.integrateData[this.editingField] = this.updatedValue!;
-      console.log('Updated Data:', this.integrateData);
+      //console.log('Updated Data:', this.integrateData);
     }
     this.resetEditing();
   }

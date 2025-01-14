@@ -42,7 +42,7 @@ startEditing(field: 'title' | 'tile1' | 'tile2' | 'tile3', index: number) {
   if (field === 'title') {
     this.originalValue = this.featuresData.title;
     this.updatedValue = this.featuresData.title;
-    console.log(this.updatedValue);
+    // console.log(this.updatedValue);
   } else {
     const tileKey = field;
     const fieldKey = index === 0 ? 0 : 1;
@@ -63,12 +63,12 @@ saveField() {
       const fieldKey = idx === 0 ? 0 : 1;
       this.featuresData.featureTiles[tileKey][fieldKey] = this.updatedValue;
     }
-    console.log('Updated Data:', this.featuresData);
+    // console.log('Updated Data:', this.featuresData);
   }
 
   this.editingField = null;
   this.originalValue = null;
-  this.updatedValue = null;  // Reset updatedValue
+  this.updatedValue = null;
 }
 
 cancelEditing() {
@@ -83,12 +83,12 @@ cancelEditing() {
       const fieldKey = idx === 0 ? 0 : 1;
       this.featuresData.featureTiles[tileKey][fieldKey] = this.originalValue!;
     }
-    console.log('Editing Canceled:', this.featuresData);
+    // console.log('Editing Canceled:', this.featuresData);
   }
 
   this.editingField = null;
   this.originalValue = null;
-  this.updatedValue = null;  // Reset updatedValue
+  this.updatedValue = null;
 }
 
 handleKeyUp(event: KeyboardEvent) {
