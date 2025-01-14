@@ -5,29 +5,58 @@
                 <app-video [pID]="videoPID"/>
             </div>
             <div #textItem class="text-container show" *ngIf="providersData?.title && providersData?.body && providersData?.listItems">
-                <h3 class="header-text">{{ providersData?.title }}</h3>
-                <img class="line-image" [src]="providerImageUrl[0]">
-                <p class="paragraph-text">{{ providersData?.body }}</p>
-                <ul class="list-container" *ngFor="let key of objectKeys(providersData?.listItems)">
-                    <li class="list-item">
-                        <img [src]="providerImageUrl[1]" alt="Tick"> {{ providersData?.listItems[key]}} 
+                <h3 class="header-text" (click)="startEditing('title')">
+                    <ng-container *ngIf="editingField !== 'title'; else editTitleTemplate">
+                      {{ providersData?.title }}
+                    </ng-container>
+                    <ng-template #editTitleTemplate>
+                      <input type="text" 
+                      [(ngModel)]="updatedTitle" 
+                      (keyup)="handleKeyUp($event)" 
+                      (blur)="saveField()" autofocus />
+                    </ng-template>
+                  </h3>
+                  <img class="line-image" src="images/lines.svg">
+                  <p class="paragraph-text" (click)="startEditing('body')">
+                    <ng-container *ngIf="editingField !== 'body'; else editBodyTemplate">
+                      {{ providersData?.body }}
+                    </ng-container>
+                    <ng-template #editBodyTemplate>
+                      <input type="text" 
+                      [(ngModel)]="updatedBody" 
+                      (keyup)="handleKeyUp($event)" 
+                      (blur)="saveField()" autofocus />
+                    </ng-template>
+                  </p>
+                  <ul class="list-container" *ngFor="let key of objectKeys(providersData?.listItems)">
+                    <li class="list-item" (click)="startEditing('list', key)">
+                      <ng-container *ngIf="editingField !== 'list-' + key; else editListTemplate">
+                        <img src="images/tick.svg" alt="Tick"> {{ providersData?.listItems[key] }}
+                      </ng-container>
+                      <ng-template #editListTemplate>
+                        <input type="text" 
+                        [(ngModel)]="updatedList[key]" 
+                        (keyup)="handleKeyUp($event)" 
+                        (blur)="saveField()" autofocus />
+                      </ng-template>
                     </li>
-                </ul>
+                  </ul>
+                  
             </div>
         </div>
         <div #counterSection class="bottom-container">
             <div #bottomItem1 class="bottom-item1 show">
-                <img [src]="providerImageUrl[2]" style="width: 49px; height: 56px" alt="Image 1">
+                <img src="images/image1.svg" style="width: 49px; height: 56px" alt="Image 1">
                 <h3>1</h3>
                 <p>Integration</p>
             </div>
             <div #bottomItem2 class="bottom-item2 show">
-                <img [src]="providerImageUrl[3]" style="width: 58px; height: 58px" alt="Image 2">
+                <img src="images/image2.svg" style="width: 58px; height: 58px" alt="Image 2">
                 <h3 #counterCities id="counterCities">300</h3>
                 <p>Cities Covered</p>
             </div>
             <div #bottomItem3 class="bottom-item3 show">
-                <img [src]="providerImageUrl[4]" alt="Image 3">
+                <img src="images/image3.svg" alt="Image 3">
                 <h3>1M+</h3>
                 <p>Drivers In-Network</p>
             </div>

@@ -5,12 +5,13 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { VideoComponent } from '../../video/video.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-template-provider',
   templateUrl: './provider.component.html',
   styleUrls: ['./provider.component.less'],
-  imports: [CommonModule, VideoComponent]
+  imports: [CommonModule, VideoComponent, FormsModule]
 })
 export class ProviderTemplateComponent implements AfterViewInit {
 
@@ -130,4 +131,72 @@ export class ProviderTemplateComponent implements AfterViewInit {
       this.renderer.setProperty(this.counterCities.nativeElement, 'textContent', this.counterValue);
     }
   }
+
+  // editable Fields
+  // --------------------------------------------------------------
+
+  editingField: string | null = null;
+  updatedTitle: string | null = null;
+  updatedBody: string | null = null;
+  updatedList: { [key: string]: string } = {};
+
+  startEditing(field: string, key?: string) {
+    this.editingField = key ? `${field}-${key}` : field;
+
+    if (field === 'title') {
+      this.updatedTitle = this.providersData?.title;
+    } else if (field === 'body') {
+      this.updatedBody = this.providersData?.body;
+    } else if (field === 'list' && key) {
+      this.updatedList[key] = this.providersData?.listItems[key];
+    }
+  }
+
+  saveField() {
+    if (this.editingField) {
+      if (this.editingField === 'title') {
+        this.providersData.title = this.updatedTitle!;
+      } else if (this.editingField === 'body') {
+        this.providersData.body = this.updatedBody!;
+      } else if (this.editingField.startsWith('list')) {
+        const key = this.editingField.split('-')[1];
+        this.providersData.listItems[key] = this.updatedList[key];
+      }
+    }
+
+    this.editingField = null;
+    this.updatedTitle = null;
+    this.updatedBody = null;
+    this.updatedList = {};
+    console.log('Updated Providers Data:', this.providersData);
+  }
+
+  cancelEditing() {
+    if (this.editingField) {
+      if (this.editingField === 'title') {
+        this.updatedTitle = this.providersData.title;
+      } else if (this.editingField === 'body') {
+        this.updatedBody = this.providersData.body;
+      } else if (this.editingField.startsWith('list')) {
+        const key = this.editingField.split('-')[1];
+        this.updatedList[key] = this.providersData.listItems[key];
+      }
+    }
+
+    this.editingField = null;
+    this.updatedTitle = null;
+    this.updatedBody = null;
+    this.updatedList = {};
+  }
+
+  handleKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.cancelEditing();
+    } else if (event.key === 'Enter') {
+      this.saveField();
+    }
+  }
+
+
+  //---------------------------------------------------------------
 }
