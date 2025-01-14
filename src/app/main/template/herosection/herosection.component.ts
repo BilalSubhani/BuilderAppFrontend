@@ -1,93 +1,32 @@
-import { Component, ElementRef, Renderer2, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { MainService } from '../../main.service';
 import { Subscription } from 'rxjs';
-import { io } from 'socket.io-client';
 import { VideoComponent } from '../../video/video.component';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-template-herosection',
   standalone: true,
-  imports: [CommonModule, VideoComponent],
+  imports: [CommonModule, VideoComponent, FormsModule],
   templateUrl: './herosection.component.html',
   styleUrl: './herosection.component.less'
 })
 export class HerosectionTemplateComponent {
-  @ViewChild('navbar', { static: false }) navbar!: ElementRef;
-  @ViewChild('heroSection', { static: false }) heroSection!: ElementRef;
-  @ViewChild('myBtn', { static: false }) myBtn!: ElementRef;
-  @ViewChild('mySidenav') mySidenav!: ElementRef;
-  objectKeys = Object.keys;
 
-  videoPID: string = '3steps';
+  @ViewChild('editValueInput', { static: false }) editValueInput!: ElementRef;
+  editingField: { type: 'value' | 'buttonText'; parentKey?: string; index?: number } | null = null;
+  originalValue: string | null = null;
+  editingHeroSectionField: string | null = null;
+  originalHeroSectionValue: string | null = null; 
 
-  private socket: any;
   messageReceived:string = '';
-
-  dropdownSections = [
-      { 
-        name: 'Navbar', 
-        comp: 'heroSection',
-      },
-      { 
-        name: 'Hero', 
-        comp: 'heroSection',
-      },
-      { 
-        name: 'Features', 
-        comp: 'features',
-      },
-      { 
-        name: 'Provider',
-        comp: 'provider', 
-      },
-      { 
-        name: 'Tab', 
-        comp: 'tabs',
-      },
-      { 
-        name: 'Integrate', 
-        comp: 'integrate',
-  
-      },
-      { 
-        name: 'Industries', 
-        comp: 'industries',
-      },
-      { 
-        name: 'Why Burq?', 
-        comp: 'whyBurq'
-      },
-      { 
-        name: 'Selling Points', 
-        comp: 'whyBurq',
-      },
-      { 
-        name: 'Testimonials', 
-        comp: 'testimonials',
-      },
-      { 
-        name: 'Backing', 
-        comp: 'backing',
-      },
-      { 
-        name: 'Powering', 
-        comp: 'backing',
-      },
-      {
-        name: 'Footer', 
-        comp: 'footer',
-      }
-  ];
 
   imagePublicUrl: string[] = ['burq-logo'];
   imageUrl: string[] = [];
-  videoUrl: string = '';
   public_id: string = '3steps';
 
   navbarData: any;
@@ -96,28 +35,12 @@ export class HerosectionTemplateComponent {
   private subscription?: Subscription;
 
   constructor(
-    private renderer: Renderer2,
-    private authService: AuthService,
-    private router: Router,
     private http: HttpClient,
     private toastr: ToastrService,
-    private mainService: MainService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private mainService: MainService
   ){}
 
   dataController(){
-    this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`).subscribe(
-      (response: any) => {
-        this.videoUrl = response.url;
-      },
-      (error) => {
-        this.toastr.error('Error fetching video', 'Error', {
-          positionClass: 'toast-top-right',
-          progressBar: true,
-          progressAnimation: 'decreasing'
-        });
-      }
-    );
 
     this.imagePublicUrl.forEach((p_id)=>{
       this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
@@ -163,87 +86,93 @@ export class HerosectionTemplateComponent {
     });
   }
 
-  ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      if ('IntersectionObserver' in window) {
-        const observerNavbar = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            const action = entry.isIntersecting ? 'addClass' : 'removeClass';
-            this.renderer[action](this.navbar.nativeElement, 'expand');
-            
-            const scrolled = entry.isIntersecting ? 'None' : 'Block';
-            this.renderer.setStyle(this.myBtn.nativeElement, 'display', scrolled);
-          });
-        }, { threshold: 0.7 });
+  // Navbar Field 
+  // ----------------------------------------------------
 
-        observerNavbar.observe(this.heroSection.nativeElement);
-      } else {
-        console.warn('IntersectionObserver is not supported in this environment.');
-      }
+  startEditingNavbarField(type: 'value' | 'buttonText', parentKey?: string, index?: number) {
+    this.editingField = { type, parentKey, index };
+
+    if (type === 'value' && parentKey !== undefined && index !== undefined) {
+      this.originalValue = this.navbarData.listItems[parentKey][index];
+    } else if (type === 'buttonText') {
+      this.originalValue = this.navbarData.buttonText;
     }
   }
+
+  saveNavbarField() {
+    this.editingField = null;
+    this.originalValue = null;
+    console.log('Updated Navbar Data:', this.navbarData);
+  }
+
+  cancelNavbarEditing() {
+    if (this.editingField) {
+      const { type, parentKey, index } = this.editingField;
+
+      if (type === 'value' && parentKey !== undefined && index !== undefined) {
+        this.navbarData.listItems[parentKey][index] = this.originalValue!;
+      } else if (type === 'buttonText') {
+        this.navbarData.buttonText = this.originalValue!;
+      }
+    }
+
+    this.editingField = null;
+    this.originalValue = null;
+  }
+
+  handleNavbarKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.cancelNavbarEditing();
+    } else if (event.key === 'Enter') {
+      this.saveNavbarField();
+    }
+  }
+
+  ngAfterViewChecked() {
+    if (this.editingField?.type === 'value' && this.editValueInput) {
+      this.editValueInput.nativeElement.focus();
+    }
+  }
+
+  objectKeys(obj: object): string[] {
+    return Object.keys(obj);
+  }
+
+  // ----------------------------------------------------
+
+  // HeroSection Field
+  // -----------------------------------------------------
+
+  startEditing(field: string) {
+    this.editingHeroSectionField = field;
+    this.originalHeroSectionValue = this.heroSectionData[field as keyof typeof this.heroSectionData];
+  }
+
+  saveField() {
+    this.editingHeroSectionField = null;
+    this.originalHeroSectionValue = null;
+    console.log('Updated Hero Section Data:', this.heroSectionData);
+  }
+
+  cancelEditing() {
+    if (this.editingHeroSectionField) {
+      this.heroSectionData[this.editingHeroSectionField as keyof typeof this.heroSectionData] = this.originalHeroSectionValue!;
+    }
+    this.editingHeroSectionField = null;
+    this.originalHeroSectionValue = null;
+  }
+
+  handleKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.cancelEditing();
+    } else if (event.key === 'Enter') {
+      this.saveField();
+    }
+  }
+
+  // -----------------------------------------------------------------------
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
   }
-
-  topFunction(): void {
-    const scrollStep = -window.scrollY / (2000 / 15);
-    const scrollInterval = setInterval(() => {
-      if (window.scrollY !== 0) {
-        window.scrollBy(0, scrollStep);
-      } else {
-        clearInterval(scrollInterval);
-      }
-    }, 15);
-  };
-
-  onLogout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
-
-  openNav() {
-    this.mySidenav.nativeElement.style.width = '250px';
-  }
-  closeNav() {
-    this.mySidenav.nativeElement.style.width = '0';
-  }
-
-  scrollTo(componentId: any) {
-    this.closeNav();
-    const childElement = document.getElementById(componentId);
-     
-    if (childElement) {
-      childElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    else
-      this.topFunction();
-  }
-
-  connectToSocket(): void {
-    this.socket = io('http://localhost:3001', {
-      transports: ['websocket', 'polling']
-    });
-
-    this.socket.on('connect', () => {
-      // console.log('Connected to server with ID:', this.socket.id);
-    });
-
-    this.socket.on('handleChange', (data: any) => {
-      // console.log('Message received from server:', data);
-      this.messageReceived = data;
-      this.implementation();
-    });
-
-    this.socket.on('connect_error', (err: any) => {
-      console.error('Connection error:', err);
-    });
-  }
-
-  implementation(){
-      window.location.reload();
-  }
-
 }

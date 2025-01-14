@@ -23,10 +23,8 @@ export class ProviderTemplateComponent implements AfterViewInit {
 
   private subscription?: Subscription;
   videoPID: string = 'provider';
-  videoUrl: string = '';
   providerImageUrl: string[] = [];
   imagePublicId: string[] = ['lines', 'tick', 'counter1', 'counter2', 'counter3'];
-  public_id: string = 'provider';
 
   providersData: any;
   private intervalId: any;
@@ -43,19 +41,6 @@ export class ProviderTemplateComponent implements AfterViewInit {
   ) {}
 
   dataFunction(){
-    this.http.get<any>(`http://localhost:3000/media/videos/${this.public_id}`).subscribe(
-      (response: any) => {
-        this.videoUrl = response.url;
-      },
-      (error) => {
-        this.toastr.error('Error fetching video', 'Error', {
-          positionClass: 'toast-top-right',
-          progressBar: true,
-          progressAnimation: 'decreasing'
-        });
-      }
-    );
-
     this.imagePublicId.forEach( pid =>  {
       this.http.get<any>(`http://localhost:3000/media/images/${pid}`).subscribe(
         (response: any) => {

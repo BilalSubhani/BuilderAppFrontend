@@ -1,45 +1,107 @@
 <nav class="navbar" #navbar id="navbar">
   <div class="navbar-container">
-    <a class="navbar-brand" (click)="openNav()">
+    <a class="navbar-brand">
       <img [src]="imageUrl[0]" alt="Burq Logo" />
     </a>
     <ul class="nav-links" *ngIf="navbarData?.listItems && navbarData?.buttonText">
       <li class="dropdown" *ngFor="let key of objectKeys(navbarData.listItems)">
-        <a href="/burq">{{key}}<i class="arrow down" *ngIf="navbarData.listItems[key].length"></i></a>
+        <a>
+          {{ key }}<i class="arrow down" *ngIf="navbarData.listItems[key].length"></i>
+        </a>
         <ul class="dropdown-menu" *ngIf="navbarData.listItems[key].length">
-          <li>
-            <a href="/burq" *ngFor="let item of navbarData.listItems[key]">{{ item }}</a>
+          <li *ngFor="let item of navbarData.listItems[key]; let i = index">
+            <ng-container *ngIf="editingField?.type !== 'value' || editingField?.parentKey !== key || editingField?.index !== i; else editValueTemplate">
+              <a href="javascript:void(0)" (click)="startEditingNavbarField('value', key, i)">{{ item }}</a>
+            </ng-container>
+            <ng-template #editValueTemplate>
+              <input
+                #editValueInput
+                type="text"
+                [(ngModel)]="navbarData.listItems[key][i]"
+                (keyup)="handleNavbarKeyUp($event)"
+                (blur)="saveNavbarField()"
+                autofocus
+              />
+            </ng-template>
           </li>
         </ul>
       </li>
-      <li><a ><button class="cta-nav" (click)="onLogout()">{{ navbarData.buttonText }}</button></a></li>
+      
+      <li>
+        <a href="javascript:void(0)" (click)="startEditingNavbarField('buttonText')">
+          <ng-container *ngIf="editingField?.type !== 'buttonText'; else editButtonTextTemplate">
+            <button class="cta-nav">{{ navbarData.buttonText }}</button>
+          </ng-container>
+        </a>
+        <ng-template #editButtonTextTemplate>
+          <input
+            type="text"
+            [(ngModel)]="navbarData.buttonText"
+            (keyup)="handleNavbarKeyUp($event)"
+            (blur)="saveNavbarField()"
+            autofocus
+          />
+        </ng-template>
+      </li>
     </ul>
+    
   </div>
 </nav>
 
-<div id="mySidenav" class="sidenav" #mySidenav>
-  <a><button class="cta-nav" (click)="connectToSocket()">Connect</button></a>  
-  <a  class="sidenav-closebtn" (click)="closeNav()">&times;</a>
-  <div class="sidenav-dropdown" *ngFor="let section of dropdownSections">
-      <a href="javascript:void(0)" (click)="scrollTo(section.comp)"> {{ section.name }} </a>
-  </div>    
-</div>
-
 <header class="hero-section" #heroSection id="heroSection">
 <div class="container">
-  <div class="hero-content" *ngIf="heroSectionData?.heading && heroSectionData?.paragraph && heroSectionData?.buttonText">
-  <h1>{{ heroSectionData.heading }}</h1>
-  <p>{{ heroSectionData.paragraph }}</p>
-  <button class="cta-hero">{{ heroSectionData.buttonText }}</button>
+  <div class="hero-content" *ngIf="heroSectionData">
+    <h1
+      *ngIf="editingHeroSectionField !== 'heading'; else editHeading"
+      (click)="startEditing('heading')"
+    >
+      {{ heroSectionData.heading }}
+    </h1>
+    <ng-template #editHeading>
+      <textarea
+        [(ngModel)]="heroSectionData.heading"
+        (blur)="saveField()"
+        (keyup)="handleKeyUp($event)"
+        autofocus
+      ></textarea>
+    </ng-template>
+
+    <p
+      *ngIf="editingHeroSectionField !== 'paragraph'; else editParagraph"
+      (click)="startEditing('paragraph')"
+    >
+      {{ heroSectionData.paragraph }}
+    </p>
+    <ng-template #editParagraph>
+      <textarea
+        [(ngModel)]="heroSectionData.paragraph"
+        (blur)="saveField()"
+        (keyup)="handleKeyUp($event)"
+        autofocus
+      ></textarea>
+    </ng-template>
+
+    <button
+      class="cta-hero"
+      *ngIf="editingHeroSectionField !== 'buttonText'; else editButtonText"
+      (click)="startEditing('buttonText')"
+    >
+      {{ heroSectionData.buttonText }}
+    </button>
+    <ng-template #editButtonText>
+      <input
+        type="text"
+        [(ngModel)]="heroSectionData.buttonText"
+        (blur)="saveField()"
+        (keyup)="handleKeyUp($event)"
+        autofocus
+      />
+    </ng-template>
   </div>
   <div class="hero-video">
   <div class="video-container">
-    <app-video [pID]="videoPID"/>
-      <!-- <video autoplay loop muted preload playsinline>
-      <source [src]="videoUrl" type="video/mp4" />
-      </video> -->
+    <app-video [pID]="public_id"/>
   </div>
   </div>
 </div>
 </header>
-<button #myBtn (click)="topFunction()" id="myBtn" title="Back to Top"><i class="arrowTop up"></i></button>
