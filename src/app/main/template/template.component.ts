@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
-import { ProviderComponent } from './provider/provider.component';
-import { HerosectionComponent } from './herosection/herosection.component';
-import { TabsComponent } from './tabs/tabs.component';
-import { IntegrateComponent } from './integrate/integrate.component';
-import { IndustriesComponent } from './industries/industries.component';
-import { FeaturesComponent } from './features/features.component';
-import { BackingComponent } from './backing/backing.component';
-import { FooterComponent } from './footer/footer.component';
-import { WhyburqComponent } from './whyburq/whyburq.component';
-import { TestimonialsComponent } from './testimonials/testimonials.component';
+import { ProviderTemplateComponent } from './provider/provider.component';
+import { HerosectionTemplateComponent } from './herosection/herosection.component';
+import { TabsTemplateComponent } from './tabs/tabs.component';
+import { IntegrateTemplateComponent } from './integrate/integrate.component';
+import { IndustriesTemplateComponent } from './industries/industries.component';
+import { FeaturesTemplateComponent } from './features/features.component';
+import { BackingTemplateComponent } from './backing/backing.component';
+import { FooterTemplateComponent } from './footer/footer.component';
+import { WhyburqTemplateComponent } from './whyburq/whyburq.component';
+import { TestimonialsTemplateComponent } from './testimonials/testimonials.component';
 
 
 @Component({
   selector: 'app-template',
   standalone: true,
   imports: [
-    ProviderComponent, FeaturesComponent,
-    HerosectionComponent, TabsComponent, 
-    IntegrateComponent, IndustriesComponent,
-    WhyburqComponent, TestimonialsComponent, 
-    FooterComponent, BackingComponent,
+    ProviderTemplateComponent, FeaturesTemplateComponent,
+    HerosectionTemplateComponent, TabsTemplateComponent, 
+    IntegrateTemplateComponent, IndustriesTemplateComponent,
+    WhyburqTemplateComponent, TestimonialsTemplateComponent, 
+    FooterTemplateComponent, BackingTemplateComponent,
   ],
   templateUrl: './template.component.html',
   styleUrl: './template.component.less'

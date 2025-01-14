@@ -8,11 +8,11 @@ import { VideoComponent } from './video/video.component';
 import { ImageComponent } from './image/image.component';
 
 import { io } from 'socket.io-client';
-import { HomeComponent } from './home/home.component';
+import { TemplateComponent } from './template/template.component';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, RouterModule, HomeComponent],
+  imports: [CommonModule, RouterModule, TemplateComponent],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
@@ -54,7 +54,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Image', 'Text'], 
       items: ['Logo', 'buttonText'],
-      url: ['', 'buttonText']
+      url: ['', 'buttonText'],
+      postion: 0
     },
     { 
       name: 'Hero', 
@@ -62,7 +63,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Button', 'Video'],
-      url: ['heading', 'paragraph', 'buttonText', '3steps']
+      url: ['heading', 'paragraph', 'buttonText', '3steps'],
+      postion: 0
     },
     { 
       name: 'Features', 
@@ -70,7 +72,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text'], 
       items: ['Heading'],
-      url: ['title']
+      url: ['title'],
+      postion: 530
     },
     { 
       name: 'Provider',
@@ -78,7 +81,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Video'],
-      url: ['title', 'body', 'provider']
+      url: ['title', 'body', 'provider'],
+      postion: 1250
     },
     { 
       name: 'Tab', 
@@ -86,7 +90,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text','Image', 'Text', 'Image', 'Text','Image'], 
       items: ['Tab Heading 1', 'Tab Content 1', 'Tab Heading 2', 'Tab Content 2', 'Tab Heading 3', 'Tab Content 3'],
-      url: [ '0', '', '1', '', '2', '' ]
+      url: [ '0', '', '1', '', '2', '' ],
+      postion: 1900
     },
     { 
       name: 'Integrate', 
@@ -94,7 +99,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Text', 'Text', 'Text'], 
       items: ['Heading 6', 'Heading 3', 'Paragraph', 'Button'],
-      url: ['smallHeading', 'title', 'body', 'button']
+      url: ['smallHeading', 'title', 'body', 'button'],
+      postion: 2500
     },
     // { 
     //   name: 'Industries', 
@@ -102,7 +108,8 @@ export class MainComponent implements OnInit {
     //   isOpen: false, 
     //   links: ['Image', 'Image', 'Text', 'Text'], 
     //   items: ['Tab Icon', 'Tab Content', 'Tab Content Heading', 'Tab Content Paragraph'],
-    //   url: ['', '', '']
+    //   url: ['', '', ''],
+    //   postion: 3200
     // },
     { 
       name: 'Why Burq?', 
@@ -110,7 +117,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Text', 'Text'], 
       items: ['Heading', 'Paragraph', 'Button'],
-      url: ['title', 'body', 'button']
+      url: ['title', 'body', 'button'],
+      postion: 3900
     },
     { 
       name: 'Selling Points', 
@@ -118,7 +126,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Image', 'Text', 'Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text'], 
       items: ['Logo 1', 'Heading 1', 'Paragraph 1', 'Logo 2', 'Heading 2', 'Paragraph 2', 'Logo 3', 'Heading 3', 'Paragraph 3'],
-      url: ['', 'sp1', 'sp1', 'sp2', 'sp2', 'sp3', 'sp3']
+      url: ['', 'sp1', 'sp1', 'sp2', 'sp2', 'sp3', 'sp3'],
+      postion: 4200
     },
     { 
       name: 'Testimonials', 
@@ -126,7 +135,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text'], 
       items: ['Title'],
-      url: ['title']
+      url: ['title'],
+      postion: 4700
     },
     { 
       name: 'Backing', 
@@ -134,7 +144,8 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Text'], 
       items: ['Title', 'Button'] ,
-      url: ['title', 'button']
+      url: ['title', 'button'],
+      postion: 5100
     },
     { 
       name: 'Powering', 
@@ -142,21 +153,18 @@ export class MainComponent implements OnInit {
       isOpen: false, 
       links: ['Text', 'Text'], 
       items: ['Title', 'Button'],
-      url: ['body', 'button']
+      url: ['body', 'button'],
+      postion: 5500
     }
   ];
 
-  openNav() {
-    this.mySidenav.nativeElement.style.width = '250px';
-  }
-  closeNav() {
-    this.mySidenav.nativeElement.style.width = '0';
-  }
-  toggleDropdown(event: Event, sectionName: string) {
+  toggleDropdown(event: Event, sectionName: string, sectionPostion: number) {
     const section = this.dropdownSections.find(sec => sec.name === sectionName);
     if (section) {
       section.isOpen = !section.isOpen;
     }
+
+    this.scrollTo(sectionPostion);
   }
   ngOnInit() {
     this.getNavbarData();
@@ -276,5 +284,23 @@ export class MainComponent implements OnInit {
     } else {
       console.error('Socket is not connected');
     }
+  }
+
+  topFunction(): void {
+    const scrollStep = -window.scrollY / (2000 / 15);
+    const scrollInterval = setInterval(() => {
+      if (window.scrollY !== 0) {
+        window.scrollBy(0, scrollStep);
+      } else {
+        clearInterval(scrollInterval);
+      }
+    }, 15);
+  };
+
+  scrollTo(compPoistion: any) {
+    window.scrollTo({
+      top: compPoistion,
+      behavior: 'smooth'
+    });
   }
 }

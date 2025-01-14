@@ -1,1 +1,23 @@
-<p>testimonials works!</p>
+<div class="outer-div" id="testimonials">
+    <div class="inner-div" *ngIf="testimonialData?.title && testimonialData?.comment">
+        <div class="upper-inner-div">
+            <img src="images/testimonials/shape1.svg" alt="Image" class="imageTopLeft">
+            <h2 class="testimonial">{{testimonialData?.title}}</h2>
+        </div>
+        <div class="lower-inner-div">
+            <img src="images/testimonials/shape2.svg" alt="Image" class="imageTopRight">
+            <div class="slider">
+                <div class="slide" *ngFor="let key of objectKeys(testimonialData?.comment)">
+                    <img src="images/testimonials/66.svg" style="width: 75px; height: 53px; padding-bottom: 20px;" alt="Image">
+                    <p class="testp">{{testimonialData?.comment[key][0]}}</p>
+                    <h6 class="name">{{testimonialData?.comment[key][1]}}</h6>
+                    <p class="desig">{{testimonialData?.comment[key][2]}}</p>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="prev">&larr;</button>
+                <button id="next">&rarr;</button>
+            </div>
+        </div>
+    </div>
+</div>

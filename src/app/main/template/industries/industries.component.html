@@ -1,1 +1,67 @@
-<p>industries works!</p>
+<div class="ind-main-container" id="industries">
+    <div class="ind-container" #indContainer *ngIf="tabContentData?.title && tabContentData?.tabContent">
+        <h3 class="tab-heading show" #indHeading>{{tabContentData?.title}}</h3>
+        <div class="tab-container show" #indTabContainer>
+            <div class="ind-tabs">
+                <div class="ind-tab active" data-tab="10"><img src="/images/tabIcons/ecommerce-blue.svg" class="ind-icon active" data-tab="10"></div>
+                <div class="ind-tab inactive" data-tab="11"><img src="/images/tabIcons/food.svg" class="ind-icon inactive" data-tab="11"></div>
+                <div class="ind-tab inactive" data-tab="12"><img src="/images/tabIcons/flower-shop.svg" class="ind-icon inactive" data-tab="12"></div>
+                <div class="ind-tab inactive" data-tab="13"><img src="/images/tabIcons/pharmacy.svg" class="ind-icon inactive" data-tab="13"></div>
+                <div class="ind-tab inactive" data-tab="14"><img src="/images/tabIcons/construction.svg" class="ind-icon inactive" data-tab="14"></div>
+                <div class="ind-tab inactive" data-tab="15"><img src="/images/tabIcons/grocery.svg" class="ind-icon inactive" data-tab="15"></div>
+                <div class="ind-tab inactive" data-tab="16"><img src="/images/tabIcons/retailer.svg" class="ind-icon inactive" data-tab="16"></div>
+            </div>
+        </div>
+        <div class="ind-content show" #indTabContent>
+            <div class="ind-tabcontent active" data-tab="10">
+                <img [src]="imageUrl[0]" alt="E-commerce">
+                <div class="ind-tabdetails">
+                    <h3>{{tabContentData?.tabContent.tc1[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc1[1]}}</p>
+                </div>
+            </div>
+            <div class="ind-tabcontent inactive" data-tab="11">
+                <img [src]="imageUrl[1]" alt="Food">
+                <div class="ind-tabdetails">
+                    <h3>{{tabContentData?.tabContent.tc2[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc2[1]}}</p>
+                </div>
+            </div>
+            <div class="ind-tabcontent inactive" data-tab="12">
+                <img [src]="imageUrl[2]" alt="Flower Shop">
+                <div class="ind-tabdetails">
+                    <h3>{{tabContentData?.tabContent.tc3[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc3[1]}}</p>
+                </div>
+            </div>
+            <div class="ind-tabcontent inactive" data-tab="13">
+                <img [src]="imageUrl[3]" alt="Pharmacy">
+                <div class="ind-tabdetails">
+                    <h3>{{tabContentData?.tabContent.tc4[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc4[1]}}</p>
+                </div>
+            </div>
+            <div class="ind-tabcontent inactive" data-tab="14">
+                <img [src]="imageUrl[4]" alt="Construction">
+                <div class="ind-tabdetails">
+                    <h3>{{tabContentData?.tabContent.tc5[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc5[1]}}</p>
+                </div>
+            </div>
+            <div class="ind-tabcontent inactive" data-tab="15">
+                <img [src]="imageUrl[5]" alt="Grocery">
+                <div class="ind-tabdetails">
+                    <h3>{{tabContentData?.tabContent.tc6[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc6[1]}}</p>
+                </div>
+            </div>
+            <div class="ind-tabcontent inactive" data-tab="16">
+                <img [src]="imageUrl[6]" alt="Retailer">
+                <div class="ind-tabdetails">
+                    <h3>{{tabContentData?.tabContent.tc7[0]}}</h3>
+                    <p>{{tabContentData?.tabContent.tc7[1]}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

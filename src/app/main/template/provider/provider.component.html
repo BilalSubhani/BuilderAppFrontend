@@ -1,1 +1,36 @@
-<p>provider works!</p>
+<div class="main-container" id="provider">
+    <div #contentSection class="content-container">
+        <div class="flex-container">
+            <div #videoItem class="video-container show">
+                <app-video [pID]="videoPID"/>
+            </div>
+            <div #textItem class="text-container show" *ngIf="providersData?.title && providersData?.body && providersData?.listItems">
+                <h3 class="header-text">{{ providersData?.title }}</h3>
+                <img class="line-image" [src]="providerImageUrl[0]">
+                <p class="paragraph-text">{{ providersData?.body }}</p>
+                <ul class="list-container" *ngFor="let key of objectKeys(providersData?.listItems)">
+                    <li class="list-item">
+                        <img [src]="providerImageUrl[1]" alt="Tick"> {{ providersData?.listItems[key]}} 
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div #counterSection class="bottom-container">
+            <div #bottomItem1 class="bottom-item1 show">
+                <img [src]="providerImageUrl[2]" style="width: 49px; height: 56px" alt="Image 1">
+                <h3>1</h3>
+                <p>Integration</p>
+            </div>
+            <div #bottomItem2 class="bottom-item2 show">
+                <img [src]="providerImageUrl[3]" style="width: 58px; height: 58px" alt="Image 2">
+                <h3 #counterCities id="counterCities">300</h3>
+                <p>Cities Covered</p>
+            </div>
+            <div #bottomItem3 class="bottom-item3 show">
+                <img [src]="providerImageUrl[4]" alt="Image 3">
+                <h3>1M+</h3>
+                <p>Drivers In-Network</p>
+            </div>
+        </div>
+    </div>
+</div>

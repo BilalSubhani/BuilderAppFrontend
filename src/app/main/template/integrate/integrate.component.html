@@ -1,1 +1,35 @@
-<p>integrate works!</p>
+<div class="main-container" id="integrate">
+    <div class="flex-container" #observeContainer>
+        <div class="left-div show" #leftDiv *ngIf="integrateData?.smallHeading && integrateData?.title && integrateData?.body && integrateData?.button">
+            <h6>{{integrateData?.smallHeading}}</h6>
+            <h3>{{integrateData?.title}}</h3>
+            <img [src]="imageUrl" alt="Image">
+            <p>{{integrateData?.body}}</p>
+            <button class="cta-hero">{{integrateData?.button}}</button>
+        </div>
+        <div class="right-div show" #rightDiv>
+            <div class="border-div left-1"  style="width:81px; height: 81px;">
+                <img src="/images/zapier.png" class="border-image" style="width:60px; height: 60px;" alt="Image 1">
+            </div>
+            <div class="border-div left-2"  style="width:105px; height: 105px;">
+                <img src="/images/woo.png" class="border-image"  style="width:60px; height: 36px;"alt="Image 2">
+            </div>
+            <div class="border-div top-1"  style="width:60px; height: 60px;">
+                <img src="/images/clover.png" class="border-image"  style="width:30px; height: 30px;"alt="Image 3">
+            </div>
+            <div class="border-div right-1"  style="width:105px; height: 105px;">
+                <img src="/images/ebay.png" class="border-image" alt="Image 4">
+            </div>
+            <div class="border-div right-2" style="width:100px; height: 100px;">
+                <img src="/images/package.svg" class="border-image" style="width:100px; height: 100px;" alt="Image 5">
+            </div>
+            <div class="border-div bottom-1" style="width:148px; height: 148px;">
+                <img src="/images/shopify.png" class="border-image" style="width: 80px; height: 91px;"alt="Image 6">
+            </div>
+
+            <div class="round-div">
+                <img src="/images/b.svg" alt="Round Image">
+            </div>
+        </div>
+    </div>
+</div>

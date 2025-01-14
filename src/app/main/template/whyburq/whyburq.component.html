@@ -1,1 +1,37 @@
-<p>whyburq works!</p>
+<div class="whyburq-main-container" id="whyBurq">
+    <div class="whyburq-container" #whyburqContainer>
+      <div class="whyburq-left-column show" #whyburqLeftDiv>
+        <img [src]="imageUrl[0]" alt="Image">
+      </div>
+  
+      <div class="whyburq-right-column show" #whyburqRightDiv *ngIf="whyBurqData?.title && whyBurqData?.body && whyBurqData?.button">
+        <img src="images/whyburq/heart.svg" alt="heart icon" class="heart-icon">
+        <h2>{{whyBurqData?.title}}</h2>
+        <img src="images/whyburq/lines.svg" alt="Decorative lines" class="decorative-lines">
+        <p>{{whyBurqData?.body}}</p>
+        <button class="cta-whyburq">{{whyBurqData?.button}}</button>
+      </div>
+    </div>
+</div>
+  
+<div class="benefits-maincontainer" *ngIf="benefitsData" id="whyBurq">
+    <div class="benefits-container show" #benefitsContainer>
+      <div class="benefit">
+        <img [src]="imageUrl[1]" style="width:55px; height: 52px;" alt="On-demand delivery">
+        <h3>{{benefitsData?.sp1[0]}}</h3>
+        <p>{{benefitsData?.sp1[1]}}</p>
+      </div>
+  
+      <div class="benefit">
+        <img [src]="imageUrl[2]" style="width:52px; height: 52px;" alt="No commission">
+        <h3>{{benefitsData?.sp2[0]}}</h3>
+        <p>{{benefitsData?.sp2[1]}}</p>
+      </div>
+  
+      <div class="benefit">
+        <img [src]="imageUrl[3]" style="width:52px; height: 55px;" alt="Advanced tracking technology">
+        <h3>{{benefitsData?.sp3[0]}}</h3>
+        <p>{{benefitsData?.sp3[1]}}</p>
+      </div>
+    </div>
+</div>
