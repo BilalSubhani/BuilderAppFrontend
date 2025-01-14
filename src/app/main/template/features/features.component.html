@@ -1,30 +1,127 @@
 <section id="features" class="features-section">
-    <div class="features-container" #featuresContainer *ngIf="featuresData?.title && featuresData?.featureTiles">
-      <div class="features-heading show" #featuresHeading>
-        <h2>{{ featuresData.title}}</h2>
-        <img [src]="imageUrl[0]" alt="Underline" class="underline">
+  <div class="features-container" #featuresContainer *ngIf="featuresData?.title && featuresData?.featureTiles">
+    <div class="features-heading show" #featuresHeading>
+      <h2 (click)="startEditing('title', 0)">
+        <ng-container *ngIf="editingField !== 'title-0'; else editTitleTemplate">
+          {{ featuresData.title }}
+        </ng-container>
+        <ng-template #editTitleTemplate>
+          <input
+            type="text"
+            [(ngModel)]="updatedValue"
+            (keyup)="handleKeyUp($event)"
+            (blur)="saveField()"
+            autofocus
+          />
+        </ng-template>
+      </h2>
+      <img [src]="imageUrl[0]" alt="Underline" class="underline">
+    </div>
+
+    <div class="features-grid">
+      <!-- Tile 1 -->
+      <div class="feature1-card show" #feature1Card>
+        <div class="icon-container" style="background-color: #FFEBDB;">
+          <img [src]="imageUrl[1]" alt="Powerful Icon">
+        </div>
+        <h3 (click)="startEditing('tile1', 0)">
+          <ng-container *ngIf="editingField !== 'tile1-0'; else editTile1TitleTemplate">
+            {{ featuresData.featureTiles.tile1[0] }}
+          </ng-container>
+          <ng-template #editTile1TitleTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedValue"
+              (keyup)="handleKeyUp($event)"
+              (blur)="saveField()"
+              autofocus
+            />
+          </ng-template>
+        </h3>
+        <p (click)="startEditing('tile1', 1)">
+          <ng-container *ngIf="editingField !== 'tile1-1'; else editTile1DescriptionTemplate">
+            {{ featuresData.featureTiles.tile1[1] }}
+          </ng-container>
+          <ng-template #editTile1DescriptionTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedValue"
+              (keyup)="handleKeyUp($event)"
+              (blur)="saveField()"
+              autofocus
+            />
+          </ng-template>
+        </p>
       </div>
-      <div class="features-grid">
-        <div class="feature1-card show" #feature1Card>
-          <div class="icon-container" style="background-color: #FFEBDB;">
-            <img [src]="imageUrl[1]" alt="Powerful Icon">
-          </div>
-          <h3>{{ featuresData.featureTiles.tile1[0] }}</h3>
-          <p>{{ featuresData.featureTiles.tile1[1] }}</p>
+
+      <!-- Tile 2 -->
+      <div class="feature2-card show" #feature2Card>
+        <div class="icon-container" style="background-color: #E0F8F8;">
+          <img [src]="imageUrl[2]" alt="Scale Icon">
         </div>
-        <div class="feature2-card show" #feature2Card>
-          <div class="icon-container" style="background-color: #E0F8F8;">
-            <img [src]="imageUrl[2]" alt="Scale Icon">
-          </div>
-          <h3>{{ featuresData.featureTiles.tile2[0] }}</h3>
-          <p>{{ featuresData.featureTiles.tile2[1] }}</p>
-        </div>
+        <h3 (click)="startEditing('tile2', 0)">
+          <ng-container *ngIf="editingField !== 'tile2-0'; else editTile2TitleTemplate">
+            {{ featuresData.featureTiles.tile2[0] }}
+          </ng-container>
+          <ng-template #editTile2TitleTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedValue"
+              (keyup)="handleKeyUp($event)"
+              (blur)="saveField()"
+              autofocus
+            />
+          </ng-template>
+        </h3>
+        <p (click)="startEditing('tile2', 1)">
+          <ng-container *ngIf="editingField !== 'tile2-1'; else editTile2DescriptionTemplate">
+            {{ featuresData.featureTiles.tile2[1] }}
+          </ng-container>
+          <ng-template #editTile2DescriptionTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedValue"
+              (keyup)="handleKeyUp($event)"
+              (blur)="saveField()"
+              autofocus
+            />
+          </ng-template>
+        </p>
+      </div>
+
+      <!-- Tile 3 -->
       <div class="feature3-card show" #feature3Card>
         <div class="icon-container" style="background-color: #F7EDFF;">
           <img [src]="imageUrl[3]" alt="Integration Icon">
         </div>
-        <h3>{{ featuresData.featureTiles.tile3[0] }}</h3>
-        <p>{{ featuresData.featureTiles.tile3[1] }}</p>
+        <h3 (click)="startEditing('tile3', 0)">
+          <ng-container *ngIf="editingField !== 'tile3-0'; else editTile3TitleTemplate">
+            {{ featuresData.featureTiles.tile3[0] }}
+          </ng-container>
+          <ng-template #editTile3TitleTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedValue"
+              (keyup)="handleKeyUp($event)"
+              (blur)="saveField()"
+              autofocus
+            />
+          </ng-template>
+        </h3>
+        <p (click)="startEditing('tile3', 1)">
+          <ng-container *ngIf="editingField !== 'tile3-1'; else editTile3DescriptionTemplate">
+            {{ featuresData.featureTiles.tile3[1] }}
+          </ng-container>
+          <ng-template #editTile3DescriptionTemplate>
+            <input
+              type="text"
+              [(ngModel)]="updatedValue"
+              (keyup)="handleKeyUp($event)"
+              (blur)="saveField()"
+              autofocus
+            />
+          </ng-template>
+        </p>
       </div>
     </div>
   </div>
