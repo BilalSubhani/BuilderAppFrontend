@@ -9,7 +9,9 @@
       <h2>{{whyBurqData?.title}}</h2>
       <img src="images/whyburq/lines.svg" alt="Decorative lines" class="decorative-lines">
       <p>{{whyBurqData?.body}}</p>
-      <button class="cta-whyburq">{{whyBurqData?.button}}</button>
+      <a [href]="whyBurqData?.button[1]">
+        <button class="cta-whyburq">{{whyBurqData?.button[0]}}</button>
+      </a>
     </div>
   </div>
 </div>

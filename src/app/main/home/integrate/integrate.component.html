@@ -5,7 +5,9 @@
             <h3>{{integrateData?.title}}</h3>
             <img [src]="imageUrl" alt="Image">
             <p>{{integrateData?.body}}</p>
-            <button class="cta-hero">{{integrateData?.button}}</button>
+            <a [href]="integrateData?.button[1]">
+                <button class="cta-hero">{{integrateData?.button[0]}}</button>
+            </a>
         </div>
         <div class="right-div" #rightDiv>
 

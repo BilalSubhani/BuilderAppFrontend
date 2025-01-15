@@ -4,15 +4,17 @@
         <img [src]="imageUrl[0]" alt="Burq Logo" />
       </a>
       <ul class="nav-links" *ngIf="navbarData?.listItems && navbarData?.buttonText">
-        <li class="dropdown" *ngFor="let key of objectKeys(navbarData.listItems)">
-          <a href="/burq">{{key}}<i class="arrow down" *ngIf="navbarData.listItems[key].length"></i></a>
-          <ul class="dropdown-menu" *ngIf="navbarData.listItems[key].length">
-            <li>
-              <a href="/burq" *ngFor="let item of navbarData.listItems[key]">{{ item }}</a>
-            </li>
-          </ul>
+        <li class="dropdown" *ngFor="let item of navbarData.listItems">
+            <a href="/burq">{{ item.key }}<i class="arrow down" *ngIf="item.values.length"></i></a>
+            <ul class="dropdown-menu" *ngIf="item.values.length">
+                <li *ngFor="let subItem of item.values">
+                    <a href="/burq">{{ subItem }}</a>
+                </li>
+            </ul>
         </li>
-        <li><a ><button class="cta-nav" (click)="onLogout()">{{ navbarData.buttonText }}</button></a></li>
+        <li>
+            <a><button class="cta-nav" (click)="onLogout()">{{ navbarData.buttonText[0] }}</button></a>
+        </li>
       </ul>
     </div>
 </nav>
@@ -30,7 +32,9 @@
     <div class="hero-content" *ngIf="heroSectionData?.heading && heroSectionData?.paragraph && heroSectionData?.buttonText">
     <h1>{{ heroSectionData.heading }}</h1>
     <p>{{ heroSectionData.paragraph }}</p>
-    <button class="cta-hero">{{ heroSectionData.buttonText }}</button>
+    <a [href]="heroSectionData.buttonText[1]">
+      <button class="cta-hero">{{ heroSectionData.buttonText[0] }}</button>
+    </a>
     </div>
     <div class="hero-video">
     <div class="video-container">

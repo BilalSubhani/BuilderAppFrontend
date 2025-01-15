@@ -24,7 +24,9 @@
         <h2>{{poweringData.body}}</h2>
       </div>
       <div class="cta">
-          <button class="cta-backing">{{poweringData.button}}</button>
+        <a [href]="poweringData.button[1]">
+          <button class="cta-backing">{{poweringData.button[0]}}</button>
+        </a>
       </div>
       <div class="fancy-image-topright">
         <img src="images/backing/redCircles.svg" alt="">

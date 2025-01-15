@@ -4,33 +4,19 @@
       <img [src]="imageUrl[0]" alt="Burq Logo" />
     </a>
     <ul class="nav-links" *ngIf="navbarData?.listItems && navbarData?.buttonText">
-      <li class="dropdown" *ngFor="let key of objectKeys(navbarData.listItems)">
-        <a>
-          {{ key }}<i class="arrow down" *ngIf="navbarData.listItems[key].length"></i>
-        </a>
-        <ul class="dropdown-menu" *ngIf="navbarData.listItems[key].length">
-          <li *ngFor="let item of navbarData.listItems[key]; let i = index">
-            <ng-container *ngIf="editingField?.type !== 'value' || editingField?.parentKey !== key || editingField?.index !== i; else editValueTemplate">
-              <a href="javascript:void(0)" (click)="startEditingNavbarField('value', key, i)">{{ item }}</a>
-            </ng-container>
-            <ng-template #editValueTemplate>
-              <input
-                #editValueInput
-                type="text"
-                [(ngModel)]="navbarData.listItems[key][i]"
-                (keyup)="handleNavbarKeyUp($event)"
-                (blur)="saveNavbarField()"
-                autofocus
-              />
-            </ng-template>
-          </li>
+      <li class="dropdown" *ngFor="let item of navbarData.listItems">
+        <a href="/burq">{{ item.key }}<i class="arrow down" *ngIf="item.values.length"></i></a>
+        <ul class="dropdown-menu" *ngIf="item.values.length">
+            <li *ngFor="let subItem of item.values">
+                <a href="/burq">{{ subItem }}</a>
+            </li>
         </ul>
       </li>
       
       <li>
         <a href="javascript:void(0)" (click)="startEditingNavbarField('buttonText')">
           <ng-container *ngIf="editingField?.type !== 'buttonText'; else editButtonTextTemplate">
-            <button class="cta-nav">{{ navbarData.buttonText }}</button>
+            <button class="cta-nav">{{ navbarData.buttonText[0] }}</button>
           </ng-container>
         </a>
         <ng-template #editButtonTextTemplate>
@@ -86,7 +72,7 @@
       *ngIf="editingHeroSectionField !== 'buttonText'; else editButtonText"
       (click)="startEditing('buttonText')"
     >
-      {{ heroSectionData.buttonText }}
+      {{ heroSectionData.buttonText[0] }}
     </button>
     <ng-template #editButtonText>
       <input

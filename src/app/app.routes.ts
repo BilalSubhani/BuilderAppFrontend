@@ -13,7 +13,7 @@ export const routes: Routes = [
     { path: 'login', component: UserListComponent},
     { path: 'dashboard', component: MainComponent, canActivate: [AuthGuard]},
     { path: '', redirectTo: '/login', pathMatch: 'full'},
-    { path: 'burq', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'burq', component: HomeComponent },
     { path: 'dashboard/users', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'dashboard/uploadimage', component: ImageComponent, canActivate: [AuthGuard] },
     { path: 'dashboard/uploadvideo', component: VideoComponent, canActivate: [AuthGuard] },
