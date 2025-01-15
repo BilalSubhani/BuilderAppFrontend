@@ -15,8 +15,8 @@ export class ImageComponent {
   publicId: string = '';
   isHovering: boolean = false;
 
-    imageChanged: boolean = false;
-    @Output() imageSent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  imageChanged: boolean = false;
+  @Output() imageSent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private http: HttpClient,     

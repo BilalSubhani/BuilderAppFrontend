@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject } from '@angular/core';
+import { Component, AfterViewInit, Inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,8 @@ import { MainService } from '../../main.service';
   imports:[CommonModule]
 })
 export class TabsTemplateComponent implements AfterViewInit {
+
+  @Output() tabsEvent = new EventEmitter<any>();
 
   private subscription?: Subscription;
   constructor(
@@ -55,6 +57,7 @@ export class TabsTemplateComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.setExport();
     const tabs = Array.from(this.document.querySelectorAll('.tab')) as HTMLElement[];
     const images = Array.from(this.document.querySelectorAll('.content img')) as HTMLElement[];
     const icons = Array.from(this.document.querySelectorAll('.icon')) as HTMLElement[];
@@ -86,5 +89,9 @@ export class TabsTemplateComponent implements AfterViewInit {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+  }
+
+  setExport(){
+    this.tabsEvent.emit(this.tabData?.data);
   }
 }

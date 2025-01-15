@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, OnInit } from '@angular/core';
+import { Component, AfterViewInit, Inject, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -20,6 +20,8 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
     15: { active: '/images/tabIcons/grocery-blue.svg', inactive: '/images/tabIcons/grocery.svg' },
     16: { active: '/images/tabIcons/retailer-blue.svg', inactive: '/images/tabIcons/retailer.svg' }
   };
+
+  @Output() industryEvent = new EventEmitter<any>();
 
   private subscription?: Subscription;
   tabContentData: any;
@@ -79,6 +81,7 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.setExport();
     const indTabs = Array.from(this.document.querySelectorAll('.ind-tab')) as HTMLElement[];
     const indIcons = Array.from(this.document.querySelectorAll('.ind-icon')) as HTMLImageElement[];
     const indTabContents = Array.from(this.document.querySelectorAll('.ind-tabcontent')) as HTMLElement[];
@@ -120,5 +123,9 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+  }
+
+  setExport(){
+    this.industryEvent.emit(this.tabContentData);
   }
 }

@@ -1,10 +1,10 @@
-<app-template-herosection #heroSection/>
-<app-template-features #features/>
-<app-template-provider #provider />
-<app-template-tabs #tabs/>
-<app-template-integrate #integrate/>
-<app-template-industries #industries/>
-<app-template-whyburq #whyburq/>
-<app-template-testimonials #testimonials/>
-<app-template-backing #backing/>
+<app-template-herosection #heroSection (heroSectionEvent)="receiveHero($event)" />
+<app-template-features #features (featuresDataEvent)="receiveFeature($event)"/>
+<app-template-provider #provider (providerEvent)="receiveProviders($event)"/>
+<app-template-tabs #tabs (tabsEvent)="receiveTabs($event)"/>
+<app-template-integrate #integrate (integratEvent)="receiveIntegrate($event)"/>
+<app-template-industries #industries (industryEvent)="receiveIndustries($event)"/>
+<app-template-whyburq #whyburq (whyburqEvent)="receiveWhyBurq($event)"/>
+<app-template-testimonials #testimonials (testimonialsEvent)="receiveTest($event)"/>
+<app-template-backing #backing (backingDataEvent)="receiveBacking($event)"/>
 <app-template-footer #footer/>

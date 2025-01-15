@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +21,9 @@ export class BackingTemplateComponent {
   backingData: any;
   poweringData: any;
 
+  @Output() backingDataEvent: EventEmitter<any> = new EventEmitter<any>();
+  exportBackingData: any;
+
   dataFunctions(): void{
     this.http.get<any>("http://localhost:3000/data/component/backing").subscribe((res)=>{
       this.backingData = res.data;
@@ -37,6 +40,8 @@ export class BackingTemplateComponent {
 
   ngOnInit(){
     this.dataFunctions();
+    
+    this.setExportData();
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
@@ -63,6 +68,8 @@ export class BackingTemplateComponent {
       this.backingData[this.editingField] = this.updatedValue;
       this.editingField = null;
     }
+
+    this.setExportData();
   }
 
   handleKeyUp(event: KeyboardEvent) {
@@ -107,7 +114,7 @@ export class BackingTemplateComponent {
     }
     this.editingPoweringField = null;
 
-    console.log(this.poweringData);
+    this.setExportData();
   }
 
   handlePoweringKeyUp(event: KeyboardEvent) {
@@ -126,5 +133,13 @@ export class BackingTemplateComponent {
       this.updatedPoweringValue = this.poweringData[this.editingPoweringField];
     }
     this.editingPoweringField = null;
+  }
+
+  setExportData(){
+    this.exportBackingData={
+      "backing": this.backingData,
+      "startPowering": this.poweringData
+    }
+    this.backingDataEvent.emit(this.exportBackingData);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID} from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, Output, EventEmitter} from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -17,10 +17,11 @@ export class ProviderTemplateComponent implements AfterViewInit {
 
   @ViewChild('counterSection', { static: false }) counterSection!: ElementRef;
   @ViewChild('counterCities', { static: false }) counterCities!: ElementRef;
-
   @ViewChild('bottomItem1', { static: false }) bottomItem1!: ElementRef;
   @ViewChild('bottomItem2', { static: false }) bottomItem2!: ElementRef;
   @ViewChild('bottomItem3', { static: false }) bottomItem3!: ElementRef;
+
+  @Output() providerEvent: EventEmitter<any> = new EventEmitter<any> ();
 
   private subscription?: Subscription;
   videoPID: string = 'provider';
@@ -68,7 +69,7 @@ export class ProviderTemplateComponent implements AfterViewInit {
 
   ngOnInit(){
     this.dataFunction();
-
+    this.setExport();
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
         this.dataFunction();
@@ -169,6 +170,8 @@ export class ProviderTemplateComponent implements AfterViewInit {
     this.updatedBody = null;
     this.updatedList = {};
     //console.log('Updated Providers Data:', this.providersData);
+
+    this.setExport();
   }
 
   cancelEditing() {
@@ -199,4 +202,8 @@ export class ProviderTemplateComponent implements AfterViewInit {
 
 
   //---------------------------------------------------------------
+
+  setExport(){
+    this.providerEvent.emit(this.providersData);
+  }
 }

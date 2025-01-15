@@ -18,7 +18,7 @@ export class VideoComponent {
   videoChanged: string = '0';
   @Output() videoSent: EventEmitter<string> = new EventEmitter<string>();
 
-  @Input() pID:string='';
+  @Input() pID: string='';
 
   constructor(
     private http: HttpClient,
@@ -99,7 +99,6 @@ export class VideoComponent {
 
     if (this.videoChanged) {
       this.videoSent.emit(this.videoChanged);
-      this.publicId='';
       this.videoChanged = '0';
     }
   }

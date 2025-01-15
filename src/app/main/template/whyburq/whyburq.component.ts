@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -18,6 +18,9 @@ export class WhyburqTemplateComponent {
   imagePublicUrl: string[] = ['whyburq', 'sp1', 'sp2', 'sp3']
   imageUrl: string[] = [];
   private subscription?: Subscription;
+
+  @Output() whyburqEvent: EventEmitter<any> = new EventEmitter<any>();
+  exportData: any;
 
   constructor(
     private http: HttpClient,
@@ -52,6 +55,7 @@ export class WhyburqTemplateComponent {
 
   ngOnInit(){
     this.dataFunctions();
+    this.setExport();
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
@@ -95,8 +99,7 @@ export class WhyburqTemplateComponent {
     }
 
     this.resetWhyBurqEditing();
-
-    console.log(this.whyBurqData);
+    this.setExport();
   }
 
   cancelWhyBurqEditing() {
@@ -148,6 +151,7 @@ export class WhyburqTemplateComponent {
       
       this.editingBenefitField = null;
       this.updatedBenefitValue = null;
+      this.setExport();
 
       // console.log(this.benefitsData);
     }
@@ -164,4 +168,13 @@ export class WhyburqTemplateComponent {
     }
   }
 
+
+  setExport(){
+    this.exportData = {
+      "whyBurq": this.whyBurqData,
+      "sellingPoints" : this.benefitsData
+    }
+    
+    this.whyburqEvent.emit(this.exportData);
+  }
 }

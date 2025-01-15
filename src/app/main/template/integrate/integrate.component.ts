@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -16,6 +16,8 @@ export class IntegrateTemplateComponent {
   integrateData: any;
   imageUrl: string = '';
   private subscription?: Subscription;
+
+  @Output() integratEvent: EventEmitter<any> = new EventEmitter<any> ();
 
   constructor(
     private http: HttpClient,
@@ -43,7 +45,7 @@ export class IntegrateTemplateComponent {
 
   ngOnInit(){
     this.dataController();
-
+    this.setExport();
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
         this.dataController();
@@ -89,6 +91,7 @@ export class IntegrateTemplateComponent {
       this.integrateData[this.editingField] = this.updatedValue.replace(/\n/g, '').trim();
     }
     this.resetEditing();
+    this.setExport();
   }
 
   cancelEditing() {
@@ -119,4 +122,8 @@ export class IntegrateTemplateComponent {
   }
 
   // ----------------------------------------------------------------------------
+
+  setExport(){
+    this.integratEvent.emit(this.integrateData);
+  }
 }

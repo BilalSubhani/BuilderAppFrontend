@@ -28,6 +28,7 @@ export class MainComponent implements OnInit {
   fieldClicked: string = '';
   elementClicked: string = '';
   videoUrl: string ='';
+  updatedData: any;
 
   // Variables for data to be displayed or edited
   navbarData: any;
@@ -244,14 +245,14 @@ export class MainComponent implements OnInit {
   onPublish(){
     const id = this.existingData._id;
 
-    const {_id, ...newData} = this.existingData.components;
-    const body = {
-      "components": newData
-    };
+    // const {_id, ...newData} = this.existingData.components;
+    // const body = {
+    //   "components": newData
+    // };
 
     // console.log(body);
 
-    this.mainService.createData(body).subscribe({
+    this.mainService.createData(this.updatedData).subscribe({
       next: (response) => {
         // console.log('API Response:', response);
       },
@@ -261,6 +262,7 @@ export class MainComponent implements OnInit {
     });
 
     this.onSubmit();
+    this.disconnectFromSocket();
   }
 
   connectToSocket(): void {
@@ -276,6 +278,15 @@ export class MainComponent implements OnInit {
     this.socket.on('connect_error', (err: any) => {
       console.error('Connection error:', err);
     });
+  }
+
+  disconnectFromSocket(): void {
+    if (this.socket) {
+      this.socket.disconnect();
+      // console.log('Disconnected from the server');
+    } else {
+      console.log('Socket is not initialized or already disconnected');
+    }
   }
 
   onSubmit() {
@@ -302,5 +313,14 @@ export class MainComponent implements OnInit {
       top: compPoistion,
       behavior: 'smooth'
     });
+  }
+
+  receiveUpdatedData(event: any){
+    if (event.testimonials) {
+      const body = {
+        components: event
+      };
+      this.updatedData = body;
+    }
   }
 }

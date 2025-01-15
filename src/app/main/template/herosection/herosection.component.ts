@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -6,7 +6,6 @@ import { MainService } from '../../main.service';
 import { Subscription } from 'rxjs';
 import { VideoComponent } from '../../video/video.component';
 import { FormsModule } from '@angular/forms';
-
 
 @Component({
   selector: 'app-template-herosection',
@@ -25,6 +24,10 @@ export class HerosectionTemplateComponent {
 
   navbarData: any;
   heroSectionData: any;
+  
+  @Output() heroSectionEvent = new EventEmitter<any>();
+
+  exportData: any;
 
   private subscription?: Subscription;
 
@@ -72,7 +75,7 @@ export class HerosectionTemplateComponent {
 
   ngOnInit() {
     this.dataController();
-
+    this.setExport();
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
         this.dataController();
@@ -114,6 +117,7 @@ export class HerosectionTemplateComponent {
   saveValueEdit(listIndex: number, valueIndex: number) {
     this.navbarData.listItems[listIndex].values[valueIndex] = this.editValue;
     this.editingValueIndex.delete(`${listIndex}-${valueIndex}`);
+    this.setExport();
   }
 
   cancelValueEdit() {
@@ -134,6 +138,8 @@ export class HerosectionTemplateComponent {
       this.navbarData.buttonText[1] = this.editButtonUrl;
     }
     this.editingField = null;
+
+    this.setExport();
   }
 
   handleKeyUp(event: KeyboardEvent) {
@@ -186,7 +192,8 @@ export class HerosectionTemplateComponent {
     this.editingHeroSectionField = null;
     this.originalHeroSectionValue = null;
   
-    console.log(this.heroSectionData);
+    // console.log(this.heroSectionData);
+    this.setExport();
   }
   
   cancelHeroEditing() {
@@ -213,5 +220,14 @@ export class HerosectionTemplateComponent {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+  }
+
+  setExport() {
+    this.exportData = {
+      "navbar": this.navbarData,
+      "heroSection": this.heroSectionData
+    };
+
+    this.heroSectionEvent.emit(this.exportData);
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { ProviderTemplateComponent } from './provider/provider.component';
 import { HerosectionTemplateComponent } from './herosection/herosection.component';
 import { TabsTemplateComponent } from './tabs/tabs.component';
@@ -24,6 +24,94 @@ import { TestimonialsTemplateComponent } from './testimonials/testimonials.compo
   templateUrl: './template.component.html',
   styleUrl: './template.component.less'
 })
-export class TemplateComponent {
+export class TemplateComponent implements AfterViewInit{
+
+  @Output() templateEvent = new EventEmitter<any>();
+  exportData: any;
+
+  navbar: any;
+  hero:any;
+  features:any;
+  providers: any;
+  tabs: any;
+  integrate: any;
+  industries: any;
+  whyburq: any;
+  sellingPoints: any;
+  test: any;
+  backing:any;
+  startPowering: any;
+
+  receiveHero(event: any) {
+    this.navbar = event?.navbar;
+    this.hero = event?.heroSection;
+
+    this.setExportData();
+  }
+  receiveFeature(event: any){
+    this.features=event;
+    
+    this.setExportData();
+  }
+  receiveProviders(event: any){
+    this.providers = event;
+    
+    this.setExportData();
+  }
+  receiveIntegrate(event: any){
+    this.integrate = event;
+    
+    this.setExportData();
+  }
+  receiveWhyBurq(event: any){
+    this.whyburq = event?.whyBurq;
+    this.sellingPoints = event?.sellingPoints;
+    
+    this.setExportData();
+  }
+  receiveBacking(event: any){
+    this.backing = event?.backing;
+    this.startPowering = event?.startPowering;
+    
+    this.setExportData();
+  }
+  receiveIndustries(event: any){
+    this.industries = event;
+    
+    this.setExportData();
+  }
+  receiveTabs(event: any){
+    this.tabs = event;
+    
+    this.setExportData();
+  }
+  receiveTest(event: any){
+    this.test = event;
+    
+    this.setExportData();
+  }
+
+  ngAfterViewInit(): void {
+    this.setExportData();
+  }
+
+  setExportData(){
+    this.exportData = {
+      "navbar" : this.navbar,
+      "heroSection" : this.hero,
+      "features": this.features,
+      "providers": this.providers,
+      "tabs" : this.tabs,
+      "integrate": this.integrate,
+      "industries": this.industries,
+      "whyBurq": this.whyburq,
+      "sellingPoints": this.sellingPoints,
+      "testimonials": this.test,
+      "backing": this.backing,
+      "startPowering": this.startPowering
+    }
+
+    this.templateEvent.emit(this.exportData);
+  }
 
 }

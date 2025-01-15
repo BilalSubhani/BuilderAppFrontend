@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject } from '@angular/core';
+import { Component, AfterViewInit, Inject, EventEmitter, Output } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -16,6 +16,8 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
     private http: HttpClient,
     @Inject(DOCUMENT) private document: Document
   ) {}
+
+  @Output() testimonialsEvent = new EventEmitter<any>();
 
   testimonialData: any;
   objectKeys = Object.keys;
@@ -42,6 +44,7 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   slides: HTMLElement[] = [];
   totalSlides: number = 0;
   ngAfterViewInit() {
+    this.setExport();
     this.slides = Array.from(this.document.querySelectorAll('.slide'));
     this.totalSlides = this.slides.length;
     const nextButton = this.document.getElementById('next');
@@ -75,5 +78,9 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   prevSlide() {
     this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
     this.showSlide(this.currentSlide);
+  }
+
+  setExport(){
+    this.testimonialsEvent.emit(this.testimonialData);
   }
 }
