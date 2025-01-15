@@ -57,27 +57,46 @@ export class IntegrateTemplateComponent {
 
   // Editable
   // ----------------------------------------------------------------------------
-
   editingField: string | null = null;
   originalValue: string | null = null;
   updatedValue: string | null = null;
+  updatedButtonText: string | null = null;
+  updatedButtonUrl: string | null = null;
 
-  startEditing(field: 'smallHeading' | 'title' | 'body' | 'button') {
+  startEditing(field: 'smallHeading' | 'title' | 'body' | 'buttonText' | 'buttonUrl') {
     this.editingField = field;
-    this.originalValue = this.integrateData[field];
-    this.updatedValue = this.originalValue;
+
+    if (field === 'buttonText') {
+      this.originalValue = this.integrateData.button[0];
+      this.updatedButtonText = this.originalValue;
+      this.originalValue = this.integrateData.button[1];
+      this.updatedButtonUrl = this.originalValue;
+    } else {
+      this.originalValue = this.integrateData[field];
+      this.updatedValue = this.originalValue;
+    }
   }
 
   saveField() {
-    if (this.editingField) {
-      this.integrateData[this.editingField] = this.updatedValue!;
-      //console.log('Updated Data:', this.integrateData);
+    if (this.editingField === 'buttonText') {
+      this.integrateData.button[0] = this.updatedButtonText?.replace(/\n/g, '').trim();
+      if (this.updatedButtonUrl !== null) {
+        this.integrateData.button[1] = this.updatedButtonUrl?.replace(/\n/g, '').trim();
+      }
+    } else if (this.editingField === 'buttonUrl') {
+      this.integrateData.button[1] = this.updatedButtonUrl?.replace(/\n/g, '').trim();
+    } else if (this.editingField && this.updatedValue !== null) {
+      this.integrateData[this.editingField] = this.updatedValue.replace(/\n/g, '').trim();
     }
     this.resetEditing();
   }
 
   cancelEditing() {
-    if (this.editingField) {
+    if (this.editingField === 'buttonText') {
+      this.updatedButtonText = this.integrateData.button[0];
+    } else if (this.editingField === 'buttonUrl') {
+      this.updatedButtonUrl = this.integrateData.button[1];
+    } else if (this.editingField) {
       this.integrateData[this.editingField] = this.originalValue!;
     }
     this.resetEditing();
@@ -87,6 +106,8 @@ export class IntegrateTemplateComponent {
     this.editingField = null;
     this.originalValue = null;
     this.updatedValue = null;
+    this.updatedButtonText = null;
+    this.updatedButtonUrl = null;
   }
 
   handleKeyUp(event: KeyboardEvent) {

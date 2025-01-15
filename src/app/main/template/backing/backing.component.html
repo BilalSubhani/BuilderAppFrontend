@@ -46,41 +46,52 @@
 </div>
   
 <div class="fancy-short-banner">
-    <div class="container" *ngIf="poweringData">
-        <div class="title" (click)="startPoweringEditing('body')">
-            <ng-container *ngIf="editingPoweringField !== 'body'; else editPoweringBodyTemplate">
-              <h2>{{ poweringData.body }}</h2>
-            </ng-container>
-            <ng-template #editPoweringBodyTemplate>
-              <input
-                type="text"
-                [(ngModel)]="updatedPoweringValue"
-                (keyup)="handlePoweringKeyUp($event)"
-                (blur)="savePoweringField()"
-                autofocus
-              />
-            </ng-template>
+  <div class="container" *ngIf="poweringData">
+    <div class="title" (click)="startPoweringEditing('body')">
+        <ng-container *ngIf="editingPoweringField !== 'body'; else editPoweringBodyTemplate">
+          <h2>{{ poweringData.body }}</h2>
+        </ng-container>
+        <ng-template #editPoweringBodyTemplate>
+          <input
+            type="text"
+            [(ngModel)]="updatedPoweringValue"
+            (keyup)="handlePoweringKeyUp($event)"
+            (blur)="savePoweringField()"
+            autofocus
+          />
+        </ng-template>
+      </div>
+      
+      <div class="cta" (click)="startPoweringEditing('button')">
+        <ng-container *ngIf="editingPoweringField !== 'button'; else editPoweringButtonTemplate">
+          <button class="cta-backing">{{ poweringData.button[0] }}</button>
+        </ng-container>
+        <ng-template #editPoweringButtonTemplate>
+          <div>
+            <input
+              type="text"
+              [(ngModel)]="updatedPoweringButtonText"
+              (keyup)="handlePoweringKeyUp($event)"
+              (blur)="savePoweringField()"
+              placeholder="Edit Button Text"
+              autofocus
+            />
           </div>
-          
-          <div class="cta" (click)="startPoweringEditing('button')">
-            <ng-container *ngIf="editingPoweringField !== 'button'; else editPoweringButtonTemplate">
-              <button class="cta-backing">{{ poweringData.button }}</button>
-            </ng-container>
-            <ng-template #editPoweringButtonTemplate>
-              <input
-                type="text"
-                [(ngModel)]="updatedPoweringValue"
-                (keyup)="handlePoweringKeyUp($event)"
-                (blur)="savePoweringField()"
-                autofocus
-              />
-            </ng-template>
+          <div>
+            <input
+              type="text"
+              [(ngModel)]="updatedPoweringButtonUrl"
+              (keyup)="handlePoweringKeyUp($event)"
+              (blur)="savePoweringField()"
+              placeholder="Edit Button URL"
+            />
           </div>
-          
+        </ng-template>
+      </div>
         
+      
     <div class="fancy-image-topright">
         <img src="images/backing/redCircles.svg" alt="">
     </div>
-    </div>
-</div>
+  </div>
 </div>

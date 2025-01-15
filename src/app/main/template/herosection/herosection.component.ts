@@ -17,12 +17,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class HerosectionTemplateComponent {
 
-  @ViewChild('editValueInput', { static: false }) editValueInput!: ElementRef;
-  editingField: { type: 'value' | 'buttonText'; parentKey?: string; index?: number } | null = null;
-  originalValue: string | null = null;
-  editingHeroSectionField: string | null = null;
-  originalHeroSectionValue: string | null = null; 
-
   messageReceived:string = '';
 
   imagePublicUrl: string[] = ['burq-logo'];
@@ -89,87 +83,132 @@ export class HerosectionTemplateComponent {
   // Navbar Field 
   // ----------------------------------------------------
 
-  startEditingNavbarField(type: 'value' | 'buttonText', parentKey?: string, index?: number) {
-    this.editingField = { type, parentKey, index };
+  editingKeyIndex = new Set<number>();
+  editKeyValue = '';
+  editingValueIndex = new Set<string>();
+  editValue = '';
+  editingField: string | null = null;
+  editButton = '';
+  editButtonUrl = '';
 
-    if (type === 'value' && parentKey !== undefined && index !== undefined) {
-      this.originalValue = this.navbarData.listItems[parentKey][index];
-    } else if (type === 'buttonText') {
-      this.originalValue = this.navbarData.buttonText;
+  enableEditKey(index: number) {
+    this.editingKeyIndex.add(index);
+    this.editKeyValue = this.navbarData.listItems[index].key;
+  }
+
+  saveKeyEdit(index: number) {
+    this.navbarData.listItems[index].key = this.editKeyValue;
+    this.editingKeyIndex.delete(index);
+  }
+
+  cancelKeyEdit() {
+    this.editingKeyIndex.clear();
+  }
+
+  enableEditValue(listIndex: number, valueIndex: number) {
+    const compositeIndex = `${listIndex}-${valueIndex}`;
+    this.editingValueIndex.add(compositeIndex);
+    this.editValue = this.navbarData.listItems[listIndex].values[valueIndex];
+  }
+
+  saveValueEdit(listIndex: number, valueIndex: number) {
+    this.navbarData.listItems[listIndex].values[valueIndex] = this.editValue;
+    this.editingValueIndex.delete(`${listIndex}-${valueIndex}`);
+  }
+
+  cancelValueEdit() {
+    this.editingValueIndex.clear();
+  }
+
+  startEditing(field: string) {
+    this.editingField = field;
+    if (field === 'buttonText') {
+      this.editButton = this.navbarData.buttonText[0];
+      this.editButtonUrl = this.navbarData.buttonText[1];
     }
   }
 
-  saveNavbarField() {
+  saveField() {
+    if (this.editingField === 'buttonText') {
+      this.navbarData.buttonText[0] = this.editButton;
+      this.navbarData.buttonText[1] = this.editButtonUrl;
+    }
     this.editingField = null;
-    this.originalValue = null;
-    console.log('Updated Navbar Data:', this.navbarData);
   }
 
-  cancelNavbarEditing() {
-    if (this.editingField) {
-      const { type, parentKey, index } = this.editingField;
-
-      if (type === 'value' && parentKey !== undefined && index !== undefined) {
-        this.navbarData.listItems[parentKey][index] = this.originalValue!;
-      } else if (type === 'buttonText') {
-        this.navbarData.buttonText = this.originalValue!;
-      }
+  handleKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.saveField();
+    } else if (event.key === 'Escape') {
+      this.cancelEdit();
     }
+  }
 
+  cancelEdit() {
+    if (this.editingField === 'buttonText') {
+      this.editButton = this.navbarData.buttonText[0];
+      this.editButtonUrl = this.navbarData.buttonText[1];
+    }
     this.editingField = null;
-    this.originalValue = null;
   }
 
-  handleNavbarKeyUp(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      this.cancelNavbarEditing();
-    } else if (event.key === 'Enter') {
-      this.saveNavbarField();
-    }
-  }
-
-  ngAfterViewChecked() {
-    if (this.editingField?.type === 'value' && this.editValueInput) {
-      this.editValueInput.nativeElement.focus();
-    }
-  }
-
-  objectKeys(obj: object): string[] {
-    return Object.keys(obj);
-  }
 
   // ----------------------------------------------------
 
   // HeroSection Field
   // -----------------------------------------------------
 
-  startEditing(field: string) {
-    this.editingHeroSectionField = field;
-    this.originalHeroSectionValue = this.heroSectionData[field as keyof typeof this.heroSectionData];
-  }
+  editingHeroSectionField: string | null = null;
+  originalHeroSectionValue: any = null;
+  editingHeroButtonText: string = '';
+  editingHeroButtonUrl: string = '';
 
-  saveField() {
+  startHeroEditing(field: string) {
+    this.editingHeroSectionField = field;
+  
+    if (field === 'buttonText') {
+      this.editingHeroButtonText = this.heroSectionData.buttonText[0];
+      this.editingHeroButtonUrl = this.heroSectionData.buttonText[1];
+    } else {
+      this.originalHeroSectionValue = this.heroSectionData[field as keyof typeof this.heroSectionData];
+    }
+  }
+  
+  saveHeroField() {
+    if (this.editingHeroSectionField === 'buttonText') {
+      this.heroSectionData.buttonText[0] = this.editingHeroButtonText.replace(/\n/g, '').trim();
+      this.heroSectionData.buttonText[1] = this.editingHeroButtonUrl.replace(/\n/g, '').trim();
+    } else if (this.editingHeroSectionField && typeof this.heroSectionData[this.editingHeroSectionField as keyof typeof this.heroSectionData] === 'string') {
+      this.heroSectionData[this.editingHeroSectionField as keyof typeof this.heroSectionData] = 
+        (this.heroSectionData[this.editingHeroSectionField as keyof typeof this.heroSectionData] as string).replace(/\n/g, '').trim();
+    }
+  
     this.editingHeroSectionField = null;
     this.originalHeroSectionValue = null;
-    // console.log('Updated Hero Section Data:', this.heroSectionData);
+  
+    console.log(this.heroSectionData);
   }
-
-  cancelEditing() {
-    if (this.editingHeroSectionField) {
+  
+  cancelHeroEditing() {
+    if (this.editingHeroSectionField === 'buttonText') {
+      this.editingHeroButtonText = this.heroSectionData.buttonText[0];
+      this.editingHeroButtonUrl = this.heroSectionData.buttonText[1];
+    } else if (this.editingHeroSectionField) {
       this.heroSectionData[this.editingHeroSectionField as keyof typeof this.heroSectionData] = this.originalHeroSectionValue!;
     }
+
     this.editingHeroSectionField = null;
     this.originalHeroSectionValue = null;
   }
-
-  handleKeyUp(event: KeyboardEvent) {
+  
+  handleHeroKeyUp(event: KeyboardEvent) {
     if (event.key === 'Escape') {
-      this.cancelEditing();
+      this.cancelHeroEditing();
     } else if (event.key === 'Enter') {
-      this.saveField();
+      this.saveHeroField();
     }
   }
-
+  
   // -----------------------------------------------------------------------
 
   ngOnDestroy() {

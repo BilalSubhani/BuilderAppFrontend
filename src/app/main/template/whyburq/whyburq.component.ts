@@ -67,20 +67,55 @@ export class WhyburqTemplateComponent {
 
   // whyBurq
   // --------------------------------------------------------------
+ 
   editingWhyBurqField: string | null = null;
+  originalWhyBurqValue: string | null = null;
   whyBurqUpdatedValue: string | null = null;
+  whyBurqUpdatedButtonText: string | null = null;
+  whyBurqUpdatedButtonUrl: string | null = null;
 
   startEditingWhyBurq(field: 'title' | 'body' | 'button') {
     this.editingWhyBurqField = field;
-    this.whyBurqUpdatedValue = this.whyBurqData[field];
+
+    if (field === 'button') {
+      this.originalWhyBurqValue = this.whyBurqData?.button[0] || '';
+      this.whyBurqUpdatedButtonText = this.originalWhyBurqValue;
+      this.whyBurqUpdatedButtonUrl = this.whyBurqData?.button[1] || '';
+    } else {
+      this.whyBurqUpdatedValue = this.whyBurqData[field];
+    }
   }
 
   saveWhyBurqField() {
-    if (this.editingWhyBurqField) {
-      this.whyBurqData[this.editingWhyBurqField] = this.whyBurqUpdatedValue!;
-      // console.log('Updated whyBurqData:', this.whyBurqData);
+    if (this.editingWhyBurqField === 'button') {
+      this.whyBurqData.button[0] = this.whyBurqUpdatedButtonText?.replace(/\n/g, '').trim();
+      this.whyBurqData.button[1] = this.whyBurqUpdatedButtonUrl?.replace(/\n/g, '').trim();
+    } else if (this.editingWhyBurqField && this.whyBurqUpdatedValue !== null) {
+      this.whyBurqData[this.editingWhyBurqField] = this.whyBurqUpdatedValue.replace(/\n/g, '').trim();
     }
+
     this.resetWhyBurqEditing();
+
+    console.log(this.whyBurqData);
+  }
+
+  cancelWhyBurqEditing() {
+    if (this.editingWhyBurqField === 'button') {
+      this.whyBurqUpdatedButtonText = this.originalWhyBurqValue;
+      this.whyBurqUpdatedButtonUrl = this.whyBurqData?.button[1] || '';
+    } else if (this.editingWhyBurqField) {
+      this.whyBurqData[this.editingWhyBurqField] = this.originalWhyBurqValue!;
+    }
+
+    this.resetWhyBurqEditing();
+  }
+
+  resetWhyBurqEditing() {
+    this.editingWhyBurqField = null;
+    this.originalWhyBurqValue = null;
+    this.whyBurqUpdatedValue = null;
+    this.whyBurqUpdatedButtonText = null;
+    this.whyBurqUpdatedButtonUrl = null;
   }
 
   handleWhyBurqKeyUp(event: KeyboardEvent) {
@@ -89,11 +124,6 @@ export class WhyburqTemplateComponent {
     } else if (event.key === 'Enter') {
       this.saveWhyBurqField();
     }
-  }
-
-  resetWhyBurqEditing() {
-    this.editingWhyBurqField = null;
-    this.whyBurqUpdatedValue = null;
   }
 
   // Selling Points 

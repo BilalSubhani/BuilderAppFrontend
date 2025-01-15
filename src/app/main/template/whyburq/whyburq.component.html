@@ -39,19 +39,31 @@
         
         <div *ngIf="editingWhyBurqField !== 'button'; else editWhyBurqButtonTemplate">
           <button class="cta-whyburq" (click)="startEditingWhyBurq('button')">
-            {{ whyBurqData?.button }}
+            {{ whyBurqData?.button[0] }}
           </button>
         </div>
-        <ng-template #editWhyBurqButtonTemplate>
-          <input
-            type="text"
-            [(ngModel)]="whyBurqUpdatedValue"
-            (keyup)="handleWhyBurqKeyUp($event)"
-            (blur)="saveWhyBurqField()"
-            autofocus
-          />
-        </ng-template>
         
+        <ng-template #editWhyBurqButtonTemplate>
+          <div>
+            <input
+              type="text"
+              [(ngModel)]="whyBurqUpdatedButtonText"
+              (keyup)="handleWhyBurqKeyUp($event)"
+              (blur)="saveWhyBurqField()"
+              placeholder="Edit Button Text"
+              autofocus
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              [(ngModel)]="whyBurqUpdatedButtonUrl"
+              (keyup)="handleWhyBurqKeyUp($event)"
+              (blur)="saveWhyBurqField()"
+              placeholder="Edit Button URL"
+            />
+          </div>
+        </ng-template>        
       </div>
     </div>
 </div>

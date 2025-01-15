@@ -80,21 +80,34 @@ export class BackingTemplateComponent {
 
 
   // Powering
+  //---------------------------------------------------------
+
   updatedPoweringValue: string = '';
+  updatedPoweringButtonText: string = '';
+  updatedPoweringButtonUrl: string = '';
   editingPoweringField: string | null = null;
 
   startPoweringEditing(field: 'body' | 'button') {
     this.editingPoweringField = field;
-    this.updatedPoweringValue = this.poweringData[field];
+
+    if (field === 'button') {
+      this.updatedPoweringButtonText = this.poweringData.button[0];
+      this.updatedPoweringButtonUrl = this.poweringData.button[1];
+    } else {
+      this.updatedPoweringValue = this.poweringData[field];
+    }
   }
 
   savePoweringField() {
-    if (this.editingPoweringField) {
-      this.poweringData[this.editingPoweringField] = this.updatedPoweringValue;
+    if (this.editingPoweringField === 'button') {
+      this.poweringData.button[0] = this.updatedPoweringButtonText.trim();
+      this.poweringData.button[1] = this.updatedPoweringButtonUrl.trim();
+    } else if (this.editingPoweringField && this.updatedPoweringValue !== '') {
+      this.poweringData[this.editingPoweringField] = this.updatedPoweringValue.trim();
     }
     this.editingPoweringField = null;
 
-    // console.log(this.poweringData);
+    console.log(this.poweringData);
   }
 
   handlePoweringKeyUp(event: KeyboardEvent) {
@@ -106,7 +119,10 @@ export class BackingTemplateComponent {
   }
 
   cancelPoweringEditing() {
-    if (this.editingPoweringField) {
+    if (this.editingPoweringField === 'button') {
+      this.updatedPoweringButtonText = this.poweringData.button[0];
+      this.updatedPoweringButtonUrl = this.poweringData.button[1];
+    } else if (this.editingPoweringField) {
       this.updatedPoweringValue = this.poweringData[this.editingPoweringField];
     }
     this.editingPoweringField = null;

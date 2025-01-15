@@ -3,65 +3,79 @@
         <div class="left-div show" #leftDiv *ngIf="integrateData?.smallHeading && integrateData?.title && integrateData?.body && integrateData?.button">
             <h6 (click)="startEditing('smallHeading')">
                 <ng-container *ngIf="editingField !== 'smallHeading'; else editSmallHeadingTemplate">
-                  {{ integrateData?.smallHeading }}
+                    {{ integrateData?.smallHeading }}
                 </ng-container>
                 <ng-template #editSmallHeadingTemplate>
-                  <input
+                    <input
                     type="text"
                     [(ngModel)]="updatedValue"
                     (keyup)="handleKeyUp($event)"
                     (blur)="saveField()"
                     autofocus
-                  />
+                    />
                 </ng-template>
             </h6>
-            
-            <h3 (click)="startEditing('title')">
-            <ng-container *ngIf="editingField !== 'title'; else editTitleTemplate">
-                {{ integrateData?.title }}
-            </ng-container>
-            <ng-template #editTitleTemplate>
-                <input
-                type="text"
-                [(ngModel)]="updatedValue"
-                (keyup)="handleKeyUp($event)"
-                (blur)="saveField()"
-                autofocus
-                />
-            </ng-template>
-            </h3>
-            
-            <img [src]="imageUrl" alt="Image">
-            
-            <p (click)="startEditing('body')">
-            <ng-container *ngIf="editingField !== 'body'; else editBodyTemplate">
-                {{ integrateData?.body }}
-            </ng-container>
-            <ng-template #editBodyTemplate>
-                <textarea
-                [(ngModel)]="updatedValue"
-                (keyup)="handleKeyUp($event)"
-                (blur)="saveField()"
-                autofocus
-                ></textarea>
-            </ng-template>
-            </p>
-            
-            <div *ngIf="editingField !== 'button'; else editButtonTemplate">
-                <button class="cta-hero" (click)="startEditing('button')">
-                  {{ integrateData?.button }}
-                </button>
-              </div>
-              <ng-template #editButtonTemplate>
-                <input
-                  type="text"
-                  [(ngModel)]="updatedValue"
-                  (keyup)="handleKeyUp($event)"
-                  (blur)="saveField()"
-                  autofocus
-                />
-              </ng-template>
               
+            <h3 (click)="startEditing('title')">
+                <ng-container *ngIf="editingField !== 'title'; else editTitleTemplate">
+                    {{ integrateData?.title }}
+                </ng-container>
+                <ng-template #editTitleTemplate>
+                    <input
+                    type="text"
+                    [(ngModel)]="updatedValue"
+                    (keyup)="handleKeyUp($event )"
+                    (blur)="saveField()"
+                    autofocus
+                    />
+                </ng-template>
+            </h3>
+              
+            <img [src]="imageUrl" alt="Image">
+              
+            <p (click)="startEditing('body')">
+                <ng-container *ngIf="editingField !== 'body'; else editBodyTemplate">
+                    {{ integrateData?.body }}
+                </ng-container>
+                <ng-template #editBodyTemplate>
+                    <textarea
+                    [(ngModel)]="updatedValue"
+                    (keyup)="handleKeyUp($event)"
+                    (blur)="saveField()"
+                    autofocus
+                    ></textarea>
+                </ng-template>
+            </p>
+              
+            <button class="cta-hero" 
+                *ngIf="editingField !== 'buttonText' ; else editButtonTemplate"
+                (click)="startEditing('buttonText')"
+            >
+                {{ integrateData?.button[0] }}
+            </button>
+              
+            <ng-template #editButtonTemplate>
+                <div>
+                    <input
+                    type="text"
+                    [(ngModel)]="updatedButtonText"
+                    (keyup)="handleKeyUp($event)"
+                    (blur)="saveField()"
+                    placeholder="Edit Button Text"
+                    autofocus
+                    />
+                </div>
+                <div>
+                    <input
+                    type="text"
+                    [(ngModel)]="updatedButtonUrl"
+                    (keyup)="handleKeyUp($event)"
+                    (blur)="saveField()"
+                    placeholder="Edit Button URL"
+                    />
+                </div>
+            </ng-template>
+                
         </div>
         <div class="right-div show" #rightDiv>
             <div class="border-div left-1"  style="width:81px; height: 81px;">
