@@ -1,0 +1,56 @@
+<div *ngIf="isLoading" class="loading">Loading users...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div class="table-container" *ngIf="admins.length > 0 && userType === 'Admins'">
+  <h3>{{userType}}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let admin of admins">
+        <td>{{ admin.fname }}</td>
+        <td>{{ admin.lname }}</td>
+        <td>{{ admin.email }}</td>
+        <td>
+          <button class="btn toggle-btn" (click)="toggleAdminStatus(admin._id, 1)">
+            Revoke Admin
+          </button>
+          <button class="btn delete-btn" (click)="deleteUser(admin._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-container" *ngIf="users.length > 0 && userType === 'Users'">
+  <h3>{{userType}}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.fname }}</td>
+        <td>{{ user.lname }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <button class="btn toggle-btn" (click)="toggleAdminStatus(user._id, 0)">
+            Make Admin
+          </button>
+          <button class="btn delete-btn" (click)="deleteUser(user._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

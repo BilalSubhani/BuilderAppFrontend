@@ -1,0 +1,34 @@
+<div class="main">
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a class="navbar-brand">
+                <img src="/images/burq-logo.jpg">
+            </a>
+            <ul class="nav-links">
+                <li>
+                    <a>
+                        <button class="cta-nav" (click)="onLogout()">Logout</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="mySidenav" class="sidenav" #mySidenav>
+        <div class="dropdown">
+            <a href="javascript:void(0)" (click)="toggleUsers()"> Users </a>
+            <div class="dropdown-content open" *ngIf="isDropdownOpen" #dropDown>
+                <a (click)="handleItemClick(userTypeArr[0])"> {{userTypeArr[0]}} </a>
+                <a (click)="handleItemClick(userTypeArr[1])"> {{userTypeArr[1]}} </a>
+            </div>
+            <a href="/dashboard"> Settings </a>
+        </div>          
+    </div>
+
+    <div class="dashboard-container">
+        <div class="home-viewport" *ngIf="displayUsers">
+            <app-dashboard [userType]="filters"/>
+        </div>
+    </div>
+
+</div>
