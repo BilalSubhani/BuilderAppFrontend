@@ -3,12 +3,13 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
+import { ImageComponent } from '../../image/image.component';
 
 @Component({
   selector: 'app-template-industries',
   templateUrl: './industries.component.html',
   styleUrls: ['./industries.component.less'],
-  imports: [CommonModule]
+  imports: [CommonModule, ImageComponent]
 })
 export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
   tabImages = {
@@ -20,6 +21,7 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
     15: { active: '/images/tabIcons/grocery-blue.svg', inactive: '/images/tabIcons/grocery.svg' },
     16: { active: '/images/tabIcons/retailer-blue.svg', inactive: '/images/tabIcons/retailer.svg' }
   };
+  publicID = ['industriesContent1', 'industriesContent2', 'industriesContent3', 'industriesContent4', 'industriesContent5', 'industriesContent6', 'industriesContent7'];
 
   @Output() industryEvent = new EventEmitter<any>();
 

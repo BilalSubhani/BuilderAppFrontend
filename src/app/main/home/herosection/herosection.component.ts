@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -6,8 +6,6 @@ import { AuthService } from '../../../auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { MainService } from '../../main.service';
 import { Subscription } from 'rxjs';
-import { io } from 'socket.io-client';
-
 
 @Component({
   selector: 'app-herosection',
@@ -23,7 +21,6 @@ export class HerosectionComponent {
   @ViewChild('mySidenav') mySidenav!: ElementRef;
   objectKeys = Object.keys;
 
-  private socket: any;
   messageReceived:string = '';
 
   dropdownSections = [
@@ -199,48 +196,4 @@ export class HerosectionComponent {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
-
-  openNav() {
-    this.mySidenav.nativeElement.style.width = '250px';
-  }
-  closeNav() {
-    this.mySidenav.nativeElement.style.width = '0';
-  }
-
-  scrollTo(componentId: any) {
-    this.closeNav();
-    const childElement = document.getElementById(componentId);
-     
-    if (childElement) {
-      childElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    else
-      this.topFunction();
-  }
-
-  connectToSocket(): void {
-    this.socket = io('http://localhost:3001', {
-      transports: ['websocket', 'polling']
-    });
-
-    this.socket.on('connect', () => {
-      // console.log('Connected to server with ID:', this.socket.id);
-    });
-
-    this.socket.on('handleChange', (data: any) => {
-      // console.log('Message received from server:', data);
-      this.messageReceived = data;
-      this.implementation();
-    });
-
-    this.socket.on('connect_error', (err: any) => {
-      console.error('Connection error:', err);
-    });
-  }
-
-  implementation(){
-      window.location.reload();
-  }
-
 }

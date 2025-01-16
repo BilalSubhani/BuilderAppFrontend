@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,11 +17,16 @@ export class ImageComponent {
 
   imageChanged: boolean = false;
   @Output() imageSent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() pID!: string;
 
   constructor(
     private http: HttpClient,     
     private toastr: ToastrService
   ) {}
+
+  ngOnChanges(){
+    this.publicId=this.pID;
+  }
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0] || null;
@@ -89,7 +94,7 @@ export class ImageComponent {
 
     if (this.imageChanged) {
       this.imageSent.emit(this.imageChanged);
-      this.publicId='';
+      this.publicId = '';
       this.imageChanged = false;
     }
   }

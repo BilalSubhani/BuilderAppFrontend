@@ -103,15 +103,15 @@ export class MainComponent implements OnInit {
       url: ['smallHeading', 'title', 'body', 'button'],
       postion: 2500
     },
-    // { 
-    //   name: 'Industries', 
-    //   comp: 'industries',
-    //   isOpen: false, 
-    //   links: ['Image', 'Image', 'Text', 'Text'], 
-    //   items: ['Tab Icon', 'Tab Content', 'Tab Content Heading', 'Tab Content Paragraph'],
-    //   url: ['', '', ''],
-    //   postion: 3200
-    // },
+    { 
+      name: 'Industries', 
+      comp: 'industries',
+      isOpen: false, 
+      links: ['Image', 'Image', 'Text', 'Text'], 
+      items: ['Tab Icon', 'Tab Content', 'Tab Content Heading', 'Tab Content Paragraph'],
+      url: ['', '', ''],
+      postion: 3080
+    },
     { 
       name: 'Why Burq?', 
       comp: 'whyBurq',

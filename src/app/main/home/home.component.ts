@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-// import { io } from 'socket.io-client';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { io } from 'socket.io-client';
 
 // Components
 import { ProviderComponent } from './provider/provider.component';
@@ -13,8 +13,6 @@ import { FooterComponent } from './footer/footer.component';
 import { BackingComponent } from './backing/backing.component';
 import { FeaturesComponent } from './features/features.component';
 import { HerosectionComponent } from './herosection/herosection.component';
-// import { Subscription } from 'rxjs';
-// import { MainService } from '../main.service';
 
 @Component({
   selector: 'app-home',
@@ -32,55 +30,38 @@ import { HerosectionComponent } from './herosection/herosection.component';
 })
 
 export class HomeComponent {
-  // private socket: any;
-  // private dataChangeSubscription!: Subscription;
-  // public dataChanged: boolean = false;
 
-  // constructor(private mainService: MainService){}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  // ngOnInit(): void {
-  //   this.dataChangeSubscription = this.mainService.dataChange$.subscribe((hasChanged) => {
-  //     this.dataChanged = hasChanged;
-  //     console.log('Data has changed:', this.dataChanged);
-  //     if(this.dataChanged)
-  //       this.connectToSocket();
-  //   });
-  // }
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.onload = () => {
+        this.connectToSocket();
+      };
+    }
+  }
 
-  // ngOnDestroy(): void {
-  //   if (this.dataChangeSubscription) {
-  //     this.resetDataChange();
-  //     this.dataChangeSubscription.unsubscribe();
-  //   }
-  // }
+  private socket: any;
 
-  // resetDataChange(): void {
-  //   this.mainService.notifyDataChange(false);
-  // }
+  connectToSocket(): void {
+    this.socket = io('http://localhost:3001', {
+      transports: ['websocket', 'polling']
+    });
 
-  // checkPublished(){
-  //     this.connectToSocket();
-  // }
+    this.socket.on('connect', () => {
+      //console.log('Connected to server with ID:', this.socket.id);
+    });
 
-  // connectToSocket(): void {
-  //   this.socket = io('http://localhost:3001', {
-  //     transports: ['websocket', 'polling']
-  //   });
+    this.socket.on('handleChange', (data: any) => {
+      this.implementation();
+    });
 
-  //   this.socket.on('connect', () => {
-  //     console.log('Connected to server with ID:', this.socket.id);
-  //   });
-
-  //   this.socket.on('handleChange', (data: any) => {
-  //     this.implementation();
-  //   });
-
-  //   this.socket.on('connect_error', (err: any) => {
-  //     console.error('Connection error:', err);
-  //   });
-  // }
+    this.socket.on('connect_error', (err: any) => {
+      console.error('Connection error:', err);
+    });
+  }
   
-  // implementation(){
-  //   window.location.reload();
-  // }
+  implementation(){
+    window.location.reload();
+  }
 }

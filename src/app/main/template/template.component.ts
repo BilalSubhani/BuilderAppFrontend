@@ -29,18 +29,18 @@ export class TemplateComponent implements AfterViewInit{
   @Output() templateEvent = new EventEmitter<any>();
   exportData: any;
 
-  navbar: any;
-  hero:any;
-  features:any;
-  providers: any;
-  tabs: any;
-  integrate: any;
-  industries: any;
-  whyburq: any;
-  sellingPoints: any;
-  test: any;
-  backing:any;
-  startPowering: any;
+  navbar:         any;
+  hero:           any;
+  features:       any;
+  providers:      any;
+  tabs:           any;
+  integrate:      any;
+  industries:     any;
+  whyburq:        any;
+  sellingPoints:  any;
+  test:           any;
+  backing:        any;
+  startPowering:  any;
 
   receiveHero(event: any) {
     this.navbar = event?.navbar;

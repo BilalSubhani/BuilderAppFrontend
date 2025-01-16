@@ -1,6 +1,6 @@
 <nav class="navbar" #navbar>
     <div class="navbar-container">
-      <a class="navbar-brand" (click)="openNav()">
+      <a class="navbar-brand">
         <img [src]="imageUrl[0]" alt="Burq Logo" />
       </a>
       <ul class="nav-links" *ngIf="navbarData?.listItems && navbarData?.buttonText">
@@ -18,14 +18,6 @@
       </ul>
     </div>
 </nav>
-
-<div id="mySidenav" class="sidenav" #mySidenav>
-    <a><button class="cta-nav" (click)="connectToSocket()">Connect</button></a>  
-    <a  class="sidenav-closebtn" (click)="closeNav()">&times;</a>
-    <div class="sidenav-dropdown" *ngFor="let section of dropdownSections">
-        <a href="javascript:void(0)" (click)="scrollTo(section.comp)"> {{ section.name }} </a>
-    </div>    
-</div>
   
 <header class="hero-section" #heroSection>
 <div class="container">

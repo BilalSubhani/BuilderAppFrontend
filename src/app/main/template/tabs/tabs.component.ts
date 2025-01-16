@@ -3,16 +3,19 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
+import { ImageComponent } from '../../image/image.component';
 
 @Component({
   selector: 'app-template-tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.less'],
-  imports:[CommonModule]
+  imports:[CommonModule, ImageComponent]
 })
 export class TabsTemplateComponent implements AfterViewInit {
 
   @Output() tabsEvent = new EventEmitter<any>();
+
+  publicID=["tabContent1", "tabContent2", "tabContent3"];
 
   private subscription?: Subscription;
   constructor(
