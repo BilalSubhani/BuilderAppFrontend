@@ -19,9 +19,9 @@
 
     <div id="mySidenav" class="sidenav" #mySidenav>
         <div class="dropdown" *ngFor="let section of dropdownSections">
-            <a href="javascript:void(0)" (click)="toggleDropdown($event, section.name, section.postion)"> {{ section.name }} </a>
+            <a (click)="toggleDropdown($event, section.name, section.postion)"> {{ section.name }} </a>
             <div class="dropdown-content" [ngClass]="{'open': section.isOpen}"> 
-              <a *ngFor="let item of section.items let i = index" (click)="handleItemClick(section.links[i], section.comp, section.url[i])"> {{ item }} </a>
+              <a *ngFor="let item of section.items let i = index"> {{ item }} </a>
             </div>
         </div>          
     </div>
@@ -31,9 +31,5 @@
           <app-template #template (templateEvent)="receiveUpdatedData($event)"/>
         </div>
     </div>
-    
-    <!-- <app-image *ngIf="imageData" (imageSent)="receiveImage($event)" />
-    <app-video *ngIf="videoData" (videoSent)="receiveVideo($event)" [pID]="videoUrl"/>
-    <app-text *ngIf="textData" (textSent)="receiveText($event)" /> -->
     <router-outlet></router-outlet>
 </div>

@@ -12,11 +12,11 @@ import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
     { path: 'login', component: UserListComponent},
-    { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
-    { path: 'dashboard', component: MainComponent, canActivate: [AuthGuard]},
     { path: '', redirectTo: '/login', pathMatch: 'full'},
     { path: 'burq', component: HomeComponent },
+    { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
     { path: 'admin/users', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'dashboard', component: MainComponent, canActivate: [AuthGuard]},
     { path: 'dashboard/uploadimage', component: ImageComponent, canActivate: [AuthGuard] },
     { path: 'dashboard/uploadvideo', component: VideoComponent, canActivate: [AuthGuard] },
     { path: 'dashboard/changetext', component: TextComponent, canActivate: [AuthGuard] },

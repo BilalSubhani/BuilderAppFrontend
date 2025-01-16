@@ -3,10 +3,6 @@ import { MainService } from './main.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TextComponent } from './text/text.component';
-import { VideoComponent } from './video/video.component';
-import { ImageComponent } from './image/image.component';
-
 import { io } from 'socket.io-client';
 import { TemplateComponent } from './template/template.component';
 
@@ -19,7 +15,6 @@ import { TemplateComponent } from './template/template.component';
 export class MainComponent implements OnInit {
   constructor(
     private mainService: MainService,
-    // private websocketService: WebSocketService, 
     private viewContainer: ViewContainerRef
   ) {}
 
@@ -27,20 +22,11 @@ export class MainComponent implements OnInit {
   private socket: any;
   fieldClicked: string = '';
   elementClicked: string = '';
-  videoUrl: string ='';
   updatedData: any;
 
   // Variables for data to be displayed or edited
   navbarData: any;
   existingData: any;
-
-  // Variables to detect changes in video, image and text from children component
-  textData: boolean = false;
-  videoData: boolean = false;
-  imageData: boolean = false;
-  textFromChild: string = '';
-  videoChanged: string = '0';
-  imageChanged: boolean=false;
 
   // Sidenav variables
   @ViewChild('mySidenav') mySidenav!: ElementRef;
@@ -184,66 +170,7 @@ export class MainComponent implements OnInit {
     })
   }
 
-  handleItemClick(link:string, name: string, item: string){
-    this.fieldClicked = name;
-    this.elementClicked = item;
-    this.videoUrl=item;
-
-    if(link === 'Image'){
-      this.videoData=false;
-      this.textData=false;
-      this.viewContainer.clear();
-      this.imageData=true;
-      return;
-    }
-    if(link === 'Video'){
-      this.textData=false;
-      this.imageData=false;
-      this.viewContainer.clear();
-      this.videoData=true;
-      return;
-    }
-    else{
-      this.videoData=false;
-      this.imageData=false;
-      this.viewContainer.clear();
-      this.textData=true;
-      return;
-    }
-  }
-
-  receiveText(event: string) {
-    this.textFromChild = event;
-
-    if (this.textFromChild) {
-      this.updateData();
-    }
-  }
-
-  receiveImage(event: boolean){
-    this.imageChanged = event;
-
-    if(this.imageChanged){
-      this.mainService.notifyDataChange(this.imageChanged);
-      this.imageChanged = false;
-    }
-  }
-
-  receiveVideo(event: string){
-    this.videoChanged = event;
-
-    if(this.videoChanged === '1'){
-      this.mainService.notifyDataChange(true);
-      this.videoChanged = '0';
-    }
-  }
-
-  updateData(){
-    this.existingData.components[this.fieldClicked][this.elementClicked] = this.textFromChild;
-  }
-
   onPublish(){
-
     this.mainService.createData(this.updatedData).subscribe({
       next: (response) => {
         //console.log('API Response:', response);
