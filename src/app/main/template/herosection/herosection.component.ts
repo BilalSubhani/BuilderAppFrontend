@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { MainService } from '../../main.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { VideoComponent } from '../../video/video.component';
 import { FormsModule } from '@angular/forms';
 
@@ -37,8 +37,7 @@ export class HerosectionTemplateComponent {
     private mainService: MainService
   ){}
 
-  dataController(){
-
+  imageController(){
     this.imagePublicUrl.forEach((p_id)=>{
       this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
         (response: any) => {
@@ -53,29 +52,49 @@ export class HerosectionTemplateComponent {
         }
       );
     })
-
-    this.http.get<any>('http://localhost:3000/data/component/navbar').subscribe(
-      (res: any)=>{
-        this.navbarData={...this.navbarData, ...res.data};
-      }, (err) =>{
-        console.log(err);
-      }
-    );
-
-    this.http.get<any>('http://localhost:3000/data/component/heroSection').subscribe(
-      (res: any)=>{
-        this.heroSectionData= {...this.heroSectionData, ...res.data};
-      }, (err) =>{
-        console.log(err);
-      }
-    );
-    
-    this.mainService.notifyDataChange(false);
   }
 
+  dataController(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>('http://localhost:3000/data/component/navbar').subscribe(
+        (res: any) => {
+          this.navbarData = { ...this.navbarData, ...res.data };
+
+          this.http.get<any>('http://localhost:3000/data/component/heroSection').subscribe(
+            (res: any) => {
+              this.heroSectionData = { ...this.heroSectionData, ...res.data };
+
+              this.mainService.notifyDataChange(false);
+
+              observer.next();
+              observer.complete();
+            },
+            (err) => {
+              console.log('Error fetching heroSection data:', err);
+              observer.error(err);
+            }
+          );
+        },
+        (err) => {
+          console.log('Error fetching navbar data:', err);
+          observer.error(err);
+        }
+      );
+    });
+  }
+
+
   ngOnInit() {
-    this.dataController();
-    this.setExport();
+    this.imageController();
+    this.dataController().subscribe({
+      next: () => {
+        this.setExport();
+      },
+      error: (err) => {
+        console.log('Error in dataController:', err);
+      }
+    });
+
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
         this.dataController();
@@ -223,11 +242,11 @@ export class HerosectionTemplateComponent {
   }
 
   setExport() {
-    this.exportData = {
-      "navbar": this.navbarData,
-      "heroSection": this.heroSectionData
-    };
-
-    this.heroSectionEvent.emit(this.exportData);
+      this.exportData = {
+        "navbar": this.navbarData,
+        "heroSection": this.heroSectionData
+      };
+  
+      this.heroSectionEvent.emit(this.exportData);
   }
 }

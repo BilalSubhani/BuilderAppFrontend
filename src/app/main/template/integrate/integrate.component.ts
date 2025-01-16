@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
 
@@ -24,7 +24,7 @@ export class IntegrateTemplateComponent {
     private mainService: MainService,
   ) {}
 
-  dataController(){
+  imageController(){
     this.http.get<any>(`http://localhost:3000/media/images/lines`).subscribe(
       (response: any) => {
         this.imageUrl = response.url;
@@ -33,19 +33,35 @@ export class IntegrateTemplateComponent {
         console.log(error);
       }
     );
-    
-    this.http.get<any>('http://localhost:3000/data/component/integrate').subscribe(
-      (res)=>{
-        this.integrateData=res.data;
-      },
-      (err)=>{
-        console.log(err);
-      });
+  }
+
+  dataController(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>('http://localhost:3000/data/component/integrate').subscribe(
+        (res) => {
+          this.integrateData = res.data;
+  
+          observer.next();
+          observer.complete()
+        },
+        (err) => {
+          console.log('Error fetching integrate data:', err);
+          observer.error(err);
+        }
+      );
+    });
   }
 
   ngOnInit(){
-    this.dataController();
-    this.setExport();
+    this.dataController().subscribe({
+      next: () => {
+        this.setExport();
+      },
+      error: (err) => {
+        console.log('Error in dataController:', err);
+      }
+    });
+
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
         this.dataController();

@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, Inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class TabsTemplateComponent implements AfterViewInit {
   tabsImageUrl: string[] = [];
   tabData: any;
 
-  dataFunction(){
+  imageController(){
     this.imagePublicUrl.forEach((p_id)=>{
       this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
         (response: any) => {
@@ -36,18 +36,36 @@ export class TabsTemplateComponent implements AfterViewInit {
         }
       );
     });
+  }
 
-    this.http.get<any>('http://localhost:3000/data/component/tabs').subscribe(
-      (res: any)=>{
-        this.tabData= res;
-      }, (err) =>{
-        console.log(err);
-      }
-    );
+  dataFunction(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>('http://localhost:3000/data/component/tabs').subscribe(
+        (res: any) => {
+          this.tabData = res;
+  
+          observer.next();
+          observer.complete();
+        },
+        (err) => {
+          console.log('Error fetching tab data:', err);
+          observer.error(err);
+        }
+      );
+    });
   }
 
   ngOnInit(){
-    this.dataFunction();
+    this.imageController();
+
+    this.dataFunction().subscribe({
+      next: () => {
+        this.setExport();
+      },
+      error: (err) => {
+        console.log('Error in dataFunction:', err);
+      }
+    });
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
@@ -56,8 +74,8 @@ export class TabsTemplateComponent implements AfterViewInit {
     });
   }
 
+
   ngAfterViewInit(): void {
-    this.setExport();
     const tabs = Array.from(this.document.querySelectorAll('.tab')) as HTMLElement[];
     const images = Array.from(this.document.querySelectorAll('.content img')) as HTMLElement[];
     const icons = Array.from(this.document.querySelectorAll('.icon')) as HTMLElement[];

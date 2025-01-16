@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
 
@@ -24,25 +24,35 @@ export class BackingTemplateComponent {
   @Output() backingDataEvent: EventEmitter<any> = new EventEmitter<any>();
   exportBackingData: any;
 
-  dataFunctions(): void{
-    this.http.get<any>("http://localhost:3000/data/component/backing").subscribe((res)=>{
-      this.backingData = res.data;
-    }, (err)=>{
-      console.log(err);
-    });
+  dataFunctions(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>("http://localhost:3000/data/component/backing").subscribe((res) => {
+        this.backingData = res.data;
 
-    this.http.get<any>("http://localhost:3000/data/component/startPowering").subscribe((res)=>{
-      this.poweringData = res.data;
-    }, (err)=>{
-      console.log(err);
+        this.http.get<any>("http://localhost:3000/data/component/startPowering").subscribe((res) => {
+          this.poweringData = res.data;
+          observer.next();
+          observer.complete();
+        }, (err) => {
+          console.log(err);
+          observer.error(err);
+        });
+      }, (err) => {
+        console.log(err);
+        observer.error(err);
+      });
     });
   }
-
+  
   ngOnInit(){
-    this.dataFunctions();
-    
-    this.setExportData();
-
+    this.dataFunctions().subscribe({
+      next: () => {
+        this.setExportData();
+      },
+      error: (err) => {
+        console.log('Error fetching data:', err);
+      }
+    });
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
         this.dataFunctions();
@@ -136,10 +146,12 @@ export class BackingTemplateComponent {
   }
 
   setExportData(){
-    this.exportBackingData={
-      "backing": this.backingData,
-      "startPowering": this.poweringData
+    if(this.backingData !== 'undefined' && this.poweringData !== 'undefined'){
+      this.exportBackingData = {
+        "backing": this.backingData,
+        "startPowering": this.poweringData
+      }
+      this.backingDataEvent.emit(this.exportBackingData);
     }
-    this.backingDataEvent.emit(this.exportBackingData);
   }
 }

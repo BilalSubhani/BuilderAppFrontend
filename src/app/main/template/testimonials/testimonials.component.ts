@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, Inject, EventEmitter, Output } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-template-testimonials',
@@ -22,29 +22,40 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   testimonialData: any;
   objectKeys = Object.keys;
 
-  dataFunction(){
-    this.http.get<any>("http://localhost:3000/data/component/testimonials").subscribe((res)=>{
-      this.testimonialData = res.data;
-    }, (err)=>{
-      console.log(err);
-    });
-
-    this.http.get<any>("http://localhost:3000/data/component/testimonials").subscribe((res)=>{
-      this.testimonialData = res.data;
-    }, (err)=>{
-      console.log(err);
+  dataFunction(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>("http://localhost:3000/data/component/testimonials").subscribe(
+        (res) => {
+          this.testimonialData = res.data;
+  
+          observer.next();
+          observer.complete();
+        },
+        (err) => {
+          console.log('Error fetching testimonials data:', err);
+          observer.error(err);
+        }
+      );
     });
   }
 
   ngOnInit(){
-    this.dataFunction();
+    this.dataFunction().subscribe({
+      next: () => {
+        this.setExport();
+      },
+      error: (err) => {
+        console.log('Error in dataFunction:', err);
+      }
+    });
   }
 
   currentSlide = 0;
   slides: HTMLElement[] = [];
   totalSlides: number = 0;
+
+  
   ngAfterViewInit() {
-    this.setExport();
     this.slides = Array.from(this.document.querySelectorAll('.slide'));
     this.totalSlides = this.slides.length;
     const nextButton = this.document.getElementById('next');

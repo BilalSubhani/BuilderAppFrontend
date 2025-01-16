@@ -243,18 +243,10 @@ export class MainComponent implements OnInit {
   }
 
   onPublish(){
-    const id = this.existingData._id;
-
-    // const {_id, ...newData} = this.existingData.components;
-    // const body = {
-    //   "components": newData
-    // };
-
-    // console.log(body);
 
     this.mainService.createData(this.updatedData).subscribe({
       next: (response) => {
-        // console.log('API Response:', response);
+        //console.log('API Response:', response);
       },
       error: (err) => {
         console.error('Error occurred:', err);
@@ -263,6 +255,7 @@ export class MainComponent implements OnInit {
 
     this.onSubmit();
     this.disconnectFromSocket();
+    this.mainService.notifyDataChange(true);
   }
 
   connectToSocket(): void {
@@ -271,7 +264,7 @@ export class MainComponent implements OnInit {
     });
 
     this.socket.on('connect', () => {
-      // console.log('Connected to server with ID:', this.socket.id);
+      //console.log('Connected to server with ID:', this.socket.id);
       this.onPublish();
     });
 
@@ -321,6 +314,8 @@ export class MainComponent implements OnInit {
         components: event
       };
       this.updatedData = body;
+
+      console.log(this.updatedData);
     }
   }
 }

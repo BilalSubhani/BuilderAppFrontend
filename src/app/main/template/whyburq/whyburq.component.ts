@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
 
@@ -27,7 +27,7 @@ export class WhyburqTemplateComponent {
     private mainService: MainService,
   ) {}
 
-  dataFunctions(): void{
+  imageController(){
     this.imagePublicUrl.forEach((p_id)=>{
       this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
         (response: any) => {
@@ -38,24 +38,45 @@ export class WhyburqTemplateComponent {
         }
       );
     });
-
-    this.http.get<any>("http://localhost:3000/data/component/whyBurq").subscribe((res)=>{
-      this.whyBurqData = res.data;
-    }, (err)=>{
-      console.log(err);
-    });
-
-    this.http.get<any>("http://localhost:3000/data/component/sellingPoints").subscribe((res)=>{
-      this.benefitsData = res.data;
-    }, (err)=>{
-      console.log(err);
+  }
+  
+  dataFunctions(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>("http://localhost:3000/data/component/whyBurq").subscribe(
+        (res) => {
+          this.whyBurqData = res.data;
+  
+          this.http.get<any>("http://localhost:3000/data/component/sellingPoints").subscribe(
+            (res) => {
+              this.benefitsData = res.data;
+  
+              observer.next();
+              observer.complete();
+            },
+            (err) => {
+              console.log('Error fetching sellingPoints data:', err);
+              observer.error(err);
+            }
+          );
+        },
+        (err) => {
+          console.log('Error fetching whyBurq data:', err);
+          observer.error(err);
+        }
+      );
     });
   }
 
-
   ngOnInit(){
-    this.dataFunctions();
-    this.setExport();
+    this.imageController();
+    this.dataFunctions().subscribe({
+      next: () => {
+        this.setExport();
+      },
+      error: (err) => {
+        console.log('Error in dataFunctions:', err);
+      }
+    });
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
@@ -174,7 +195,6 @@ export class WhyburqTemplateComponent {
       "whyBurq": this.whyBurqData,
       "sellingPoints" : this.benefitsData
     }
-    
     this.whyburqEvent.emit(this.exportData);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, Inject, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 
 @Component({
@@ -33,8 +33,8 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
     private http: HttpClient,
     private mainService: MainService,
   ) {}
-
-  dataFunction(){
+  
+  imageController(){
     this.imagePublicUrl.forEach((p_id)=>{
       this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
         (response: any) => {
@@ -45,11 +45,21 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
         }
       );
     })
-
-    this.http.get<any>("http://localhost:3000/data/component/industries").subscribe((res)=>{
-      this.tabContentData = res.data;
-    }, (err)=>{
-      console.log(err);
+  }
+  dataFunction(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>("http://localhost:3000/data/component/industries").subscribe(
+        (res) => {
+          this.tabContentData = res.data;
+  
+          observer.next();
+          observer.complete();
+        },
+        (err) => {
+          console.log('Error fetching industries data:', err);
+          observer.error(err);
+        }
+      );
     });
   }
 
@@ -70,7 +80,14 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
       firstTabIcon.classList.add('active');
     }
 
-    this.dataFunction();
+    this.dataFunction().subscribe({
+      next: () => {
+        this.setExport();
+      },
+      error: (err) => {
+        console.log('Error in dataFunction:', err);
+      }
+    });
     
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
@@ -81,7 +98,6 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.setExport();
     const indTabs = Array.from(this.document.querySelectorAll('.ind-tab')) as HTMLElement[];
     const indIcons = Array.from(this.document.querySelectorAll('.ind-icon')) as HTMLImageElement[];
     const indTabContents = Array.from(this.document.querySelectorAll('.ind-tabcontent')) as HTMLElement[];

@@ -2,7 +2,7 @@ import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLA
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { VideoComponent } from '../../video/video.component';
 import { FormsModule } from '@angular/forms';
@@ -42,7 +42,7 @@ export class ProviderTemplateComponent implements AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  dataFunction(){
+  imageController(){
     this.imagePublicId.forEach( pid =>  {
       this.http.get<any>(`http://localhost:3000/media/images/${pid}`).subscribe(
         (response: any) => {
@@ -57,19 +57,37 @@ export class ProviderTemplateComponent implements AfterViewInit {
         }
       );
     });
+  }
 
-    this.http.get<any>('http://localhost:3000/data/component/providers').subscribe(
-      (res: any)=>{
-        this.providersData= {...this.providersData, ...res.data};
-      }, (err) =>{
-        console.log(err);
-      }
-    );
+  dataFunction(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>('http://localhost:3000/data/component/providers').subscribe(
+        (res: any) => {
+          this.providersData = { ...this.providersData, ...res.data };
+  
+          observer.next();
+          observer.complete();
+        },
+        (err) => {
+          console.log('Error fetching providers data:', err);
+          observer.error(err);
+        }
+      );
+    });
   }
 
   ngOnInit(){
-    this.dataFunction();
-    this.setExport();
+    this.imageController();
+
+    this.dataFunction().subscribe({
+      next: () => {
+        this.setExport();
+      },
+      error: (err) => {
+        console.log('Error in dataFunction:', err);
+      }
+    });
+
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
         this.dataFunction();

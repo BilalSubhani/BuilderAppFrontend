@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
 
@@ -105,7 +105,7 @@ export class FeaturesTemplateComponent {
 
  // ----------------------------------------------------------------------------
 
-  dataController(){
+  imageController(){
     this.imagePublicUrl.forEach((p_id)=>{
       this.http.get<any>(`http://localhost:3000/media/images/${p_id}`).subscribe(
         (response: any) => {
@@ -120,21 +120,39 @@ export class FeaturesTemplateComponent {
         }
       );
     });
-
-    this.http.get<any>('http://localhost:3000/data/component/features').subscribe(
-      (res: any)=>{
-        this.featuresData=res.data;
-      }, (err) =>{
-      }
-    );
-
-    this.mainService.notifyDataChange(false);
   }
 
+  dataController(): Observable<void> {
+    return new Observable((observer) => {
+      this.http.get<any>('http://localhost:3000/data/component/features').subscribe(
+        (res: any) => {
+          this.featuresData = res.data;
+
+          this.mainService.notifyDataChange(false);
+          
+          observer.next();
+          observer.complete();
+        },
+        (err) => {
+          console.log('Error fetching features data:', err);
+          observer.error(err);
+        }
+      );
+    });
+  }
+  
+
   ngOnInit(){
-    this.dataController();
-    
-    this.setExport();
+    this.imageController();
+  
+    this.dataController().subscribe({
+      next: () => {
+        this.setExport();
+      },
+      error: (err) => {
+        console.log('Error in dataController:', err);
+      }
+    });
 
     this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
       if (hasChanged) {
@@ -142,6 +160,7 @@ export class FeaturesTemplateComponent {
       }
     });
   }
+
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();

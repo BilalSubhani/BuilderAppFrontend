@@ -12,7 +12,8 @@ export class AuthGuard implements CanActivate {
     const admin = this.authService.getAdminStatus();
     const adminRoutes = [
       '/dashboard',
-      '/dashboard/users',
+      '/admin',
+      '/admin/users',
       '/dashboard/changetext',
       '/dashboard/uploadvideo',
       '/dashboard/uploadimage',
