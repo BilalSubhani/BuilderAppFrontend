@@ -16,12 +16,12 @@
 
     <div id="mySidenav" class="sidenav" #mySidenav>
         <div class="dropdown">
-            <a href="javascript:void(0)" (click)="toggleUsers()"> Users </a>
+            <a (click)="toggleUsers()"> Users </a>
             <div class="dropdown-content open" *ngIf="isDropdownOpen" #dropDown>
                 <a (click)="handleItemClick(userTypeArr[0])"> {{userTypeArr[0]}} </a>
                 <a (click)="handleItemClick(userTypeArr[1])"> {{userTypeArr[1]}} </a>
             </div>
-            <a href="/dashboard"> Settings </a>
+            <a href="/customization"> Customization </a>
         </div>          
     </div>
 

@@ -16,9 +16,9 @@ export const routes: Routes = [
     { path: 'burq', component: HomeComponent },
     { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
     { path: 'admin/users', component: DashboardComponent, canActivate: [AuthGuard] },
-    { path: 'dashboard', component: MainComponent, canActivate: [AuthGuard]},
-    { path: 'dashboard/uploadimage', component: ImageComponent, canActivate: [AuthGuard] },
-    { path: 'dashboard/uploadvideo', component: VideoComponent, canActivate: [AuthGuard] },
-    { path: 'dashboard/changetext', component: TextComponent, canActivate: [AuthGuard] },
+    { path: 'customization', component: MainComponent, canActivate: [AuthGuard]},
+    { path: 'customization/uploadimage', component: ImageComponent, canActivate: [AuthGuard] },
+    { path: 'customization/uploadvideo', component: VideoComponent, canActivate: [AuthGuard] },
+    { path: 'customization/changetext', component: TextComponent, canActivate: [AuthGuard] },
     { path: '**', component: PageNotFoundComponent},
 ];

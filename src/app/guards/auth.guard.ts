@@ -11,12 +11,12 @@ export class AuthGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const admin = this.authService.getAdminStatus();
     const adminRoutes = [
-      '/dashboard',
+      '/customization',
       '/admin',
       '/admin/users',
-      '/dashboard/changetext',
-      '/dashboard/uploadvideo',
-      '/dashboard/uploadimage',
+      '/customization/changetext',
+      '/customization/uploadvideo',
+      '/customization/uploadimage',
       '/burq',
     ];
     const userRoutes = ['/burq'];
