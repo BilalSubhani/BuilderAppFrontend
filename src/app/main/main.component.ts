@@ -83,7 +83,7 @@ export class MainComponent implements OnInit {
       links: ['Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Video'],
       url: ['title', 'body', 'provider'],
-      postion: 1250
+      postion: 1200
     },
     { 
       name: 'Tab', 
@@ -119,7 +119,7 @@ export class MainComponent implements OnInit {
       links: ['Text', 'Text', 'Text'], 
       items: ['Heading', 'Paragraph', 'Button'],
       url: ['title', 'body', 'button'],
-      postion: 3900
+      postion: 3800
     },
     { 
       name: 'Selling Points', 
@@ -146,7 +146,7 @@ export class MainComponent implements OnInit {
       links: ['Text', 'Text'], 
       items: ['Title', 'Button'] ,
       url: ['title', 'button'],
-      postion: 5300
+      postion: 5150
     },
     { 
       name: 'Powering', 
@@ -309,13 +309,11 @@ export class MainComponent implements OnInit {
   }
 
   receiveUpdatedData(event: any){
-    if (event.testimonials) {
+    if (event.backing) {
       const body = {
         components: event
       };
       this.updatedData = body;
-
-      console.log(this.updatedData);
     }
   }
 }

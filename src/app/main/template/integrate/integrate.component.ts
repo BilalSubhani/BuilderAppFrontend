@@ -53,6 +53,7 @@ export class IntegrateTemplateComponent {
   }
 
   ngOnInit(){
+    this.imageController();
     this.dataController().subscribe({
       next: () => {
         this.setExport();

@@ -80,6 +80,7 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
       firstTabIcon.classList.add('active');
     }
 
+    this.imageController();
     this.dataFunction().subscribe({
       next: () => {
         this.setExport();
