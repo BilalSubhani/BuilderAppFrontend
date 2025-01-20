@@ -62,7 +62,8 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   editedTitle = '';
 
   ngOnChanges(){
-    if(this?.fieldToUpdate === 't' || this?.fieldToUpdate[0] === 'c'){
+    console.log(this.fieldToUpdate);
+    if(this?.fieldToUpdate[0] === 't' || this?.fieldToUpdate[0] === 'c'){
       let len = this.fieldToUpdate.length;
       if(this.fieldToUpdate[len-1] === '1' || this.fieldToUpdate[len-1] === '2' ||
         this.fieldToUpdate[len-1] === '3' || this.fieldToUpdate[len-1] === '4' || this.fieldToUpdate[len-1] === '5'
@@ -70,7 +71,8 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
         this.comment = this.fieldToUpdate;
         this.isEditingComment = true;
       }
-      else{
+      else if(this.fieldToUpdate === 'title'){
+        console.log(this.fieldToUpdate);
         this.isEditing = true;
       }
     }
@@ -113,6 +115,7 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   }
 
   setExport(){
+    console.log(this.testimonialData);
     this.testimonialsEvent.emit(this.testimonialData);
   }
 
@@ -125,6 +128,7 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   save() {
     this.testimonialData.title = this.editedTitle;
     this.isEditing = false;
+    this.setExport();
   }
 
   cancel() {
@@ -141,6 +145,7 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   saveCommentEdit() {
     this.testimonialData.comment[this.comment][0] = this.editedComment;
     this.isEditingComment = false;
+    this.setExport();
   }
 
   cancelCommentEdit() {
@@ -157,6 +162,7 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   saveNameEdit() {
     this.testimonialData.comment[this.comment][1] = this.editedName;
     this.isEditingComment = false;
+    this.setExport();
   }
 
   cancelNameEdit() {
@@ -173,6 +179,7 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   saveDesignationEdit() {
     this.testimonialData.comment[this.comment][2] = this.editedDesignation;
     this.isEditingComment = false;
+    this.setExport();
   }
 
   cancelDesignationEdit() {
