@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, Inject, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -11,8 +11,6 @@ import { FormsModule } from '@angular/forms';
   imports:[CommonModule, FormsModule]
 })
 export class TestimonialsTemplateComponent implements AfterViewInit {
-
-  private subscription?: Subscription;
   constructor(
     private http: HttpClient,
     @Inject(DOCUMENT) private document: Document
@@ -83,7 +81,6 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
     this.totalSlides = this.slides.length;
     const nextButton = this.document.getElementById('next');
     const prevButton = this.document.getElementById('prev');
-    // this.currentSlide = 0;
     this.showSlide(this.currentSlide);
     if (nextButton) {
       nextButton.addEventListener('click', () => this.nextSlide());
@@ -91,10 +88,6 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
     if (prevButton) {
       prevButton.addEventListener('click', () => this.prevSlide());
     }
-  }
-
-  ngOnDestroy() {
-    this.subscription?.unsubscribe();
   }
 
   showSlide(index: number) {
@@ -105,7 +98,6 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
 
   nextSlide() {
     this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
-    // console.log((this.currentSlide + 1) % this.totalSlides);
     this.showSlide(this.currentSlide);
   }
 
