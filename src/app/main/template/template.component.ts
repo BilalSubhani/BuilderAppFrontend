@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Output, EventEmitter, AfterViewInit, Input } from '@angular/core';
 import { ProviderTemplateComponent } from './provider/provider.component';
 import { HerosectionTemplateComponent } from './herosection/herosection.component';
 import { TabsTemplateComponent } from './tabs/tabs.component';
@@ -28,6 +28,8 @@ export class TemplateComponent implements AfterViewInit{
 
   @Output() templateEvent = new EventEmitter<any>();
   exportData: any;
+
+  @Input() field!: string;
 
   navbar:         any;
   hero:           any;
@@ -113,5 +115,4 @@ export class TemplateComponent implements AfterViewInit{
 
     this.templateEvent.emit(this.exportData);
   }
-
 }

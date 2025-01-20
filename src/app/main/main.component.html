@@ -21,14 +21,14 @@
         <div class="dropdown" *ngFor="let section of dropdownSections">
             <a (click)="toggleDropdown($event, section.name, section.postion)"> {{ section.name }} </a>
             <div class="dropdown-content" [ngClass]="{'open': section.isOpen}"> 
-              <a *ngFor="let item of section.items let i = index"> {{ item }} </a>
+              <a *ngFor="let item of section.items let i = index" (click)="handleFieldUpdation(section.url[i])"> {{ item }} </a>
             </div>
         </div>          
     </div>
 
     <div class="dashboard-container">
         <div class="home-viewport">
-          <app-template #template (templateEvent)="receiveUpdatedData($event)"/>
+          <app-template #template (templateEvent)="receiveUpdatedData($event)" [field]="fieldToUpdate"/>
         </div>
     </div>
     <router-outlet></router-outlet>

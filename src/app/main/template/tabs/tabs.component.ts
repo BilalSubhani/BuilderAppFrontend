@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
@@ -14,8 +14,10 @@ import { ImageComponent } from '../../image/image.component';
 export class TabsTemplateComponent implements AfterViewInit {
 
   @Output() tabsEvent = new EventEmitter<any>();
+  @Input() fieldToUpdate!: string;
 
   publicID=["tabContent1", "tabContent2", "tabContent3"];
+  p_ID:string = 'tabContent1';
 
   private subscription?: Subscription;
   constructor(
@@ -77,6 +79,14 @@ export class TabsTemplateComponent implements AfterViewInit {
     });
   }
 
+  ngOnChanges(){
+    if(this.fieldToUpdate === 'tabContent1' || this.fieldToUpdate === 'tabContent2' || this.fieldToUpdate === 'tabContent3' ||
+      this.fieldToUpdate === 'tab1' || this.fieldToUpdate === 'tab2' || this.fieldToUpdate === 'tab3'
+    ){
+      this.p_ID = this.fieldToUpdate;
+    }
+    
+  }
 
   ngAfterViewInit(): void {
     const tabs = Array.from(this.document.querySelectorAll('.tab')) as HTMLElement[];

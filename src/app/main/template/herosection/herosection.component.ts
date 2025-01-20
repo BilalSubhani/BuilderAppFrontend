@@ -6,11 +6,12 @@ import { MainService } from '../../main.service';
 import { Observable, Subscription } from 'rxjs';
 import { VideoComponent } from '../../video/video.component';
 import { FormsModule } from '@angular/forms';
+import { ImageComponent } from '../../image/image.component';
 
 @Component({
   selector: 'app-template-herosection',
   standalone: true,
-  imports: [CommonModule, VideoComponent, FormsModule],
+  imports: [CommonModule, VideoComponent, FormsModule, ImageComponent],
   templateUrl: './herosection.component.html',
   styleUrl: './herosection.component.less'
 })
@@ -248,5 +249,13 @@ export class HerosectionTemplateComponent {
       };
   
       this.heroSectionEvent.emit(this.exportData);
+  }
+
+  publicID: string ='burq-logo';
+  change: boolean = false;
+
+  changeLogo(){
+    console.log('called');
+    this.change = !this.change;
   }
 }

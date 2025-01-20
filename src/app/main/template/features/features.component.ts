@@ -5,11 +5,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
+import { ImageComponent } from '../../image/image.component';
 
 @Component({
   selector: 'app-template-features',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ImageComponent],
   templateUrl: './features.component.html',
   styleUrl: './features.component.less'
 })
@@ -168,5 +169,17 @@ export class FeaturesTemplateComponent {
 
   setExport(){
     this.featuresDataEvent.emit(this.featuresData);
+  }
+
+  publicID: string ='';
+  change: boolean = false;
+
+  changeLogo(index: any){
+    if(typeof index != 'string'){
+      this.publicID=this.imagePublicUrl[index];
+      this.change = !this.change;
+    }
+    else
+      this.change = !this.change;
   }
 }

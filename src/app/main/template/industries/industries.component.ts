@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Inject, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, Inject, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
@@ -22,8 +22,10 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
     16: { active: '/images/tabIcons/retailer-blue.svg', inactive: '/images/tabIcons/retailer.svg' }
   };
   publicID = ['industriesContent1', 'industriesContent2', 'industriesContent3', 'industriesContent4', 'industriesContent5', 'industriesContent6', 'industriesContent7'];
+  p_ID: string = 'industriesContent1';
 
   @Output() industryEvent = new EventEmitter<any>();
+  @Input() fieldToUpdate!: string;
 
   private subscription?: Subscription;
   tabContentData: any;
@@ -98,6 +100,15 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
         this.dataFunction();
       }
     });
+  }
+
+  ngOnChanges(){
+    if(this.fieldToUpdate === 'industriesContent1' || this.fieldToUpdate === 'industriesContent2' || this.fieldToUpdate === 'industriesContent3' ||
+      this.fieldToUpdate === 'industriesContent4' || this.fieldToUpdate === 'industriesContent5' || this.fieldToUpdate === 'industriesContent6' || this.fieldToUpdate === 'industriesContent7'
+    ){
+      this.p_ID = this.fieldToUpdate;
+    }
+    
   }
 
   ngAfterViewInit(): void {

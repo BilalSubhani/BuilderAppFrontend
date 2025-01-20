@@ -27,6 +27,7 @@ export class MainComponent implements OnInit {
   // Variables for data to be displayed or edited
   navbarData: any;
   existingData: any;
+  fieldToUpdate!: string;
 
   // Sidenav variables
   @ViewChild('mySidenav') mySidenav!: ElementRef;
@@ -76,8 +77,16 @@ export class MainComponent implements OnInit {
       comp: 'tabs',
       isOpen: false, 
       links: ['Text','Image', 'Text', 'Image', 'Text','Image'], 
-      items: ['Tab Heading 1', 'Tab Content 1', 'Tab Heading 2', 'Tab Content 2', 'Tab Heading 3', 'Tab Content 3'],
-      url: [ '0', '', '1', '', '2', '' ],
+      items: [
+        'Tab Icon 1', 'Tab Heading 1', 'Tab Content 1', 
+        'Tab Icon 2', 'Tab Heading 2', 'Tab Content 2', 
+        'Tab Icon 3', 'Tab Heading 3', 'Tab Content 3'
+      ],
+      url: [ 
+        'tab1', '0', 'tabContent1', 
+        'tab2', '1', 'tabContent2', 
+        'tab3', '2', 'tabContent3' 
+      ],
       postion: 1900
     },
     { 
@@ -94,8 +103,24 @@ export class MainComponent implements OnInit {
       comp: 'industries',
       isOpen: false, 
       links: ['Image', 'Image', 'Text', 'Text'], 
-      items: ['Tab Icon', 'Tab Content', 'Tab Content Heading', 'Tab Content Paragraph'],
-      url: ['', '', ''],
+      items: ['Heading', 
+        'Tab 1 Content', 'Tab 1 Heading', 'Tab 1 Paragraph',
+        'Tab 2 Content', 'Tab 2 Heading', 'Tab 2 Paragraph',
+        'Tab 3 Content', 'Tab 3 Heading', 'Tab 3 Paragraph',
+        'Tab 4 Content', 'Tab 4 Heading', 'Tab 4 Paragraph',
+        'Tab 5 Content', 'Tab 5 Heading', 'Tab 5 Paragraph',
+        'Tab 6 Content', 'Tab 6 Heading', 'Tab 6 Paragraph',
+        'Tab 7 Content', 'Tab 7 Heading', 'Tab 7 Paragraph'
+      ],
+      url: ['heading', 
+        'industriesContent1', 'tc10', 'tc11',
+        'industriesContent2', 'tc20', 'tc21',
+        'industriesContent3', 'tc30', 'tc31',
+        'industriesContent4', 'tc40', 'tc41',
+        'industriesContent5', 'tc50', 'tc51',
+        'industriesContent6', 'tc60', 'tc61',
+        'industriesContent7', 'tc70', 'tc71'
+      ],
       postion: 3080
     },
     { 
@@ -121,8 +146,20 @@ export class MainComponent implements OnInit {
       comp: 'testimonials',
       isOpen: false, 
       links: ['Text'], 
-      items: ['Title'],
-      url: ['title'],
+      items: ['Title', 
+        'Comment 1',
+        'Comment 2',
+        'Comment 3',
+        'Comment 4',
+        'Comment 5'
+      ],
+      url: ['title', 
+        'client1',
+        'client2', 
+        'client3',
+        'client4',
+        'client5',
+      ],
       postion: 4700
     },
     { 
@@ -170,6 +207,9 @@ export class MainComponent implements OnInit {
     })
   }
 
+  handleFieldUpdation(field: any){
+    this.fieldToUpdate = field;
+  }
   onPublish(){
     this.mainService.createData(this.updatedData).subscribe({
       next: (response) => {

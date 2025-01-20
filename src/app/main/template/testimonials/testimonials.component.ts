@@ -1,13 +1,14 @@
-import { Component, AfterViewInit, Inject, EventEmitter, Output } from '@angular/core';
+import { Component, AfterViewInit, Inject, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-template-testimonials',
   templateUrl: './testimonials.component.html',
   styleUrls: ['./testimonials.component.less'],
-  imports:[CommonModule]
+  imports:[CommonModule, FormsModule]
 })
 export class TestimonialsTemplateComponent implements AfterViewInit {
 
@@ -17,10 +18,12 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
+  @Input() fieldToUpdate!: string;
   @Output() testimonialsEvent = new EventEmitter<any>();
 
   testimonialData: any;
   objectKeys = Object.keys;
+  comment!: string;
 
   dataFunction(): Observable<void> {
     return new Observable((observer) => {
@@ -54,7 +57,25 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   slides: HTMLElement[] = [];
   totalSlides: number = 0;
 
-  
+  isEditing = false;
+  isEditingComment = false;
+  editedTitle = '';
+
+  ngOnChanges(){
+    if(this?.fieldToUpdate === 't' || this?.fieldToUpdate[0] === 'c'){
+      let len = this.fieldToUpdate.length;
+      if(this.fieldToUpdate[len-1] === '1' || this.fieldToUpdate[len-1] === '2' ||
+        this.fieldToUpdate[len-1] === '3' || this.fieldToUpdate[len-1] === '4' || this.fieldToUpdate[len-1] === '5'
+      ){
+        this.comment = this.fieldToUpdate;
+        this.isEditingComment = true;
+      }
+      else{
+        this.isEditing = true;
+      }
+    }
+  }
+
   ngAfterViewInit() {
     this.slides = Array.from(this.document.querySelectorAll('.slide'));
     this.totalSlides = this.slides.length;
@@ -93,5 +114,68 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
 
   setExport(){
     this.testimonialsEvent.emit(this.testimonialData);
+  }
+
+  // Editable
+  edit() {
+    this.editedTitle = this.testimonialData?.title;
+    this.isEditing = true;
+  }
+
+  save() {
+    this.testimonialData.title = this.editedTitle;
+    this.isEditing = false;
+  }
+
+  cancel() {
+    this.isEditing = false;
+  }
+
+  editedComment = '';
+
+  enableCommentEdit() {
+    this.isEditingComment = true;
+    this.editedComment = this.testimonialData.comment[this.comment][0];
+  }
+
+  saveCommentEdit() {
+    this.testimonialData.comment[this.comment][0] = this.editedComment;
+    this.isEditingComment = false;
+  }
+
+  cancelCommentEdit() {
+    this.isEditingComment = false;
+  }
+
+  editedName = '';
+
+  enableNameEdit() {
+    this.isEditingComment = true;
+    this.editedName = this.testimonialData.comment[this.comment][1];
+  }
+
+  saveNameEdit() {
+    this.testimonialData.comment[this.comment][1] = this.editedName;
+    this.isEditingComment = false;
+  }
+
+  cancelNameEdit() {
+    this.isEditingComment = false;
+  }
+
+  editedDesignation = '';
+
+  enableDesignationEdit() {
+    this.isEditingComment = true;
+    this.editedDesignation = this.testimonialData.comment[this.comment][2];
+  }
+
+  saveDesignationEdit() {
+    this.testimonialData.comment[this.comment][2] = this.editedDesignation;
+    this.isEditingComment = false;
+  }
+
+  cancelDesignationEdit() {
+    this.isEditingComment = false;
   }
 }

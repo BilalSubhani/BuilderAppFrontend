@@ -2,16 +2,66 @@
     <div class="inner-div" *ngIf="testimonialData?.title && testimonialData?.comment">
         <div class="upper-inner-div">
             <img src="images/testimonials/shape1.svg" alt="Image" class="imageTopLeft">
-            <h2 class="testimonial">{{testimonialData?.title}}</h2>
+            <h2 *ngIf="!isEditing" class="testimonial" (dblclick)="edit()">
+                {{ testimonialData?.title }}
+              </h2>
+              <input 
+                *ngIf="isEditing"
+                type="text" 
+                [(ngModel)]="editedTitle"
+                (keydown.enter)="save()"
+                (keydown.escape)="cancel()"
+                (blur)="cancel()" 
+                class="testimonial-edit"
+              >
         </div>
         <div class="lower-inner-div">
             <img src="images/testimonials/shape2.svg" alt="Image" class="imageTopRight">
             <div class="slider">
-                <div class="slide" *ngFor="let key of objectKeys(testimonialData?.comment)">
+                <div class="slide">
                     <img src="images/testimonials/66.svg" style="width: 75px; height: 53px; padding-bottom: 20px;" alt="Image">
-                    <p class="testp">{{testimonialData?.comment[key][0]}}</p>
-                    <h6 class="name">{{testimonialData?.comment[key][1]}}</h6>
-                    <p class="desig">{{testimonialData?.comment[key][2]}}</p>
+                    <p *ngIf="!isEditingComment" class="testp" (dblclick)="enableCommentEdit()">
+                        {{ testimonialData?.comment["client1"][0] }}
+                      </p>
+                      <input 
+                        *ngIf="isEditingComment" 
+                        type="text" 
+                        [(ngModel)]="editedComment" 
+                        (keydown.enter)="saveCommentEdit()"
+                        (keydown.escape)="cancelCommentEdit()" 
+                        (blur)="cancelCommentEdit()" 
+                        class="testp-edit"
+                        placeholder="{{testimonialData?.comment[fieldToUpdate][0]}}"
+                      >
+                      
+                      <h6 *ngIf="!isEditingComment" class="name" (dblclick)="enableNameEdit()">
+                        {{ testimonialData?.comment["client1"][1] }}
+                      </h6>
+                      <input 
+                        *ngIf="isEditingComment" 
+                        type="text" 
+                        [(ngModel)]="editedName" 
+                        (keydown.enter)="saveNameEdit()"
+                        (keydown.escape)="cancelNameEdit()" 
+                        (blur)="cancelNameEdit()" 
+                        class="name-edit"
+                        placeholder="{{testimonialData?.comment[fieldToUpdate][1]}}"
+                      >
+                      
+                      <p *ngIf="!isEditingComment" class="desig" (dblclick)="enableDesignationEdit()">
+                        {{ testimonialData?.comment["client1"][2] }}
+                      </p>
+                      <input 
+                        *ngIf="isEditingComment" 
+                        type="text" 
+                        [(ngModel)]="editedDesignation" 
+                        (keydown.enter)="saveDesignationEdit()"
+                        (keydown.escape)="cancelDesignationEdit()" 
+                        (blur)="cancelDesignationEdit()" 
+                        class="desig-edit"
+                        placeholder="{{testimonialData?.comment[fieldToUpdate][2]}}"
+                      >
+                      
                 </div>
             </div>
             <div class="controls">

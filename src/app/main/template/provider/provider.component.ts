@@ -6,12 +6,13 @@ import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { VideoComponent } from '../../video/video.component';
 import { FormsModule } from '@angular/forms';
+import { ImageComponent } from '../../image/image.component';
 
 @Component({
   selector: 'app-template-provider',
   templateUrl: './provider.component.html',
   styleUrls: ['./provider.component.less'],
-  imports: [CommonModule, VideoComponent, FormsModule]
+  imports: [CommonModule, VideoComponent, FormsModule, ImageComponent]
 })
 export class ProviderTemplateComponent implements AfterViewInit {
 
@@ -223,5 +224,18 @@ export class ProviderTemplateComponent implements AfterViewInit {
 
   setExport(){
     this.providerEvent.emit(this.providersData);
+  }
+
+
+  publicID: string ='';
+  change: boolean = false;
+
+  changeLogo(index: any){
+    if(typeof index != 'string'){
+      this.publicID = this.imagePublicId[index];
+      this.change = !this.change;
+    }
+    else
+      this.change = !this.change;
   }
 }

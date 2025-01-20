@@ -1,10 +1,10 @@
 <app-template-herosection (heroSectionEvent)="receiveHero($event)" />
 <app-template-features (featuresDataEvent)="receiveFeature($event)"/>
 <app-template-provider (providerEvent)="receiveProviders($event)"/>
-<app-template-tabs (tabsEvent)="receiveTabs($event)"/>
+<app-template-tabs (tabsEvent)="receiveTabs($event)" [fieldToUpdate]="field"/>
 <app-template-integrate (integratEvent)="receiveIntegrate($event)"/>
-<app-template-industries (industryEvent)="receiveIndustries($event)"/>
+<app-template-industries (industryEvent)="receiveIndustries($event)" [fieldToUpdate]="field"/>
 <app-template-whyburq (whyburqEvent)="receiveWhyBurq($event)"/>
-<app-template-testimonials (testimonialsEvent)="receiveTest($event)"/>
+<app-template-testimonials (testimonialsEvent)="receiveTest($event)" [fieldToUpdate]="field"/>
 <app-template-backing (backingDataEvent)="receiveBacking($event)"/>
 <app-template-footer />
