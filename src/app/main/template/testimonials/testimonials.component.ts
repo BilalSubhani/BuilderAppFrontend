@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, Inject, EventEmitter, Output, Input } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -10,10 +10,9 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./testimonials.component.less'],
   imports:[CommonModule, FormsModule]
 })
-export class TestimonialsTemplateComponent implements AfterViewInit {
+export class TestimonialsTemplateComponent {
   constructor(
-    private http: HttpClient,
-    @Inject(DOCUMENT) private document: Document
+    private http: HttpClient
   ) {}
 
   @Input() fieldToUpdate!: string;
@@ -60,7 +59,6 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
   editedTitle = '';
 
   ngOnChanges(){
-    console.log(this.fieldToUpdate);
     if(this?.fieldToUpdate[0] === 't' || this?.fieldToUpdate[0] === 'c'){
       let len = this.fieldToUpdate.length;
       if(this.fieldToUpdate[len-1] === '1' || this.fieldToUpdate[len-1] === '2' ||
@@ -70,40 +68,9 @@ export class TestimonialsTemplateComponent implements AfterViewInit {
         this.isEditingComment = true;
       }
       else if(this.fieldToUpdate === 'title'){
-        console.log(this.fieldToUpdate);
         this.isEditing = true;
       }
     }
-  }
-
-  ngAfterViewInit() {
-    this.slides = Array.from(this.document.querySelectorAll('.slide'));
-    this.totalSlides = this.slides.length;
-    const nextButton = this.document.getElementById('next');
-    const prevButton = this.document.getElementById('prev');
-    this.showSlide(this.currentSlide);
-    if (nextButton) {
-      nextButton.addEventListener('click', () => this.nextSlide());
-    }
-    if (prevButton) {
-      prevButton.addEventListener('click', () => this.prevSlide());
-    }
-  }
-
-  showSlide(index: number) {
-    this.slides.forEach((slide, i) => {
-      slide.style.display = i === index ? 'block' : 'none';
-    });
-  }
-
-  nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
-    this.showSlide(this.currentSlide);
-  }
-
-  prevSlide() {
-    this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
-    this.showSlide(this.currentSlide);
   }
 
   setExport(){
