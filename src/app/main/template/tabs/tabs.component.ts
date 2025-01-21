@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { ImageComponent } from '../../image/image.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-template-tabs',
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.less'],
-  imports:[CommonModule, ImageComponent]
+  imports:[CommonModule, ImageComponent, FormsModule]
 })
 export class TabsTemplateComponent implements AfterViewInit {
 
@@ -47,7 +48,7 @@ export class TabsTemplateComponent implements AfterViewInit {
     return new Observable((observer) => {
       this.http.get<any>('http://localhost:3000/data/component/tabs').subscribe(
         (res: any) => {
-          this.tabData = res;
+          this.tabData = res.data;
   
           observer.next();
           observer.complete();
@@ -85,7 +86,9 @@ export class TabsTemplateComponent implements AfterViewInit {
     ){
       this.p_ID = this.fieldToUpdate;
     }
-    
+    else if(this.fieldToUpdate === '0' || this.fieldToUpdate === '1' || this.fieldToUpdate === '2'){
+      this.enableTabEdit(parseInt(this.fieldToUpdate));
+    }
   }
 
   ngAfterViewInit(): void {
@@ -122,7 +125,25 @@ export class TabsTemplateComponent implements AfterViewInit {
     this.subscription?.unsubscribe();
   }
 
+
+  isEditingTab: { [key: number]: boolean } = {};
+  editedTab: { [key: number]: string } = {};
+
+  enableTabEdit(index: number) {
+    this.isEditingTab[index] = true;
+    this.editedTab[index] = this.tabData[index];
+  }
+
+  saveTabEdit(index: number) {
+    this.tabData[index] = this.editedTab[index];
+    this.isEditingTab[index] = false;
+  }
+
+  cancelTabEdit(index: number) {
+    this.isEditingTab[index] = false;
+  }
+
   setExport(){
-    this.tabsEvent.emit(this.tabData?.data);
+    this.tabsEvent.emit(this.tabData);
   }
 }

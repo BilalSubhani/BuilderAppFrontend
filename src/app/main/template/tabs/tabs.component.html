@@ -5,16 +5,52 @@
         <div class="roundImg"></div>
     
         <div class="tab-container">
-            <div class="tabs" *ngIf="tabData?.data">
-                <div class="tab active" data-tab="1"><img [src]="tabsImageUrl[0]" style="width: 25px; height: 22px;" class="icon active" data-tab="1"> {{tabData?.data[0]}}</div>
-                <div class="tab" data-tab="2"><img [src]="tabsImageUrl[1]" style="width: 20px; height: 20px;" class="icon" data-tab="2">{{tabData?.data[1]}}</div>
-                <div class="tab" data-tab="3"><img [src]="tabsImageUrl[2]" style="width: 22px; height: 22px;" class="icon" data-tab="3">{{tabData?.data[2]}}</div>
+            <div class="tabs" *ngIf="tabData">
+                <div class="tab active" data-tab="1">
+                    <img [src]="tabsImageUrl[0]" style="width: 25px; height: 22px;" class="icon active" data-tab="1">
+                    <span *ngIf="!isEditingTab[0]" (dblclick)="enableTabEdit(0)">{{tabData[0]}}</span>
+                    <input 
+                      *ngIf="isEditingTab[0]" 
+                      type="text" 
+                      [(ngModel)]="editedTab[0]" 
+                      (keydown.enter)="saveTabEdit(0)" 
+                      (keydown.escape)="cancelTabEdit(0)" 
+                      (blur)="cancelTabEdit(0)" 
+                      class="tab-edit"
+                    >
+                </div>
+                  
+                <div class="tab active" data-tab="2">
+                    <img [src]="tabsImageUrl[1]" style="width: 20px; height: 20px;" class="icon" data-tab="2">
+                    <span *ngIf="!isEditingTab[1]" (dblclick)="enableTabEdit(1)">{{tabData[1]}}</span>
+                    <input 
+                      *ngIf="isEditingTab[1]" 
+                      type="text" 
+                      [(ngModel)]="editedTab[1]" 
+                      (keydown.enter)="saveTabEdit(1)" 
+                      (keydown.escape)="cancelTabEdit(1)" 
+                      (blur)="cancelTabEdit(1)" 
+                      class="tab-edit"
+                    >
+                </div>
+                  
+                <div class="tab active" data-tab="3">
+                    <img [src]="tabsImageUrl[2]" style="width: 22px; height: 22px;" class="icon" data-tab="3">
+                    <span *ngIf="!isEditingTab[2]" (dblclick)="enableTabEdit(2)">{{tabData[2]}}</span>
+                    <input 
+                      *ngIf="isEditingTab[2]" 
+                      type="text" 
+                      [(ngModel)]="editedTab[2]" 
+                      (keydown.enter)="saveTabEdit(2)" 
+                      (keydown.escape)="cancelTabEdit(2)" 
+                      (blur)="cancelTabEdit(2)" 
+                      class="tab-edit"
+                    >
+                </div>                  
             </div>
         </div>
         <div class="content">
             <app-image [pID]="p_ID" class="tabCont"/>
-            <img [src]="tabsImageUrl[4]" alt="Image 2" data-tab="2">
-            <img [src]="tabsImageUrl[5]" alt="Image 3" data-tab="3">
         </div>
     </div>
 </div>
