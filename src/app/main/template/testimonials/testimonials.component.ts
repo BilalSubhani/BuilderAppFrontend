@@ -59,26 +59,24 @@ export class TestimonialsTemplateComponent {
   editedTitle = '';
 
   ngOnChanges(){
-    if(this?.fieldToUpdate[0] === 't' || this?.fieldToUpdate[0] === 'c'){
+    if(this.fieldToUpdate[0] === 't' || this.fieldToUpdate[0] === 'c'){
       let len = this.fieldToUpdate.length;
       if(this.fieldToUpdate[len-1] === '1' || this.fieldToUpdate[len-1] === '2' ||
         this.fieldToUpdate[len-1] === '3' || this.fieldToUpdate[len-1] === '4' || this.fieldToUpdate[len-1] === '5'
       ){
         this.comment = this.fieldToUpdate;
-        this.isEditingComment = true;
+        this.enableCommentEdit();
       }
       else if(this.fieldToUpdate === 'title'){
-        this.isEditing = true;
+        this.edit();
       }
     }
   }
 
   setExport(){
-    console.log(this.testimonialData);
     this.testimonialsEvent.emit(this.testimonialData);
   }
 
-  // Editable
   edit() {
     this.editedTitle = this.testimonialData?.title;
     this.isEditing = true;

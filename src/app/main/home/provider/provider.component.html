@@ -20,18 +20,18 @@
         <div #counterSection class="bottom-container">
             <div #bottomItem1 class="bottom-item1">
                 <img [src]="imageUrl[2]" style="width: 49px; height: 56px" alt="Image 1">
-                <h3>1</h3>
-                <p>Integration</p>
+                <h3>{{ providersData?.counterItems[0]?.Count1[0] }}</h3>
+                <p>{{ providersData?.counterItems[0]?.Count1[1] }}</p>
             </div>
             <div #bottomItem2 class="bottom-item2">
                 <img [src]="imageUrl[3]" style="width: 58px; height: 58px" alt="Image 2">
                 <h3 #counterCities id="counterCities">300</h3>
-                <p>Cities Covered</p>
+                <p>{{ providersData?.counterItems[1]?.Count2[1] }}</p>
             </div>
             <div #bottomItem3 class="bottom-item3">
                 <img [src]="imageUrl[4]" alt="Image 3">
-                <h3>1M+</h3>
-                <p>Drivers In-Network</p>
+                <h3>{{ providersData?.counterItems[2]?.Count3[0] }}</h3>
+                <p>{{ providersData?.counterItems[2]?.Count3[1] }}</p>
             </div>
         </div>
     </div>

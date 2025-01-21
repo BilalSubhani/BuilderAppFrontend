@@ -111,20 +111,21 @@ export class ProviderComponent implements AfterViewInit {
             this.renderer[action](this.bottomItem2.nativeElement, 'show');
             this.renderer[action](this.bottomItem3.nativeElement, 'show');
 
+            let count = parseInt(this.providersData?.counterItems[1]?.Count2[0]);
+            let toInc = count / 100;
             if (entry.isIntersecting) {
               // const counterComplete = this.counterValue === 300 ? false: localStorage.getItem('counterComplete');
-              const counterComplete = this.updatedCounter === 3000 ? true : false;
-              // console.log(counterComplete);
+              const counterComplete = this.updatedCounter === count ? true : false;
               if (!counterComplete) {
                 clearInterval(this.intervalId);
                 this.counterValue = 300;
                 this.updateCounter();
 
                 this.intervalId = setInterval(() => {
-                  this.counterValue += 30;
+                  this.counterValue += toInc;
                   this.updateCounter();
 
-                  if (this.counterValue >= 3000) {
+                  if (this.counterValue >= count) {
                     this.updatedCounter = this.counterValue;
                     clearInterval(this.intervalId);
                     // localStorage.setItem('counterComplete', 'true');
