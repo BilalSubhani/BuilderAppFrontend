@@ -30,6 +30,7 @@ export class IntegrateTemplateComponent {
     this.imagePublicID.forEach((id) => {
       this.http.get<any>(`http://localhost:3000/media/images/${id}`).subscribe(
         (response: any) => {
+          console.log(response.url);
           this.imageUrl.push(response.url);
         },
         (error) => {
@@ -37,8 +38,23 @@ export class IntegrateTemplateComponent {
         }
       );
     });
+    this.http.get<any>(`http://localhost:3000/media/images/${this.imagePublicID[0]}`).subscribe(
+      (response: any) => {
+        this.imageUrl[0] = response.url;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.http.get<any>(`http://localhost:3000/media/images/${this.imagePublicID[1]}`).subscribe(
+      (response: any) => {
+        this.imageUrl[1] = response.url;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-
 
   dataController(): Observable<void> {
     return new Observable((observer) => {

@@ -43,6 +43,7 @@ export class TemplateComponent implements AfterViewInit{
   test:           any;
   backing:        any;
   startPowering:  any;
+  footerData:     any;
 
   receiveHero(event: any) {
     this.navbar = event?.navbar;
@@ -92,6 +93,11 @@ export class TemplateComponent implements AfterViewInit{
     
     this.setExportData();
   }
+  receiveFooter(event: any){
+    this.footerData = event;
+    
+    this.setExportData();
+  }
 
   ngAfterViewInit(): void {
     this.setExportData();
@@ -110,7 +116,8 @@ export class TemplateComponent implements AfterViewInit{
       "sellingPoints": this.sellingPoints,
       "testimonials": this.test,
       "backing": this.backing,
-      "startPowering": this.startPowering
+      "startPowering": this.startPowering,
+      "footer": this.footerData
     }
 
     this.templateEvent.emit(this.exportData);

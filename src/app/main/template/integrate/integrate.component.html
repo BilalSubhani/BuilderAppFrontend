@@ -31,7 +31,7 @@
                 </ng-template>
             </h3>
               
-            <img [src]="imageUrl[1]" alt="Image">
+            <img [src]="imageUrl[0]" alt="Image">
               
             <p (click)="startEditing('body')">
                 <ng-container *ngIf="editingField !== 'body'; else editBodyTemplate">
@@ -98,7 +98,7 @@
             </div>
 
             <div class="round-div">
-                <img [src]="imageUrl[0]" alt="Round Image" style="width: 100px; height: 100px;">
+                <img [src]="imageUrl[1]" alt="Round Image" style="width: 100px; height: 100px;">
             </div>
             <button class="circle-button" (click)="changeLogo(1)">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true">
