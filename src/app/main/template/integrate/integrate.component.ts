@@ -4,17 +4,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
+import { ImageComponent } from '../../image/image.component';
 
 @Component({
   selector: 'app-template-integrate',
   templateUrl: './integrate.component.html',
   styleUrls: ['./integrate.component.less'],
-  imports:[CommonModule, FormsModule]
+  imports:[CommonModule, FormsModule, ImageComponent]
 })
 export class IntegrateTemplateComponent {
 
   integrateData: any;
-  imageUrl: string = '';
+  imagePublicID: string[] = ['lines', 'integrateLogo'];
+  imageUrl: string[] = [];
   private subscription?: Subscription;
 
   @Output() integratEvent: EventEmitter<any> = new EventEmitter<any> ();
@@ -25,15 +27,18 @@ export class IntegrateTemplateComponent {
   ) {}
 
   imageController(){
-    this.http.get<any>(`http://localhost:3000/media/images/lines`).subscribe(
-      (response: any) => {
-        this.imageUrl = response.url;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.imagePublicID.forEach((id) => {
+      this.http.get<any>(`http://localhost:3000/media/images/${id}`).subscribe(
+        (response: any) => {
+          this.imageUrl.push(response.url);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
   }
+
 
   dataController(): Observable<void> {
     return new Observable((observer) => {
@@ -142,5 +147,17 @@ export class IntegrateTemplateComponent {
 
   setExport(){
     this.integratEvent.emit(this.integrateData);
+  }
+
+  publicID: string = '';
+  change: boolean = false;
+
+  changeLogo(index: any) {
+    if (typeof index !== 'string') {
+      this.publicID = "integrateLogo";
+      this.change = !this.change;
+    } else {
+      this.change = !this.change;
+    }
   }
 }

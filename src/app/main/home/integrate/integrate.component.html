@@ -3,7 +3,7 @@
         <div class="left-div" #leftDiv *ngIf="integrateData?.smallHeading && integrateData?.title && integrateData?.body && integrateData?.button">
             <h6>{{integrateData?.smallHeading}}</h6>
             <h3>{{integrateData?.title}}</h3>
-            <img [src]="imageUrl" alt="Image">
+            <img [src]="imageUrl[0]" alt="Image">
             <p>{{integrateData?.body}}</p>
             <a [href]="integrateData?.button[1]">
                 <button class="cta-hero">{{integrateData?.button[0]}}</button>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="round-div">
-                <img src="/images/b.svg" alt="Round Image">
+                <img [src]="imageUrl[1]" alt="Round Image" style="width: 100px; height: 100px;">
             </div>
         </div>
     </div>

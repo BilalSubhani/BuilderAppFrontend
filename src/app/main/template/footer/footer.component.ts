@@ -1,26 +1,23 @@
-import { Component, ElementRef, Renderer2, ViewChild, Inject, PLATFORM_ID, ViewChildren, QueryList } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { ImageComponent } from '../../image/image.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-template-footer',
-  imports: [CommonModule],
+  imports: [CommonModule, ImageComponent, FormsModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.less'
 })
+
 export class FooterTemplateComponent {
-  @ViewChild('footerContainer', {static: false}) footerContainer!: ElementRef;
-  @ViewChild('footerLogo', {static: false}) footerLogo!: ElementRef;
-  @ViewChildren('footerSection') footerSection!: QueryList<ElementRef<HTMLDivElement>>;
   imageUrl: string = '';
+  footerData: any;
   
   constructor(
-    private renderer: Renderer2,
-    private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private http: HttpClient
   ){}
-
-  footerData: any;
 
   dataFunction(){
     this.http.get<any>('http://localhost:3000/data/component/footer').subscribe(
@@ -44,22 +41,15 @@ export class FooterTemplateComponent {
     this.dataFunction();
   }
 
-  ngAfterViewInit(): void{
-    if(isPlatformBrowser(this.platformId)){
-      if('IntersectionObserver' in window){
-        const observerContainer = new IntersectionObserver((entries) =>{
-          entries.forEach((entry) =>{
-            const action = entry.isIntersecting ? 'addClass' : 'removeClass';
-            this.renderer[action](this.footerLogo.nativeElement, 'show');
+  publicID: string = '';
+  change: boolean = false;
 
-            this.footerSection.forEach((section)=>{
-              this.renderer[action](section.nativeElement, 'show');
-            });
-          })
-        }, { threshold: 0.3 });
-
-        observerContainer.observe(this.footerContainer.nativeElement); 
-      }
+  changeLogo(index: any) {
+    if (typeof index !== 'string') {
+      this.publicID = "footerLogo";
+      this.change = !this.change;
+    } else {
+      this.change = !this.change;
     }
   }
 }

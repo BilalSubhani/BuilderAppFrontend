@@ -4,10 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
+import { ImageComponent } from '../../image/image.component';
 
 @Component({
   selector: 'app-template-whyburq',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ImageComponent],
   templateUrl: './whyburq.component.html',
   styleUrl: './whyburq.component.less'
 })
@@ -196,5 +197,17 @@ export class WhyburqTemplateComponent {
       "sellingPoints" : this.benefitsData
     }
     this.whyburqEvent.emit(this.exportData);
+  }
+
+  publicID: string = '';
+  change: boolean = false;
+
+  changeLogo(index: any) {
+    if (typeof index !== 'string') {
+      this.publicID = this.imagePublicUrl[index];
+      this.change = !this.change;
+    } else {
+      this.change = !this.change;
+    }
   }
 }
