@@ -1,9 +1,8 @@
-import { Component, ElementRef, Renderer2, ViewChild, AfterViewInit, Inject, PLATFORM_ID, Output, EventEmitter} from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, ElementRef, ViewChild, Output, EventEmitter} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, Subscription } from 'rxjs';
-import { MainService } from '../../main.service';
+import { Observable } from 'rxjs';
 import { VideoComponent } from '../../video/video.component';
 import { FormsModule } from '@angular/forms';
 import { ImageComponent } from '../../image/image.component';
@@ -14,7 +13,7 @@ import { ImageComponent } from '../../image/image.component';
   styleUrls: ['./provider.component.less'],
   imports: [CommonModule, VideoComponent, FormsModule, ImageComponent]
 })
-export class ProviderTemplateComponent implements AfterViewInit {
+export class ProviderTemplateComponent {
 
   @ViewChild('counterSection', { static: false }) counterSection!: ElementRef;
   @ViewChild('counterCities', { static: false }) counterCities!: ElementRef;
@@ -24,27 +23,31 @@ export class ProviderTemplateComponent implements AfterViewInit {
 
   @Output() providerEvent: EventEmitter<any> = new EventEmitter<any> ();
 
-  private subscription?: Subscription;
   videoPID: string = 'provider';
   providerImageUrl: string[] = [];
   imagePublicId: string[] = ['lines', 'tick', 'counter1', 'counter2', 'counter3'];
 
   providersData: any;
-  private intervalId: any;
-  private counterValue = 300;
-  private updatedCounter: number = 300;
+  firstCounterCount1: string[] = [];
+  secondCounterCount2: string[] = [];
+  thirdCounterCount3: string[] = [];
+
+  counter1Head!: string;
+  counter1Body!: string;
+  counter2Head!: string; 
+  counter2Body!: string;
+  counter3Head!: string;
+  counter3Body!: string;
+
   objectKeys  = Object.keys;
 
   constructor(
-    private renderer: Renderer2,
     private http: HttpClient,
-    private toastr: ToastrService,
-    private mainService: MainService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    private toastr: ToastrService
   ) {}
 
-  imageController(){
-    this.imagePublicId.forEach( pid =>  {
+  imageController() {
+    this.imagePublicId.forEach(pid =>  {
       this.http.get<any>(`http://localhost:3000/media/images/${pid}`).subscribe(
         (response: any) => {
           this.providerImageUrl.push(response.url);
@@ -65,7 +68,23 @@ export class ProviderTemplateComponent implements AfterViewInit {
       this.http.get<any>('http://localhost:3000/data/component/providers').subscribe(
         (res: any) => {
           this.providersData = { ...this.providersData, ...res.data };
-  
+
+          if (this.providersData?.counterItems?.[0]?.Count1) {
+            this.firstCounterCount1 = [...this.providersData?.counterItems[0]?.Count1];
+            this.counter1Head = this.firstCounterCount1[0];
+            this.counter1Body = this.firstCounterCount1[1];
+          }
+          if (this.providersData?.counterItems?.[1]?.Count2) {
+            this.secondCounterCount2 = [...this.providersData?.counterItems[1]?.Count2];
+            this.counter2Head = this.secondCounterCount2[0]; 
+            this.counter2Body = this.secondCounterCount2[1];
+          }
+          if (this.providersData?.counterItems?.[2]?.Count3) {
+            this.thirdCounterCount3 = [...this.providersData?.counterItems[2]?.Count3];
+            this.counter3Head = this.thirdCounterCount3[0];
+            this.counter3Body = this.thirdCounterCount3[1];
+          }
+
           observer.next();
           observer.complete();
         },
@@ -77,7 +96,7 @@ export class ProviderTemplateComponent implements AfterViewInit {
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.imageController();
 
     this.dataFunction().subscribe({
@@ -88,73 +107,10 @@ export class ProviderTemplateComponent implements AfterViewInit {
         console.log('Error in dataFunction:', err);
       }
     });
-
-    this.subscription = this.mainService.dataChange$.subscribe((hasChanged) => {
-      if (hasChanged) {
-        this.dataFunction();
-      }
-    });
-  }
-
-  ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      if ('IntersectionObserver' in window) {
-
-        const observerFeatures = new IntersectionObserver(entries => {
-          entries.forEach(entry => {
-            //console.log(entry);
-            const action = entry.isIntersecting ? 'addClass' : 'removeClass';
-            this.renderer[action](this.bottomItem1.nativeElement, 'show');
-            this.renderer[action](this.bottomItem2.nativeElement, 'show');
-            this.renderer[action](this.bottomItem3.nativeElement, 'show');
-
-            if (entry.isIntersecting) {
-              // const counterComplete = this.counterValue === 300 ? false: localStorage.getItem('counterComplete');
-              const counterComplete = this.updatedCounter === 3000 ? true : false;
-              // console.log(counterComplete);
-              if (!counterComplete) {
-                clearInterval(this.intervalId);
-                this.counterValue = 300;
-                this.updateCounter();
-
-                this.intervalId = setInterval(() => {
-                  this.counterValue += 30;
-                  this.updateCounter();
-
-                  if (this.counterValue >= 3000) {
-                    this.updatedCounter = this.counterValue;
-                    clearInterval(this.intervalId);
-                    // localStorage.setItem('counterComplete', 'true');
-                  }
-                }, 20);
-              } else {
-                this.counterValue = this.updatedCounter;
-                this.updateCounter();
-              }
-            }
-          }, { threshold: 0.8 });
-        });
-
-        observerFeatures.observe(this.counterSection.nativeElement);
-      } else {
-        console.warn('IntersectionObserver is not supported in this environment.');
-      }
-    }
-  }
-
-  ngOnDestroy() {
-    this.subscription?.unsubscribe();
-  }
-
-  private updateCounter(): void {
-    if (this.counterCities) {
-      this.renderer.setProperty(this.counterCities.nativeElement, 'textContent', this.counterValue);
-    }
   }
 
   // editable Fields
   // --------------------------------------------------------------
-
   editingField: string | null = null;
   updatedTitle: string | null = null;
   updatedBody: string | null = null;
@@ -188,7 +144,6 @@ export class ProviderTemplateComponent implements AfterViewInit {
     this.updatedTitle = null;
     this.updatedBody = null;
     this.updatedList = {};
-    //console.log('Updated Providers Data:', this.providersData);
 
     this.setExport();
   }
@@ -219,23 +174,81 @@ export class ProviderTemplateComponent implements AfterViewInit {
     }
   }
 
+  // Counter Section
+  //---------------------------------------------------------------
+  
 
+  counter1HeadChange: boolean = false;
+  counter1BodyChange: boolean = false;
+  counter2HeadChange: boolean = false;
+  counter2BodyChange: boolean = false;
+  counter3HeadChange: boolean = false;
+  counter3BodyChange: boolean = false;
+
+  makeEditable(index: number){
+    if (index === 1) {
+      this.counter1HeadChange = !this.counter1HeadChange;
+      this.counter1BodyChange = !this.counter1BodyChange;
+    } else if (index === 2) {
+      this.counter2HeadChange = !this.counter2HeadChange;
+      this.counter2BodyChange = !this.counter2BodyChange;
+    } else if (index === 3) {
+      this.counter3HeadChange = !this.counter3HeadChange;
+      this.counter3BodyChange = !this.counter3BodyChange;
+    }
+  }
+
+  saveCounterField(index: number){
+    if (index === 1) {
+      this.providersData.counterItems[0].Count1 = [this.counter1Head, this.counter1Body];
+    } else if (index === 2) {
+      this.providersData.counterItems[1].Count2 = [this.counter2Head, this.counter2Body];
+    } else if (index === 3) {
+      this.providersData.counterItems[2].Count3 = [this.counter3Head, this.counter3Body];
+    }
+
+    this.makeEditable(index);
+    this.setExport();
+  }
+
+  cancelEditingCounter(index: number){
+    if (index === 1) {
+      this.counter1Head = this.firstCounterCount1[0];
+      this.counter1Body = this.firstCounterCount1[1];
+    } else if (index === 2) {
+      this.counter2Head = this.secondCounterCount2[0];
+      this.counter2Body = this.secondCounterCount2[1];
+    } else if (index === 3) {
+      this.counter3Head = this.thirdCounterCount3[0];
+      this.counter3Body = this.thirdCounterCount3[1];
+    }
+
+    this.makeEditable(index);
+  }
+
+  handleCounterKeyUp(event: KeyboardEvent, index: number) {
+    if (event.key === 'Escape') {
+      this.cancelEditingCounter(index);
+    } else if (event.key === 'Enter') {
+      this.saveCounterField(index);
+    }
+  }
+  
   //---------------------------------------------------------------
 
-  setExport(){
+  setExport() {
     this.providerEvent.emit(this.providersData);
   }
 
-
-  publicID: string ='';
+  publicID: string = '';
   change: boolean = false;
 
-  changeLogo(index: any){
-    if(typeof index != 'string'){
+  changeLogo(index: any) {
+    if (typeof index !== 'string') {
       this.publicID = this.imagePublicId[index];
       this.change = !this.change;
-    }
-    else
+    } else {
       this.change = !this.change;
+    }
   }
 }

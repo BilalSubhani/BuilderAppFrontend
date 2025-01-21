@@ -207,7 +207,6 @@ input[type="text"]:not(:focus) {
     }
 }
 
-
 .bottom-item1.show{
     transform: translateY(0);
     opacity: 1;
@@ -219,6 +218,39 @@ input[type="text"]:not(:focus) {
 .bottom-item3.show{
     transform: translateY(22px);
     opacity: 1;
+}
+
+.bottom-item1, .bottom-item2, .bottom-item3 {
+    h3, p{
+        cursor: pointer;
+    }
+
+    input[type="text"] {
+        font-size: 18px;
+        letter-spacing: 1.2px;
+        line-height: 1.5;
+        color: #333;
+        border: 1px solid #8C98A4;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: transparent;
+        width: 80%;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        outline: none;
+    }
+    
+    input[type="text"]:focus {
+        border-color: #3066ED;
+        box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+    }
+    
+    input[type="text"], h3, p {
+        transition: opacity 0.3s ease;
+    }
+    
+    input[type="text"]:not(:focus) {
+        opacity: 0.7;
+    }
 }
 
 .circle-button {

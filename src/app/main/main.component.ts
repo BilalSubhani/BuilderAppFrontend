@@ -40,7 +40,6 @@ export class MainComponent implements OnInit {
       name: 'Navbar', 
       comp: 'navbar',
       isOpen: false, 
-      links: ['Image', 'Text'], 
       items: ['Logo', 'buttonText'],
       url: ['', 'buttonText'],
       postion: 0
@@ -49,7 +48,6 @@ export class MainComponent implements OnInit {
       name: 'Hero', 
       comp: 'heroSection',
       isOpen: false, 
-      links: ['Text', 'Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Button', 'Video'],
       url: ['heading', 'paragraph', 'buttonText', '3steps'],
       postion: 0
@@ -57,8 +55,7 @@ export class MainComponent implements OnInit {
     { 
       name: 'Features', 
       comp: 'features',
-      isOpen: false, 
-      links: ['Text'], 
+      isOpen: false,  
       items: ['Heading'],
       url: ['title'],
       postion: 530
@@ -67,7 +64,6 @@ export class MainComponent implements OnInit {
       name: 'Provider',
       comp: 'providers', 
       isOpen: false, 
-      links: ['Text', 'Text', 'Video'], 
       items: ['Heading', 'Paragraph', 'Video'],
       url: ['title', 'body', 'provider'],
       postion: 1200
@@ -76,7 +72,6 @@ export class MainComponent implements OnInit {
       name: 'Tab', 
       comp: 'tabs',
       isOpen: false, 
-      links: ['Text','Image', 'Text', 'Image', 'Text','Image'], 
       items: [
         'Tab Icon 1', 'Tab Heading 1', 'Tab Content 1', 
         'Tab Icon 2', 'Tab Heading 2', 'Tab Content 2', 
@@ -93,7 +88,6 @@ export class MainComponent implements OnInit {
       name: 'Integrate', 
       comp: 'integrate',
       isOpen: false, 
-      links: ['Text', 'Text', 'Text', 'Text'], 
       items: ['Heading 6', 'Heading 3', 'Paragraph', 'Button'],
       url: ['smallHeading', 'title', 'body', 'button'],
       postion: 2500
@@ -101,8 +95,7 @@ export class MainComponent implements OnInit {
     { 
       name: 'Industries', 
       comp: 'industries',
-      isOpen: false, 
-      links: ['Image', 'Image', 'Text', 'Text'], 
+      isOpen: false,  
       items: ['Heading', 
         'Tab 1 Content',
         'Tab 2 Content',
@@ -127,7 +120,6 @@ export class MainComponent implements OnInit {
       name: 'Why Burq?', 
       comp: 'whyBurq',
       isOpen: false, 
-      links: ['Text', 'Text', 'Text'], 
       items: ['Heading', 'Paragraph', 'Button'],
       url: ['title', 'body', 'button'],
       postion: 3800
@@ -136,7 +128,6 @@ export class MainComponent implements OnInit {
       name: 'Selling Points', 
       comp: 'sellingPoints',
       isOpen: false, 
-      links: ['Image', 'Text', 'Text', 'Image', 'Text', 'Text', 'Image', 'Text', 'Text'], 
       items: ['Logo 1', 'Heading 1', 'Paragraph 1', 'Logo 2', 'Heading 2', 'Paragraph 2', 'Logo 3', 'Heading 3', 'Paragraph 3'],
       url: ['', 'sp1', 'sp1', 'sp2', 'sp2', 'sp3', 'sp3'],
       postion: 4200
@@ -145,7 +136,6 @@ export class MainComponent implements OnInit {
       name: 'Testimonials', 
       comp: 'testimonials',
       isOpen: false, 
-      links: ['Text'], 
       items: ['Title', 
         'Comment 1',
         'Comment 2',
@@ -166,7 +156,6 @@ export class MainComponent implements OnInit {
       name: 'Backing', 
       comp: 'backing',
       isOpen: false, 
-      links: ['Text', 'Text'], 
       items: ['Title', 'Button'] ,
       url: ['title', 'button'],
       postion: 5150
@@ -174,11 +163,18 @@ export class MainComponent implements OnInit {
     { 
       name: 'Powering', 
       comp: 'startPowering',
-      isOpen: false, 
-      links: ['Text', 'Text'], 
+      isOpen: false,  
       items: ['Title', 'Button'],
       url: ['body', 'button'],
       postion: 5700
+    },
+    {
+      name: 'Footer', 
+      comp: 'footer',
+      isOpen: false, 
+      items: ['Title', 'Button'],
+      url: ['body', 'button'],
+      postion: 5900
     }
   ];
 

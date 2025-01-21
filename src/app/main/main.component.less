@@ -131,7 +131,7 @@
 }
 
 .main .sidenav {
-    height: 100%;
+    height: calc(100vh - 80px);
     width: 250px;
     position: fixed;
     z-index: 100;
@@ -139,6 +139,7 @@
     left: 0;
     background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     overflow-x: hidden;
+    overflow-y: scroll;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     padding-top: 80px;
     box-shadow: 
