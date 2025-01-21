@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MainService } from './main.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,8 +14,7 @@ import { TemplateComponent } from './template/template.component';
 })
 export class MainComponent implements OnInit {
   constructor(
-    private mainService: MainService,
-    private viewContainer: ViewContainerRef
+    private mainService: MainService
   ) {}
 
   // Variables for data uploading
@@ -40,8 +39,8 @@ export class MainComponent implements OnInit {
       name: 'Navbar', 
       comp: 'navbar',
       isOpen: false, 
-      items: ['Logo', 'buttonText'],
-      url: ['', 'buttonText'],
+      items: ["Logo", "List 1", "List 2", "List 3", "Button"],
+      url: ["navLogo", "navList1", "navList2", "navList3", "navButton"],
       postion: 0
     },
     { 
@@ -49,23 +48,23 @@ export class MainComponent implements OnInit {
       comp: 'heroSection',
       isOpen: false, 
       items: ['Heading', 'Paragraph', 'Button', 'Video'],
-      url: ['heading', 'paragraph', 'buttonText', '3steps'],
+      url: ["heroHeading", "heroParagraph", "heroButton", "heroVideo"],
       postion: 0
     },
     { 
       name: 'Features', 
       comp: 'features',
       isOpen: false,  
-      items: ['Heading'],
-      url: ['title'],
+      items: ['Heading', 'Tile 1', 'Tile 2', 'Tile 3'],
+      url: ["featuresHeading", "featuresTile1", "featuresTile2", "featuresTile3"],
       postion: 530
     },
     { 
       name: 'Provider',
       comp: 'providers', 
       isOpen: false, 
-      items: ['Heading', 'Paragraph', 'Video'],
-      url: ['title', 'body', 'provider'],
+      items: ['Heading', 'Paragraph', 'List Item 1', 'List Item 2', 'List Item 3', 'List Item 4', "Counter 1", "Counter 2", "Counter 3"],
+      url: ["providerHeading", "providerParagraph", "providerListItem1", "providerListItem2", "providerListItem3", "providerListItem4", "providerCounter1", "providerCounter2", "providerCounter3"],
       postion: 1200
     },
     { 
@@ -89,7 +88,7 @@ export class MainComponent implements OnInit {
       comp: 'integrate',
       isOpen: false, 
       items: ['Heading 6', 'Heading 3', 'Paragraph', 'Button'],
-      url: ['smallHeading', 'title', 'body', 'button'],
+      url: ["integrateHeading6", "integrateHeading3", "integrateParagraph", "integrateButton"],
       postion: 2500
     },
     { 
@@ -121,15 +120,15 @@ export class MainComponent implements OnInit {
       comp: 'whyBurq',
       isOpen: false, 
       items: ['Heading', 'Paragraph', 'Button'],
-      url: ['title', 'body', 'button'],
+      url: ["whyBurqHeading", "whyBurqParagraph", "whyBurqButton"],
       postion: 3800
     },
     { 
       name: 'Selling Points', 
       comp: 'sellingPoints',
       isOpen: false, 
-      items: ['Logo 1', 'Heading 1', 'Paragraph 1', 'Logo 2', 'Heading 2', 'Paragraph 2', 'Logo 3', 'Heading 3', 'Paragraph 3'],
-      url: ['', 'sp1', 'sp1', 'sp2', 'sp2', 'sp3', 'sp3'],
+      items: ['Logo 1', 'Body 1', 'Logo 2', 'Body 2', 'Logo 3', 'Body 3'],
+      url: ["sellingPointsLogo1", "sellingPointsBody1", "sellingPointsLogo2", "sellingPointsBody2", "sellingPointsLogo3", "sellingPointsBody3"],
       postion: 4200
     },
     { 
@@ -157,7 +156,7 @@ export class MainComponent implements OnInit {
       comp: 'backing',
       isOpen: false, 
       items: ['Title', 'Button'] ,
-      url: ['title', 'button'],
+      url: ["backingTitle", "backingButton"],
       postion: 5150
     },
     { 
@@ -165,15 +164,15 @@ export class MainComponent implements OnInit {
       comp: 'startPowering',
       isOpen: false,  
       items: ['Title', 'Button'],
-      url: ['body', 'button'],
+      url: ["startPoweringTitle", "startPoweringButton"],
       postion: 5700
     },
     {
       name: 'Footer', 
       comp: 'footer',
       isOpen: false, 
-      items: ['Title', 'Button'],
-      url: ['body', 'button'],
+      items: ["Logo", 'List Heading 1', 'List Heading 2', 'List Heading 3', 'List Heading 4', "Social Links"],
+      url: ["footerLogo", 'footerList1', 'footerList2', 'footerList3', 'footerList4', "footerSocialLinks"],
       postion: 5900
     }
   ];
@@ -272,7 +271,7 @@ export class MainComponent implements OnInit {
   }
 
   receiveUpdatedData(event: any){
-    if (event.backing) {
+    if (event.footer) {
       const body = {
         components: event
       };
