@@ -4,37 +4,33 @@
       <a href="/"><img [src]="imageUrl" alt="Burq" style="width: 80px; height: 80px;" class="footerlogo"></a>
     </div>
     <div class="footer-section" #footerSection>
-      <h5>Use Cases</h5>
-      <ul>
-        <li><a href="#">E-commerce</a></li>
-        <li><a href="#">Food</a></li>
-        <li><a href="#">Flower</a></li>
-        <li><a href="#">Health & Wellness</a></li>
-        <li><a href="#">Construction</a></li>
-        <li><a href="#">Grocery</a></li>
-        <li><a href="#">Retailer</a></li>
-        <li><a href="#">Laundromat</a></li>
+      <h5>{{footerData?.listItems[0].key}}</h5>
+      <ul *ngIf="footerData?.listItems[0].values?.length > 0">
+        <li *ngFor="let item of footerData?.listItems[0].values">
+          <a href="#">{{ item }}</a>
+        </li>
       </ul>
     </div>
     <div class="footer-section" #footerSection>
-      <h5>Integrations</h5>
-      <ul>
-        <li><a href="#">Shopify</a></li>
-        <li><a href="#">Wordpress</a></li>
-        <li><a href="#">WooCommerce</a></li>
-        <li><a href="#">Zapier</a></li>
-        <li><a href="#">Ebay</a></li>
+      <h5>{{footerData?.listItems[1].key}}</h5>
+      <ul *ngIf="footerData?.listItems[1].values?.length > 0">
+        <li *ngFor="let item of footerData?.listItems[1].values">
+          <a href="#">{{ item }}</a>
+        </li>
       </ul>
     </div>
     <div class="footer-section" #footerSection>
-      <h5>Developers</h5>
-      <ul>
-        <li><a href="#">Documentation</a></li>
+      <h5>{{footerData?.listItems[2].key}}</h5>
+      <ul *ngIf="footerData?.listItems[2].values?.length > 0">
+        <li *ngFor="let item of footerData?.listItems[2].values">
+          <a href="#">{{ item }}</a>
+        </li>
       </ul>
-      <h5 class="footer-company">Company</h5>
-      <ul>
-        <li><a href="#">Jobs</a></li>
-        <li><a href="#">Chat Now</a></li>
+      <h5 class="footer-company">{{footerData?.listItems[3].key}}</h5>
+      <ul *ngIf="footerData?.listItems[3].values?.length > 0">
+        <li *ngFor="let item of footerData?.listItems[3].values">
+          <a href="#">{{ item }}</a>
+        </li>
       </ul>
     </div>
     <div class="footer-section" #footerSection>

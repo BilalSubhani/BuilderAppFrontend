@@ -1,10 +1,10 @@
 import { Component, ElementRef, Renderer2, ViewChild, Inject, PLATFORM_ID, ViewChildren, QueryList } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.less'
 })
@@ -23,6 +23,17 @@ export class FooterComponent {
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ){}
+  footerData: any;
+
+  dataFunction(){
+    this.http.get<any>('http://localhost:3000/data/component/footer').subscribe(
+      (res: any)=>{
+        this.footerData= {...this.footerData, ...res.data};
+      }, (err) =>{
+        console.log(err);
+      }
+    );
+  }
 
   ngOnInit(){
     this.http.get<any>(`http://localhost:3000/media/images/footerLogo`).subscribe(
@@ -33,7 +44,7 @@ export class FooterComponent {
         console.log(error);
       }
     );
-
+    this.dataFunction();
   }
 
   ngAfterViewInit(): void{
