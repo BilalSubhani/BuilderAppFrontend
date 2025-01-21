@@ -2,7 +2,7 @@
     <div class="inner-div" *ngIf="testimonialData?.title && testimonialData?.comment">
         <div class="upper-inner-div">
             <img src="images/testimonials/shape1.svg" alt="Image" class="imageTopLeft">
-            <h2 *ngIf="!isEditing" class="testimonial" (dblclick)="edit()">
+            <h2 *ngIf="!isEditing" class="testimonial" (click)="edit()">
                 {{ testimonialData?.title }}
               </h2>
               <input 

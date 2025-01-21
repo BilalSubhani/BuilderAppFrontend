@@ -8,7 +8,7 @@
             <div class="tabs" *ngIf="tabData">
                 <div class="tab active" data-tab="1">
                     <img [src]="tabsImageUrl[0]" style="width: 25px; height: 22px;" class="icon" data-tab="1">
-                    <span *ngIf="!isEditingTab[0]" (dblclick)="enableTabEdit(0)">{{tabData[0]}}</span>
+                    <span *ngIf="!isEditingTab[0]" (click)="enableTabEdit(0)">{{tabData[0]}}</span>
                     <input 
                       *ngIf="isEditingTab[0]" 
                       type="text" 
@@ -22,7 +22,7 @@
                   
                 <div class="tab active" data-tab="2"> 
                     <img [src]="tabsImageUrl[1]" style="width: 20px; height: 20px;" class="icon" data-tab="2">
-                    <span *ngIf="!isEditingTab[1]" (dblclick)="enableTabEdit(1)">{{tabData[1]}}</span>
+                    <span *ngIf="!isEditingTab[1]" (click)="enableTabEdit(1)">{{tabData[1]}}</span>
                     <input 
                       *ngIf="isEditingTab[1]" 
                       type="text" 
@@ -36,7 +36,7 @@
                   
                 <div class="tab active" data-tab="3">
                     <img [src]="tabsImageUrl[2]" style="width: 22px; height: 22px;" class="icon" data-tab="3">
-                    <span *ngIf="!isEditingTab[2]" (dblclick)="enableTabEdit(2)">{{tabData[2]}}</span>
+                    <span *ngIf="!isEditingTab[2]" (click)="enableTabEdit(2)">{{tabData[2]}}</span>
                     <input 
                       *ngIf="isEditingTab[2]" 
                       type="text" 
