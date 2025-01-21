@@ -1,6 +1,22 @@
 <div class="ind-main-container" id="industries">
     <div class="ind-container" #indContainer *ngIf="tabContentData?.title && tabContentData?.tabContent">
-        <h3 class="tab-heading show" #indHeading>{{tabContentData?.title}}</h3>
+            <h3 
+            *ngIf="!isEditingTabHeading" 
+            class="tab-heading show" 
+            #indHeading 
+            (dblclick)="enableTabHeadingEdit()"
+            >
+                {{ tabContentData?.title }}
+            </h3>
+            <input 
+                *ngIf="isEditingTabHeading" 
+                type="text" 
+                [(ngModel)]="editedTabHeading" 
+                (keydown.enter)="saveTabHeadingEdit()" 
+                (keydown.escape)="cancelTabHeadingEdit()" 
+                (blur)="cancelTabHeadingEdit()" 
+                class="tab-heading-edit"
+            >
         <div class="tab-container show" #indTabContainer>
             <div class="ind-tabs">
                 <div class="ind-tab active" data-tab="10"><img src="/images/tabIcons/ecommerce-blue.svg" class="ind-icon active" data-tab="10"></div>
@@ -16,50 +32,31 @@
             <div class="ind-tabcontent active" data-tab="10">
                 <app-image [pID]="p_ID" class="indCont"/>
                 <div class="ind-tabdetails">
-                    <h3>{{tabContentData?.tabContent.tc1[0]}}</h3>
-                    <p>{{tabContentData?.tabContent.tc1[1]}}</p>
-                </div>
-            </div>
-            <div class="ind-tabcontent inactive" data-tab="11">
-                <img [src]="imageUrl[1]" alt="Food">
-                <div class="ind-tabdetails">
-                    <h3>{{tabContentData?.tabContent.tc2[0]}}</h3>
-                    <p>{{tabContentData?.tabContent.tc2[1]}}</p>
-                </div>
-            </div>
-            <div class="ind-tabcontent inactive" data-tab="12">
-                <img [src]="imageUrl[2]" alt="Flower Shop">
-                <div class="ind-tabdetails">
-                    <h3>{{tabContentData?.tabContent.tc3[0]}}</h3>
-                    <p>{{tabContentData?.tabContent.tc3[1]}}</p>
-                </div>
-            </div>
-            <div class="ind-tabcontent inactive" data-tab="13">
-                <img [src]="imageUrl[3]" alt="Pharmacy">
-                <div class="ind-tabdetails">
-                    <h3>{{tabContentData?.tabContent.tc4[0]}}</h3>
-                    <p>{{tabContentData?.tabContent.tc4[1]}}</p>
-                </div>
-            </div>
-            <div class="ind-tabcontent inactive" data-tab="14">
-                <img [src]="imageUrl[4]" alt="Construction">
-                <div class="ind-tabdetails">
-                    <h3>{{tabContentData?.tabContent.tc5[0]}}</h3>
-                    <p>{{tabContentData?.tabContent.tc5[1]}}</p>
-                </div>
-            </div>
-            <div class="ind-tabcontent inactive" data-tab="15">
-                <img [src]="imageUrl[5]" alt="Grocery">
-                <div class="ind-tabdetails">
-                    <h3>{{tabContentData?.tabContent.tc6[0]}}</h3>
-                    <p>{{tabContentData?.tabContent.tc6[1]}}</p>
-                </div>
-            </div>
-            <div class="ind-tabcontent inactive" data-tab="16">
-                <img [src]="imageUrl[6]" alt="Retailer">
-                <div class="ind-tabdetails">
-                    <h3>{{tabContentData?.tabContent.tc7[0]}}</h3>
-                    <p>{{tabContentData?.tabContent.tc7[1]}}</p>
+                    <h3 *ngIf="!isEditingHeader" (dblclick)="enableHeaderEdit()">
+                        {{ tabContentData?.tabContent.tc1[0] }}
+                      </h3>
+                      <input 
+                        *ngIf="isEditingHeader" 
+                        type="text" 
+                        [(ngModel)]="editedHeader" 
+                        (keydown.enter)="saveHeaderEdit()"
+                        (keydown.escape)="cancelHeaderEdit()" 
+                        (blur)="cancelHeaderEdit()" 
+                        class="header-edit"
+                      >
+                      
+                      <p *ngIf="!isEditingParagraph" (dblclick)="enableParagraphEdit()">
+                        {{ tabContentData?.tabContent.tc1[1] }}
+                      </p>
+                      <input 
+                        *ngIf="isEditingParagraph" 
+                        type="text" 
+                        [(ngModel)]="editedParagraph" 
+                        (keydown.enter)="saveParagraphEdit()"
+                        (keydown.escape)="cancelParagraphEdit()" 
+                        (blur)="cancelParagraphEdit()" 
+                        class="paragraph-edit"
+                      >
                 </div>
             </div>
         </div>

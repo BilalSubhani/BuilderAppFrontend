@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { ImageComponent } from '../../image/image.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-template-industries',
   templateUrl: './industries.component.html',
   styleUrls: ['./industries.component.less'],
-  imports: [CommonModule, ImageComponent]
+  imports: [CommonModule, ImageComponent, FormsModule]
 })
 export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
   tabImages = {
@@ -106,9 +107,17 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
     if(this.fieldToUpdate === 'industriesContent1' || this.fieldToUpdate === 'industriesContent2' || this.fieldToUpdate === 'industriesContent3' ||
       this.fieldToUpdate === 'industriesContent4' || this.fieldToUpdate === 'industriesContent5' || this.fieldToUpdate === 'industriesContent6' || this.fieldToUpdate === 'industriesContent7'
     ){
+      let len = this.fieldToUpdate.length;
+
+      this.contentCont = "tc" + this.fieldToUpdate[len-1];
+
       this.p_ID = this.fieldToUpdate;
+      this.enableHeaderEdit();
+      this.enableParagraphEdit();
     }
-    
+    else if(this.fieldToUpdate === "heading"){
+      this.enableTabHeadingEdit();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -153,6 +162,62 @@ export class IndustriesTemplateComponent implements AfterViewInit, OnInit {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+  }
+
+  index: number = 0;
+  contentCont: string = "tc1";
+  isEditingHeader = false;
+  editedHeader = '';
+
+  enableHeaderEdit() {
+    this.isEditingHeader = true;
+    this.editedHeader = this.tabContentData.tabContent[this.contentCont][0];
+  }
+
+  saveHeaderEdit() {
+    this.tabContentData.tabContent[this.contentCont][0] = this.editedHeader;
+    this.isEditingHeader = false;
+    this.setExport();
+  }
+
+  cancelHeaderEdit() {
+    this.isEditingHeader = false;
+  }
+
+  isEditingParagraph = false;
+  editedParagraph = '';
+
+  enableParagraphEdit() {
+    this.isEditingParagraph = true;
+    this.editedParagraph = this.tabContentData.tabContent[this.contentCont][1];
+  }
+
+  saveParagraphEdit() {
+    this.tabContentData.tabContent[this.contentCont][1] = this.editedParagraph;
+    this.isEditingParagraph = false;
+    this.setExport();
+  }
+
+  cancelParagraphEdit() {
+    this.isEditingParagraph = false;
+  }
+
+  isEditingTabHeading = false;
+  editedTabHeading = '';
+
+  enableTabHeadingEdit() {
+    this.isEditingTabHeading = true;
+    this.editedTabHeading = this.tabContentData.title;
+  }
+
+  saveTabHeadingEdit() {
+    this.tabContentData.title = this.editedTabHeading;
+    this.isEditingTabHeading = false;
+    this.setExport();
+  }
+
+  cancelTabHeadingEdit() {
+    this.isEditingTabHeading = false;
   }
 
   setExport(){
