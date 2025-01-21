@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -27,6 +27,7 @@ export class HerosectionTemplateComponent {
   heroSectionData: any;
   
   @Output() heroSectionEvent = new EventEmitter<any>();
+  @Input() fieldToUpdate!: string;
 
   exportData: any;
 
@@ -101,6 +102,10 @@ export class HerosectionTemplateComponent {
         this.dataController();
       }
     });
+  }
+
+  ngOnChanges() {
+    
   }
 
   // Navbar Field 

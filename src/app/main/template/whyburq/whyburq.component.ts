@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
@@ -20,6 +20,7 @@ export class WhyburqTemplateComponent {
   imageUrl: string[] = [];
   private subscription?: Subscription;
 
+  @Input() fieldToUpdate!: string;
   @Output() whyburqEvent: EventEmitter<any> = new EventEmitter<any>();
   exportData: any;
 

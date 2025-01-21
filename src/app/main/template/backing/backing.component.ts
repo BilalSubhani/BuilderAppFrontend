@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +21,7 @@ export class BackingTemplateComponent {
   backingData: any;
   poweringData: any;
 
+  @Input() fieldToUpdate!: string;
   @Output() backingDataEvent: EventEmitter<any> = new EventEmitter<any>();
   exportBackingData: any;
 

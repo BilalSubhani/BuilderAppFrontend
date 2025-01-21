@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
@@ -19,6 +19,7 @@ export class IntegrateTemplateComponent {
   imageUrl: string[] = [];
   private subscription?: Subscription;
 
+  @Input() fieldToUpdate!: string;
   @Output() integratEvent: EventEmitter<any> = new EventEmitter<any> ();
 
   constructor(

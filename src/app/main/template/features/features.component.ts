@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
@@ -21,6 +21,7 @@ export class FeaturesTemplateComponent {
   featuresData: any;
 
   @Output() featuresDataEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Input() fieldToUpdate!: string;
 
   private subscription?: Subscription;
 

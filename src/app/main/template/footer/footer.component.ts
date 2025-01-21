@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ImageComponent } from '../../image/image.component';
@@ -17,6 +17,7 @@ export class FooterTemplateComponent {
   footerData: any;
 
   @Output() footerDataEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Input() fieldToUpdate!: string;
   
   constructor(
     private http: HttpClient

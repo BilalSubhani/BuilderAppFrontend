@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, Output, EventEmitter} from '@angular/core';
+import { Component, ElementRef, ViewChild, Output, EventEmitter, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -21,6 +21,7 @@ export class ProviderTemplateComponent {
   @ViewChild('bottomItem2', { static: false }) bottomItem2!: ElementRef;
   @ViewChild('bottomItem3', { static: false }) bottomItem3!: ElementRef;
 
+  @Input() fieldToUpdate!: string;
   @Output() providerEvent: EventEmitter<any> = new EventEmitter<any> ();
 
   videoPID: string = 'provider';
