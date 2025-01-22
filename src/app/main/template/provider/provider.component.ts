@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { VideoComponent } from '../../video/video.component';
 import { FormsModule } from '@angular/forms';
 import { ImageComponent } from '../../image/image.component';
+import { parse } from 'node:path';
 
 @Component({
   selector: 'app-template-provider',
@@ -108,6 +109,23 @@ export class ProviderTemplateComponent {
         console.log('Error in dataFunction:', err);
       }
     });
+  }
+
+  ngOnChanges(){
+    if(this.fieldToUpdate === 'providerHeading'){
+      this.startEditing('title');
+    }
+    if(this.fieldToUpdate === 'providerParagraph'){
+      this.startEditing('body');
+    }
+    if(this.fieldToUpdate === 'LI1' || this.fieldToUpdate === 'LI2' || this.fieldToUpdate === 'LI3' || this.fieldToUpdate === 'LI4'){
+      this.startEditing('list', this.fieldToUpdate);
+    }
+    if(this.fieldToUpdate === 'providerCounter1' || this.fieldToUpdate === 'providerCounter2' || this.fieldToUpdate === 'providerCounter3'){
+      let len = this.fieldToUpdate.length;
+      let index = parseInt(this.fieldToUpdate[len-1]);
+      this.makeEditable(index);
+    }
   }
 
   // editable Fields

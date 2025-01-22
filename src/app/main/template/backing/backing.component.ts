@@ -61,6 +61,21 @@ export class BackingTemplateComponent {
     });
   }
 
+  ngOnChanges(){
+    if(this.fieldToUpdate === 'backingTitle'){
+      this.startEditing('title');
+    }
+    if(this.fieldToUpdate === 'backingBody'){
+      this.startEditing('body');
+    }
+    if(this.fieldToUpdate === 'startPoweringTitle'){
+      this.startPoweringEditing('body');
+    }
+    if(this.fieldToUpdate === 'startPoweringButton'){
+      this.startPoweringEditing('button');
+    }
+  }
+
   ngOnDestroy() {
     this.subscription?.unsubscribe();
   }

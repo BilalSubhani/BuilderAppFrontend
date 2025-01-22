@@ -91,6 +91,20 @@ export class IntegrateTemplateComponent {
       }
     });
   }
+  ngOnChanges(){
+    if(this.fieldToUpdate === "integrateHeading6"){
+      this.startEditing('smallHeading');
+    }
+    if(this.fieldToUpdate === "integrateHeading3"){ 
+      this.startEditing('title');
+    }
+    if(this.fieldToUpdate === "integrateParagraph"){
+      this.startEditing('body');
+    }
+    if(this.fieldToUpdate === "integrateButton"){
+      this.startEditing('buttonText');
+    }
+  }
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();

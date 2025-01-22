@@ -87,6 +87,33 @@ export class WhyburqTemplateComponent {
     });
   }
 
+  ngOnChanges(){
+    if(this.fieldToUpdate === 'whyBurqHeading'){
+      this.startEditingWhyBurq('title');
+    }
+    if(this.fieldToUpdate === 'whyBurqParagraph'){
+      this.startEditingWhyBurq('body');
+    }
+    if(this.fieldToUpdate === 'whyBurqButton'){
+      this.startEditingWhyBurq('button');
+    }
+    if(this.fieldToUpdate === 'whyBurqImage'){
+      this.changeLogo(0);
+    }
+    if(this.fieldToUpdate === 'sellingPointsBody1' || this.fieldToUpdate === 'sellingPointsBody2' || this.fieldToUpdate === 'sellingPointsBody3'){
+      let len = this.fieldToUpdate.length;
+      let index = parseInt(this.fieldToUpdate[len-1]) - 1;
+      
+      this.startEditingBenefit('sp1', index);
+      this.startEditingBenefit('sp1', index);
+    }
+    else if(this.fieldToUpdate === 'sellingPointsLogo1' || this.fieldToUpdate === 'sellingPointsLogo2' || this.fieldToUpdate === 'sellingPointsLogo3'){
+      let len = this.fieldToUpdate.length;
+      let index = parseInt(this.fieldToUpdate[len-1]);
+      this.changeLogo(index);
+    }
+  }
+
   ngOnDestroy() {
     this.subscription?.unsubscribe();
   }

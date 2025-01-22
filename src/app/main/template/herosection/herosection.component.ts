@@ -105,7 +105,25 @@ export class HerosectionTemplateComponent {
   }
 
   ngOnChanges() {
-    
+    if(this.fieldToUpdate === 'navLogo')
+      this.changeLogo();
+    if(this.fieldToUpdate === 'navList1' ||this.fieldToUpdate === 'navList2'||this.fieldToUpdate === 'navList3'){
+      let len = this.fieldToUpdate.length;
+      let index = parseInt(this.fieldToUpdate[len-1]) - 1;
+      this.enableEditKey(index);
+    }
+    if(this.fieldToUpdate === 'navButton'){
+      this.startEditing('buttonText');
+    }
+    if(this.fieldToUpdate === 'heroHeading'){
+      this.startHeroEditing('heading');
+    }
+    if(this.fieldToUpdate === 'heroParagraph'){
+      this.startHeroEditing('paragraph');
+    }
+    if(this.fieldToUpdate === 'heroButton'){
+      this.startHeroEditing('buttonText');
+    }
   }
 
   // Navbar Field 
@@ -260,7 +278,6 @@ export class HerosectionTemplateComponent {
   change: boolean = false;
 
   changeLogo(){
-    console.log('called');
     this.change = !this.change;
   }
 }

@@ -64,7 +64,7 @@ export class MainComponent implements OnInit {
       comp: 'providers', 
       isOpen: false, 
       items: ['Heading', 'Paragraph', 'List Item 1', 'List Item 2', 'List Item 3', 'List Item 4', "Counter 1", "Counter 2", "Counter 3"],
-      url: ["providerHeading", "providerParagraph", "providerListItem1", "providerListItem2", "providerListItem3", "providerListItem4", "providerCounter1", "providerCounter2", "providerCounter3"],
+      url: ["providerHeading", "providerParagraph", "LI1", "LI2", "LI3", "LI4", "providerCounter1", "providerCounter2", "providerCounter3"],
       postion: 1200
     },
     { 
@@ -119,8 +119,8 @@ export class MainComponent implements OnInit {
       name: 'Why Burq?', 
       comp: 'whyBurq',
       isOpen: false, 
-      items: ['Heading', 'Paragraph', 'Button'],
-      url: ["whyBurqHeading", "whyBurqParagraph", "whyBurqButton"],
+      items: ['Image','Heading', 'Paragraph', 'Button'],
+      url: ["whyBurqImage","whyBurqHeading", "whyBurqParagraph", "whyBurqButton"],
       postion: 3800
     },
     { 
@@ -155,8 +155,8 @@ export class MainComponent implements OnInit {
       name: 'Backing', 
       comp: 'backing',
       isOpen: false, 
-      items: ['Title', 'Button'] ,
-      url: ["backingTitle", "backingButton"],
+      items: ['Title', 'Body'] ,
+      url: ["backingTitle", "backingBody"],
       postion: 5150
     },
     { 
