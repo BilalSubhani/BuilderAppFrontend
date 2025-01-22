@@ -68,6 +68,8 @@ export class TestimonialsTemplateComponent {
       ){
         this.comment = this.fieldToUpdate;
         this.enableCommentEdit();
+        this.enableNameEdit();
+        this.enableDesignationEdit();
       }
       else if(this.fieldToUpdate === 'testimonialtitle'){
         this.edit();

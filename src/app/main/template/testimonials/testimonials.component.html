@@ -21,7 +21,7 @@
             <div class="slider">
                 <div class="slide">
                     <img src="images/testimonials/66.svg" style="width: 75px; height: 53px; padding-bottom: 20px;" alt="Image">
-                    <p *ngIf="!isEditingComment" class="testp" (dblclick)="enableCommentEdit()">
+                    <p *ngIf="!isEditingComment" class="testp" (click)="enableCommentEdit()">
                         {{ testimonialData?.comment["client1"][0] }}
                       </p>
                       <input 
@@ -35,7 +35,7 @@
                         placeholder="{{testimonialData?.comment[fieldToUpdate][0]}}"
                       >
                       
-                      <h6 *ngIf="!isEditingComment" class="name" (dblclick)="enableNameEdit()">
+                      <h6 *ngIf="!isEditingComment" class="name" (click)="enableNameEdit()">
                         {{ testimonialData?.comment["client1"][1] }}
                       </h6>
                       <input 
@@ -49,7 +49,7 @@
                         placeholder="{{testimonialData?.comment[fieldToUpdate][1]}}"
                       >
                       
-                      <p *ngIf="!isEditingComment" class="desig" (dblclick)="enableDesignationEdit()">
+                      <p *ngIf="!isEditingComment" class="desig" (click)="enableDesignationEdit()">
                         {{ testimonialData?.comment["client1"][2] }}
                       </p>
                       <input 
