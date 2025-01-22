@@ -16,6 +16,7 @@ import { ImageComponent } from '../../image/image.component';
 export class WhyburqTemplateComponent {
   whyBurqData: any;
   benefitsData: any;
+  benefit: any;
   imagePublicUrl: string[] = ['whyburq', 'sp1', 'sp2', 'sp3']
   imageUrl: string[] = [];
   private subscription?: Subscription;
@@ -100,12 +101,19 @@ export class WhyburqTemplateComponent {
     if(this.fieldToUpdate === 'whyBurqImage'){
       this.changeLogo(0);
     }
-    if(this.fieldToUpdate === 'sellingPointsBody1' || this.fieldToUpdate === 'sellingPointsBody2' || this.fieldToUpdate === 'sellingPointsBody3'){
+    if(this.fieldToUpdate === 'sellingPointsHeading1' || this.fieldToUpdate === 'sellingPointsHeading2' || this.fieldToUpdate === 'sellingPointsHeading3'){      
       let len = this.fieldToUpdate.length;
-      let index = parseInt(this.fieldToUpdate[len-1]) - 1;
-      
-      this.startEditingBenefit('sp1', index);
-      this.startEditingBenefit('sp1', index);
+      let index = this.fieldToUpdate[len-1];
+      this.benefit = "sp" + index;   
+  
+      this.startEditingBenefit(this.benefit, 0);
+    }
+    if(this.fieldToUpdate === 'sellingPointsBody1' || this.fieldToUpdate === 'sellingPointsBody2' || this.fieldToUpdate === 'sellingPointsBody3'){      
+      let len = this.fieldToUpdate.length;
+      let index = this.fieldToUpdate[len-1];
+      this.benefit = "sp" + index;   
+  
+      this.startEditingBenefit(this.benefit, 1);
     }
     else if(this.fieldToUpdate === 'sellingPointsLogo1' || this.fieldToUpdate === 'sellingPointsLogo2' || this.fieldToUpdate === 'sellingPointsLogo3'){
       let len = this.fieldToUpdate.length;

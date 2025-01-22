@@ -35,16 +35,23 @@ export class FeaturesTemplateComponent {
     if(this.fieldToUpdate === 'featuresHeading'){
       this.startEditing('title', 0);
     }
-    if(this.fieldToUpdate === 'featuresTile1'){
+    if(this.fieldToUpdate === 'featuresTileheading1'){
       this.startEditing('tile1', 0);
+    }
+    if(this.fieldToUpdate === 'featuresTileheading2'){
+      this.startEditing('tile2', 0);
+    }
+    if(this.fieldToUpdate === 'featuresTileheading3'){
+      this.startEditing('tile3', 0);
+    }
+
+    if(this.fieldToUpdate === 'featuresTilebody1'){
       this.startEditing('tile1', 1);
     }
-    if(this.fieldToUpdate === 'featuresTile2'){
-      this.startEditing('tile2', 0);
+    if(this.fieldToUpdate === 'featuresTilebody2'){
       this.startEditing('tile2', 1);
     }
-    if(this.fieldToUpdate === 'featuresTile3'){
-      this.startEditing('tile3', 0);
+    if(this.fieldToUpdate === 'featuresTilebody3'){
       this.startEditing('tile3', 1);
     }
   }

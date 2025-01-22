@@ -55,8 +55,8 @@ export class MainComponent implements OnInit {
       name: 'Features', 
       comp: 'features',
       isOpen: false,  
-      items: ['Heading', 'Tile 1', 'Tile 2', 'Tile 3'],
-      url: ["featuresHeading", "featuresTile1", "featuresTile2", "featuresTile3"],
+      items: ['Heading', 'Tile 1 Heading', 'Tile 1 Body', 'Tile 2 Heading', 'Tile 2 Body', 'Tile 3 Heading', 'Tile 3 Body'],
+      url: ["featuresHeading", "featuresTileheading1", "featuresTilebody1","featuresTileheading2", "featuresTilebody2", "featuresTileheading3", "featuresTilebody3"],
       postion: 530
     },
     { 
@@ -127,8 +127,8 @@ export class MainComponent implements OnInit {
       name: 'Selling Points', 
       comp: 'sellingPoints',
       isOpen: false, 
-      items: ['Logo 1', 'Body 1', 'Logo 2', 'Body 2', 'Logo 3', 'Body 3'],
-      url: ["sellingPointsLogo1", "sellingPointsBody1", "sellingPointsLogo2", "sellingPointsBody2", "sellingPointsLogo3", "sellingPointsBody3"],
+      items: ['Logo 1', 'Heading 1','Body 1', 'Logo 2', 'Heading 2', 'Body 2', 'Logo 3', 'Heading 3', 'Body 3'],
+      url: ["sellingPointsLogo1", "sellingPointsHeading1" ,"sellingPointsBody1", "sellingPointsLogo2", "sellingPointsHeading2", "sellingPointsBody2", "sellingPointsLogo3", "sellingPointsHeading3", "sellingPointsBody3"],
       postion: 4200
     },
     { 
