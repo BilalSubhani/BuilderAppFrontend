@@ -31,7 +31,6 @@ export class IntegrateTemplateComponent {
     this.imagePublicID.forEach((id) => {
       this.http.get<any>(`http://localhost:3000/media/images/${id}`).subscribe(
         (response: any) => {
-          console.log(response.url);
           this.imageUrl.push(response.url);
         },
         (error) => {

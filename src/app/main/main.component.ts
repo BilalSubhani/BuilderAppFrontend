@@ -171,8 +171,8 @@ export class MainComponent implements OnInit {
       name: 'Footer', 
       comp: 'footer',
       isOpen: false, 
-      items: ["Logo", 'List Heading 1', 'List Heading 2', 'List Heading 3', 'List Heading 4', "Social Links"],
-      url: ["footerLogo", 'footerList1', 'footerList2', 'footerList3', 'footerList4', "footerSocialLinks"],
+      items: ["Logo", 'List Heading 1', 'List Heading 2', 'List Heading 3', 'List Heading 4', "Twitter Link", "LinkedIn Link"],
+      url: ["footerLogo", 'footerList1', 'footerList2', 'footerList3', 'footerList4', "footerSocialLink1", "footerSocialLink2"],
       postion: 5900
     }
   ];

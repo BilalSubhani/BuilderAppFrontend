@@ -60,6 +60,23 @@ export class FooterTemplateComponent {
     });
   }
 
+  ngOnChanges(){
+    if(this.fieldToUpdate === 'footerLogo'){
+      this.changeLogo(1);
+    }
+    if(this.fieldToUpdate === 'footerList1' || this.fieldToUpdate === 'footerList2' || this.fieldToUpdate === 'footerList3' || this.fieldToUpdate === 'footerList4'){
+      let len = this.fieldToUpdate.length;
+      let index = parseInt(this.fieldToUpdate[len-1]) - 1;
+      this.enableEditKey(index);
+    }
+    if(this.fieldToUpdate === 'footerSocialLink1' || this.fieldToUpdate === 'footerSocialLink2'){
+      let len = this.fieldToUpdate.length;
+      let index = parseInt(this.fieldToUpdate[len-1]) - 1;
+      console.log(index);
+      this.enableEditSocial(index);
+    }
+  }
+
   publicID: string = '';
   change: boolean = false;
 
@@ -74,5 +91,64 @@ export class FooterTemplateComponent {
 
   setExport(){
     this.footerDataEvent.emit(this.footerData);
+  }
+
+  editingKeyIndex = new Set<number>();
+  editKeyValue = '';
+  editingValueIndex = new Set<string>();
+  editValue = '';
+
+  enableEditKey(index: number) {
+    this.editingKeyIndex.add(index);
+    this.editKeyValue = this.footerData.listItems[index].key;
+  }
+
+  saveKeyEdit(index: number) {
+    this.footerData.listItems[index].key = this.editKeyValue;
+    this.editingKeyIndex.delete(index);
+  }
+
+  cancelKeyEdit() {
+    this.editingKeyIndex.clear();
+  }
+
+  enableEditValue(listIndex: number, valueIndex: number): void {
+    const compositeIndex = `${listIndex}-${valueIndex}`;
+    this.editingValueIndex.add(compositeIndex);
+    this.editValue = this.footerData.listItems[listIndex].values[valueIndex];
+  }
+  
+  saveValueEdit(listIndex: number, valueIndex: number): void {
+    const compositeIndex = `${listIndex}-${valueIndex}`;
+    if (this.editValue.trim()) {
+      this.footerData.listItems[listIndex].values[valueIndex] = this.editValue.trim();
+    }
+    this.editingValueIndex.delete(compositeIndex);
+    this.setExport();
+  }
+  
+  cancelValueEdit(listIndex: number, valueIndex: number): void {
+    const compositeIndex = `${listIndex}-${valueIndex}`;
+    this.editingValueIndex.delete(compositeIndex);
+  }
+  
+  
+
+  editingSocial: number | null = null;
+  editSocial = '';
+
+  enableEditSocial(index: number){
+    this.editingSocial = index;
+    this.editSocial = this.footerData.socialLinks[index];
+  }
+
+  saveSocialEdit(index: number){
+    this.footerData.socialLinks[index] = this.editSocial;
+    this.editingSocial = null;
+    this.setExport();
+  }
+
+  cancelSocialEdit(){ 
+    this.editingSocial = null;
   }
 }

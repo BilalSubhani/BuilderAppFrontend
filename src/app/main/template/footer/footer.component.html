@@ -9,39 +9,159 @@
       </button>
     </div>
     <div class="footer-section show" #footerSection>
-      <h5>{{footerData?.listItems[0].key}}</h5>
-      <ul *ngIf="footerData?.listItems[0].values?.length > 0">
-        <li *ngFor="let item of footerData?.listItems[0].values">
-          <a href="#">{{ item }}</a>
+      <h5>
+        <ng-container *ngIf="!editingKeyIndex.has(0); else editKeyTemplate">
+          <span (click)="enableEditKey(0)">
+            {{ footerData?.listItems[0]?.key }}
+          </span>
+        </ng-container>
+        <ng-template #editKeyTemplate>
+          <input 
+            class="editable-input" 
+            [(ngModel)]="editKeyValue" 
+            (keydown.enter)="saveKeyEdit(0)" 
+            (keydown.escape)="cancelKeyEdit()" 
+          />
+        </ng-template>
+      </h5>
+      <ul *ngIf="footerData?.listItems[0].values?.length > 0" class="editable-list">
+        <li *ngFor="let value of footerData?.listItems[0].values; let valueIndex = index">
+          <ng-container *ngIf="!editingValueIndex.has(0 + '-' + valueIndex); else editValueTemplate">
+            <span (click)="enableEditValue(0, valueIndex)">
+              {{ value }}
+            </span>
+          </ng-container>
+          <ng-template #editValueTemplate>
+            <input 
+              class="editable-input" 
+              [(ngModel)]="editValue" 
+              (keydown.enter)="saveValueEdit(0, valueIndex)" 
+              (keydown.escape)="cancelValueEdit(0, valueIndex)" 
+            />
+          </ng-template>
         </li>
-      </ul>
+      </ul>      
     </div>
+
     <div class="footer-section show" #footerSection>
-      <h5>{{footerData?.listItems[1].key}}</h5>
-      <ul *ngIf="footerData?.listItems[1].values?.length > 0">
-        <li *ngFor="let item of footerData?.listItems[1].values">
-          <a href="#">{{ item }}</a>
+      <h5>
+        <ng-container *ngIf="!editingKeyIndex.has(1); else editKeyTemplate">
+          <span (click)="enableEditKey(1)">
+            {{ footerData?.listItems[1]?.key }}
+          </span>
+        </ng-container>
+        <ng-template #editKeyTemplate>
+          <input 
+            class="editable-input" 
+            [(ngModel)]="editKeyValue" 
+            (keydown.enter)="saveKeyEdit(1)" 
+            (keydown.escape)="cancelKeyEdit()" 
+          />
+        </ng-template>
+      </h5>
+      <ul *ngIf="footerData?.listItems[1].values?.length > 0" class="editable-list">
+        <li *ngFor="let value of footerData?.listItems[1].values; let valueIndex = index">
+          <ng-container *ngIf="!editingValueIndex.has(1 + '-' + valueIndex); else editValueTemplate">
+            <span (click)="enableEditValue(1, valueIndex)">
+              {{ value }}
+            </span>
+          </ng-container>
+          <ng-template #editValueTemplate>
+            <input 
+              class="editable-input" 
+              [(ngModel)]="editValue" 
+              (keydown.enter)="saveValueEdit(1, valueIndex)" 
+              (keydown.escape)="cancelValueEdit(1, valueIndex)" 
+            />
+          </ng-template>
         </li>
       </ul>
     </div>
+
     <div class="footer-section show" #footerSection>
-      <h5>{{footerData?.listItems[2].key}}</h5>
-      <ul *ngIf="footerData?.listItems[2].values?.length > 0">
-        <li *ngFor="let item of footerData?.listItems[2].values">
-          <a href="#">{{ item }}</a>
+      <h5>
+        <ng-container *ngIf="!editingKeyIndex.has(2); else editKeyTemplate">
+          <span (click)="enableEditKey(2)">
+            {{ footerData?.listItems[2]?.key }}
+          </span>
+        </ng-container>
+        <ng-template #editKeyTemplate>
+          <input 
+            class="editable-input" 
+            [(ngModel)]="editKeyValue" 
+            (keydown.enter)="saveKeyEdit(2)" 
+            (keydown.escape)="cancelKeyEdit()" 
+          />
+        </ng-template>
+      </h5>
+      <ul *ngIf="footerData?.listItems[2].values?.length > 0" class="editable-list">
+        <li *ngFor="let value of footerData?.listItems[2].values; let valueIndex = index">
+          <ng-container *ngIf="!editingValueIndex.has(2 + '-' + valueIndex); else editValueTemplate">
+            <span (click)="enableEditValue(2, valueIndex)">
+              {{ value }}
+            </span>
+          </ng-container>
+          <ng-template #editValueTemplate>
+            <input 
+              class="editable-input" 
+              [(ngModel)]="editValue" 
+              (keydown.enter)="saveValueEdit(2, valueIndex)" 
+              (keydown.escape)="cancelValueEdit(2, valueIndex)" 
+            />
+          </ng-template>
         </li>
-      </ul>
-      <h5 class="footer-company">{{footerData?.listItems[3].key}}</h5>
-      <ul *ngIf="footerData?.listItems[3].values?.length > 0">
-        <li *ngFor="let item of footerData?.listItems[3].values">
-          <a href="#">{{ item }}</a>
+      </ul> 
+
+      <h5  class="footer-company">
+        <ng-container *ngIf="!editingKeyIndex.has(3); else editKeyTemplate">
+          <span (click)="enableEditKey(3)">
+            {{ footerData?.listItems[3]?.key }}
+          </span>
+        </ng-container>
+        <ng-template #editKeyTemplate>
+          <input 
+            class="editable-input" 
+            [(ngModel)]="editKeyValue" 
+            (keydown.enter)="saveKeyEdit(3)" 
+            (keydown.escape)="cancelKeyEdit()" 
+          />
+        </ng-template>
+      </h5>
+      <ul *ngIf="footerData?.listItems[3].values?.length > 0" class="editable-list">
+        <li *ngFor="let value of footerData?.listItems[3].values; let valueIndex = index">
+          <ng-container *ngIf="!editingValueIndex.has(3 + '-' + valueIndex); else editValueTemplate">
+            <span (click)="enableEditValue(3, valueIndex)">
+              {{ value }}
+            </span>
+          </ng-container>
+          <ng-template #editValueTemplate>
+            <input 
+              class="editable-input" 
+              [(ngModel)]="editValue" 
+              (keydown.enter)="saveValueEdit(3, valueIndex)" 
+              (keydown.escape)="cancelValueEdit(3, valueIndex)" 
+            />
+          </ng-template>
         </li>
-      </ul>
+      </ul> 
     </div>
+    
     <div class="footer-section show" #footerSection>
       <div class="footer-social">
-        <a [href]="footerData?.socialLinks[0]"><svg style="width:22px; height: 22px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#8c98a4" d="M459.4 151.7c.3 4.5 .3 9.1 .3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53 51.7 63.7 129.3 105.3 216.4 109.8-1.6-7.8-2.6-15.9-2.6-24 0-57.8 46.8-104.9 104.9-104.9 30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3z"/></svg></a>
-        <a [href]="footerData?.socialLinks[1]"><svg style="width:22px; height: 22px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#8c98a4" d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z"/></svg></a>
+        <a *ngIf="editingSocial !== 0" (click)="enableEditSocial(0)">
+          <svg style="width:22px; height: 22px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path fill="#8c98a4" d="M459.4 151.7c.3 4.5 .3 9.1 .3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53 51.7 63.7 129.3 105.3 216.4 109.8-1.6-7.8-2.6-15.9-2.6-24 0-57.8 46.8-104.9 104.9-104.9 30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3z" />
+          </svg>
+        </a>
+        <input *ngIf="editingSocial === 0" type="text" [(ngModel)]="editSocial" (keyup.enter)="saveSocialEdit(0)" (keyup.escape)="cancelSocialEdit()" />
+        
+        <a *ngIf="editingSocial !== 1" (click)="enableEditSocial(1)">
+          <svg style="width:22px; height: 22px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path fill="#8c98a4" d="M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z" />
+          </svg>
+        </a>
+        <input *ngIf="editingSocial === 1" type="text" [(ngModel)]="editSocial" (keyup.enter)="saveSocialEdit(1)" (keyup.escape)="cancelSocialEdit()" />
+        
       </div>
     </div>
   </div>

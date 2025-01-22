@@ -34,13 +34,13 @@ footer {
   .footer-section ul li {
     margin-bottom: 10px;
   }
-  .footer-section ul li a {
+  .footer-section ul li span {
     text-decoration: none;
     color: #8C98A4;
     font-size: 16px;
     transition: color 0.3s;
   }
-  .footer-section ul li a:hover {
+  .footer-section ul li span:hover {
     color: #F77A56;
   }
   .footer-social {
@@ -159,3 +159,71 @@ footer {
   .close-button:hover {
     color: red;
   }
+
+  input[type="text"] {
+    width: 200px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  input[type="text"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+
+.editable-header {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.editable-header:hover {
+  color: #0056b3;
+}
+
+.editable-input {
+  font-size: 16px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 90%;
+  max-width: 300px;
+  outline: none;
+  margin-top: 5px;
+  transition: border 0.3s ease;
+}
+
+.editable-input:focus {
+  border-color: #0056b3;
+}
+
+.editable-list {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.editable-list li {
+  margin-bottom: 10px;
+}
+
+.editable-list li input {
+  font-size: 16px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 80%;
+  max-width: 300px;
+  outline: none;
+  margin-top: 5px;
+  transition: border 0.3s ease;
+}
+
+.editable-list li input:focus {
+  border-color: #0056b3;
+}
