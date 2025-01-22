@@ -59,7 +59,9 @@ export class TestimonialsTemplateComponent {
   editedTitle = '';
 
   ngOnChanges(){
-    if(this.fieldToUpdate[0] === 't' || this.fieldToUpdate[0] === 'c'){
+    if(this.fieldToUpdate === 'testimonialtitle' || this.fieldToUpdate === 'client1' || this.fieldToUpdate === 'client2'
+      || this.fieldToUpdate === 'client3' || this.fieldToUpdate === 'client4' || this.fieldToUpdate === 'client5'
+    ){
       let len = this.fieldToUpdate.length;
       if(this.fieldToUpdate[len-1] === '1' || this.fieldToUpdate[len-1] === '2' ||
         this.fieldToUpdate[len-1] === '3' || this.fieldToUpdate[len-1] === '4' || this.fieldToUpdate[len-1] === '5'
@@ -67,7 +69,7 @@ export class TestimonialsTemplateComponent {
         this.comment = this.fieldToUpdate;
         this.enableCommentEdit();
       }
-      else if(this.fieldToUpdate === 'title'){
+      else if(this.fieldToUpdate === 'testimonialtitle'){
         this.edit();
       }
     }

@@ -72,7 +72,6 @@ export class FooterTemplateComponent {
     if(this.fieldToUpdate === 'footerSocialLink1' || this.fieldToUpdate === 'footerSocialLink2'){
       let len = this.fieldToUpdate.length;
       let index = parseInt(this.fieldToUpdate[len-1]) - 1;
-      console.log(index);
       this.enableEditSocial(index);
     }
   }

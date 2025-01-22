@@ -142,7 +142,7 @@ export class MainComponent implements OnInit {
         'Comment 4',
         'Comment 5'
       ],
-      url: ['title', 
+      url: ['testimonialtitle', 
         'client1',
         'client2', 
         'client3',
