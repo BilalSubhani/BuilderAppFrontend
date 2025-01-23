@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { MainService } from './main.service';
 import { OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,6 @@ export class MainComponent implements OnInit {
   fieldToUpdate!: string;
 
   // Sidenav variables
-  @ViewChild('mySidenav') mySidenav!: ElementRef;
   objectKeys = Object.keys;
 
   isLoading = true;
@@ -39,7 +38,7 @@ export class MainComponent implements OnInit {
       name: 'Navbar', 
       comp: 'navbar',
       isOpen: false, 
-      items: ["Logo", "List 1", "List 2", "List 3", "Button"],
+      items: ["Logo", "List 1", "List 2", "List 3", "CTA Button"],
       url: ["navLogo", "navList1", "navList2", "navList3", "navButton"],
       postion: 0
     },

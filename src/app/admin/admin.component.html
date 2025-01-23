@@ -15,6 +15,9 @@
     </nav>
 
     <div id="mySidenav" class="sidenav" #mySidenav>
+        <div class="sidenavTop">
+            <img class="sidenavbar-brand" src="/images/sidenav-logo.png">
+        </div>
         <div class="dropdown">
             <a (click)="toggleUsers()"> Users </a>
             <div class="dropdown-content open" *ngIf="isDropdownOpen" #dropDown>

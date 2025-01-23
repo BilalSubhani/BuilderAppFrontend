@@ -8,16 +8,15 @@
                 <li *ngFor="let key of objectKeys(navbarData.List)">
                     <a [href]="navbarData.List[key].link">{{ navbarData.List[key].name }}</a>
                 </li>
-                <li>
-                    <a (click)="connectToSocket()">
-                        <button class="cta-nav">Publish</button>
-                    </a>
-                </li>
             </ul>
         </div>
     </nav>
 
-    <div id="mySidenav" class="sidenav" #mySidenav>
+    <div id="mySidenav" class="sidenav">
+        <div class="sidenavTop">
+            <img class="sidenavbar-brand" src="/images/sidenav-logo.png">
+            <button class="cta-nav" (click)="connectToSocket()">Publish</button>
+        </div>
         <div class="dropdown" *ngFor="let section of dropdownSections">
             <a (click)="toggleDropdown($event, section.name, section.postion)"> {{ section.name }} </a>
             <div class="dropdown-content" [ngClass]="{'open': section.isOpen}"> 
