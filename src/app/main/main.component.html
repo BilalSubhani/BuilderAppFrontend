@@ -1,34 +1,53 @@
 <div class="main">
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a class="navbar-brand">
-                <img src="/images/burq-logo.jpg">
-            </a>
-            <ul class="nav-links" *ngIf="navbarData?.List && navbarData?.Button">
-                <li *ngFor="let key of objectKeys(navbarData.List)">
-                    <a [href]="navbarData.List[key].link">{{ navbarData.List[key].name }}</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div id="mySidenav" class="sidenav">
-        <div class="sidenavTop">
-            <img class="sidenavbar-brand" src="/images/sidenav-logo.png">
-            <button class="cta-nav" (click)="connectToSocket()">Publish</button>
-        </div>
-        <div class="dropdown" *ngFor="let section of dropdownSections">
-            <a (click)="toggleDropdown($event, section.name, section.postion)"> {{ section.name }} </a>
-            <div class="dropdown-content" [ngClass]="{'open': section.isOpen}"> 
-              <a *ngFor="let item of section.items let i = index" (click)="handleFieldUpdation(section.url[i])"> {{ item }} </a>
-            </div>
-        </div>          
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a class="navbar-brand">
+        <img src="/images/burq-logo.jpg" />
+      </a>
+      <ul class="nav-links" *ngIf="navbarData?.List && navbarData?.Button">
+        <li *ngFor="let key of objectKeys(navbarData.List)">
+          <a [href]="navbarData.List[key].link">{{
+            navbarData.List[key].name
+          }}</a>
+        </li>
+      </ul>
     </div>
+  </nav>
 
-    <div class="dashboard-container">
-        <div class="home-viewport">
-          <app-template #template (templateEvent)="receiveUpdatedData($event)" [field]="fieldToUpdate"/>
-        </div>
+  <div id="mySidenav" class="sidenav">
+    <div class="sidenavTop">
+      <img class="sidenavbar-brand" src="/images/sidenav-logo.png" />
+      <button class="cta-nav" (click)="connectToSocket()">Publish</button>
     </div>
-    <router-outlet></router-outlet>
+    <div class="dropdown" *ngFor="let section of dropdownSections">
+      <a (click)="toggleDropdown($event, section.name, section.postion)">
+        {{ section.name }}
+      </a>
+      <div class="dropdown-content" [ngClass]="{ open: section.isOpen }">
+        <a
+          *ngFor="let item of section.items; let i = index"
+          (click)="handleFieldUpdation(section.url[i])"
+        >
+          {{ item }}
+        </a>
+
+        <div class="dropdown-menu" [ngClass]="{ open: isOpen }">
+          <!-- <div class="menu-container"> -->
+          <app-menu-dropdown [listItems]="listItems" (listItemsEvent)="receiveNavList($event)"/>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-container">
+    <div class="home-viewport">
+      <app-template
+        #template
+        (templateEvent)="receiveUpdatedData($event)"
+        [field]="fieldToUpdate"
+      />
+    </div>
+  </div>
+  <router-outlet></router-outlet>
 </div>

@@ -1,0 +1,96 @@
+<div class="add-key">
+  <input
+    type="text"
+    [(ngModel)]="newKey"
+    placeholder="Add New Key"
+    class="editable-key"
+  />
+  <button (click)="addNewKey()" class="keybutton">Add</button>
+</div>
+
+<table class="key-value-table">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th style="padding-left: 100px">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let item of listItems; let i = index"
+      [class.dragging]="draggedItemIndex === i"
+      [class.expanded]="expandedIndex === i"
+      draggable="true"
+      (dragstart)="onDragStart(i)"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop(i)"
+    >
+      <td
+        (click)="toggleExpand(i, $event)"
+        (dblclick)="editKey(i)"
+        class="key-cell"
+      >
+        <div class="key-content">
+          <span class="expand-icon">▶</span>
+          <input
+            *ngIf="editingKeyIndex === i"
+            [(ngModel)]="item.key"
+            (keydown.enter)="saveKey(i)"
+            (keydown.escape)="cancelEditKey(i)"
+            class="editable-key"
+            (click)="$event.stopPropagation()"
+          />
+          <span *ngIf="editingKeyIndex !== i">{{ item.key }}</span>
+        </div>
+      </td>
+      <td style="padding-left: 100px">
+        <button (click)="removeKey(i)" class="valueButton">X</button>
+      </td>
+    </tr>
+    <tr
+      *ngFor="let item of listItems; let i = index"
+      class="values-row"
+      [class.expanded]="expandedIndex === i"
+    >
+      <td class="values-cell">
+        <div class="values-content">
+          <ul>
+            <li
+              *ngFor="
+                let value of listItems[expandedIndex]?.values;
+                let j = index
+              "
+              draggable="true"
+              (dragstart)="onValueDragStart(i, j, $event)"
+              (dragover)="onDragOver($event)"
+              (drop)="onValueDrop(i, j, $event)"
+              (dblclick)="editValue(i, j)"
+            >
+              <input
+                *ngIf="editingValueIndex[i - 1] === j"
+                [(ngModel)]="listItems[expandedIndex]?.values[j]"
+                (keydown.enter)="saveValue(i, j)"
+                (keydown.escape)="cancelEditValue(i, j)"
+                class="editable-value"
+              />
+              <span *ngIf="editingValueIndex[i - 1] !== j">
+                {{ value }}
+              </span>
+              <button (click)="removeValue(item, j)" class="keybutton">
+                X
+              </button>
+            </li>
+          </ul>
+          <div class="add-value">
+            <input
+              type="text"
+              [(ngModel)]="newValues[item.key]"
+              placeholder="Add a new value"
+            />
+          </div>
+          <button (click)="addValue(item)" class="keybutton">Add</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
