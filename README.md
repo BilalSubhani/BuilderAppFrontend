@@ -41,7 +41,7 @@ This project is the frontend application for the Builder App, developed using An
 ### Cloning the Repository
 ```bash
 git clone https://github.com/BilalSubhani/BuilderAppFrontend.git
-cd builder-app-frontend
+cd BuilderAppFrontend
 ```
 
 ### Setting Up the Environment
