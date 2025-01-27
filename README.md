@@ -40,7 +40,7 @@ This project is the frontend application for the Builder App, developed using An
 
 ### Cloning the Repository
 ```bash
-git clone https://github.com/your-repo/builder-app-frontend.git
+git clone https://github.com/BilalSubhani/BuilderAppFrontend.git
 cd builder-app-frontend
 ```
 
