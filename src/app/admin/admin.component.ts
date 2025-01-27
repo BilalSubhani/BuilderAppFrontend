@@ -8,21 +8,17 @@ import { Router } from '@angular/router';
   selector: 'app-admin',
   imports: [CommonModule, DashboardComponent],
   templateUrl: './admin.component.html',
-  styleUrl: './admin.component.less'
+  styleUrl: './admin.component.less',
 })
 export class AdminComponent {
-
   displayUsers: boolean = false;
   filters: string = '';
-  userTypeArr = ["Admins", "Users"];
+  userTypeArr = ['Admins', 'Users'];
   isDropdownOpen: boolean = false;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ){}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.displayUsers = false;
   }
 
@@ -35,7 +31,7 @@ export class AdminComponent {
     this.router.navigate(['/login']);
   }
 
-  handleItemClick(userType: string){
+  handleItemClick(userType: string) {
     this.filters = userType;
     this.displayUsers = true;
   }

@@ -19,34 +19,55 @@
       <img class="sidenavbar-brand" src="/images/sidenav-logo.png" />
       <button class="cta-nav" (click)="connectToSocket()">Publish</button>
     </div>
-    <div class="dropdown" *ngFor="let section of dropdownSections">
-      <a (click)="toggleDropdown($event, section.name, section.postion)">
-        {{ section.name }}
-      </a>
-      <div class="dropdown-content" [ngClass]="{ open: section.isOpen }">
-        <a
-          *ngFor="let item of section.items; let i = index"
-          (click)="handleFieldUpdation(section.url[i])"
-        >
-          {{ item }}
+    <div class="outerDropdown">
+      <a (click)="toggleMenu()">Navbar Menu</a>
+      <a (click)="toggleFooterMenu()">Footer Menu</a>
+      <a (click)="toggleCustomization()">Customize</a>
+    </div>
+    <div *ngIf="isSideNavOpen">
+      <div class="dropdown" *ngFor="let section of dropdownSections">
+        <a (click)="toggleDropdown($event, section.name, section.postion)">
+          {{ section.name }}
         </a>
+        <div class="dropdown-content" [ngClass]="{ open: section.isOpen }">
+          <a
+            *ngFor="let item of section.items; let i = index"
+            (click)="handleFieldUpdation(section.url[i])"
+          >
+            {{ item }}
+          </a>
 
-        <div class="dropdown-menu" [ngClass]="{ open: isOpen }">
-          <!-- <div class="menu-container"> -->
-          <app-menu-dropdown [listItems]="listItems" (listItemsEvent)="receiveNavList($event)"/>
-          <!-- </div> -->
+          <div class="dropdown-menu" [ngClass]="{ open: isOpen }">
+            <!-- <div class="menu-container"> -->
+            <app-menu-dropdown
+              [listItems]="listItems"
+              (listItemsEvent)="receiveNavList($event)"
+            />
+            <!-- </div> -->
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="dashboard-container">
-    <div class="home-viewport">
+    <div
+      class="home-viewport"
+      *ngIf="isCustomization || isMenuOpen || isFooterMenuOpen"
+    >
       <app-template
+        *ngIf="isCustomization"
         #template
         (templateEvent)="receiveUpdatedData($event)"
         [field]="fieldToUpdate"
       />
+
+      <div *ngIf="isMenuOpen || isFooterMenuOpen">
+        <app-kanban-board
+          [listItems]="parentListItems"
+          (listItemsChange)="updateListItems($event)"
+        ></app-kanban-board>
+      </div>
     </div>
   </div>
   <router-outlet></router-outlet>

@@ -1,0 +1,70 @@
+<div class="kanban-board">
+  <div class="add-key-section">
+    <input [(ngModel)]="newKey" placeholder="Enter new key" />
+    <button (click)="addKey()">Add Key</button>
+  </div>
+
+  <div class="columns">
+    <div
+      *ngFor="let item of listItems; let keyIndex = index"
+      class="column"
+      (drop)="onDrop($event, item.key)"
+      (dragover)="onDragOver($event)"
+    >
+      <div class="column-header">
+        <input
+          *ngIf="editingKey.index === keyIndex"
+          [(ngModel)]="editingKey.key"
+          (blur)="saveEditKey()"
+          (keyup.enter)="saveEditKey()"
+          (keyup.escape)="cancelEditKey()"
+          class="key-input"
+        />
+        <span
+          *ngIf="editingKey.index !== keyIndex"
+          (dblclick)="startEditKey(item.key, keyIndex)"
+        >
+          {{ item.key }}
+        </span>
+        <button (click)="deleteKey(item.key)" class="delete-key-btn">×</button>
+      </div>
+
+      <div class="add-value-section">
+        <input [(ngModel)]="newValue" placeholder="Enter new value" />
+        <button (click)="addValue(item.key)">Add Value</button>
+      </div>
+
+      <div
+        *ngFor="let value of item.values; let valueIndex = index"
+        class="card"
+        draggable="true"
+        (dragstart)="onDragStart($event, item.key, value)"
+      >
+        <input
+          *ngIf="
+            editingValue.keyIndex === keyIndex &&
+            editingValue.valueIndex === valueIndex
+          "
+          [(ngModel)]="editingValue.value"
+          (blur)="saveEditValue()"
+          (keyup.enter)="saveEditValue()"
+          (keyup.escape)="cancelEditValue()"
+          class="value-input"
+        />
+        <span
+          *ngIf="
+            editingValue.keyIndex !== keyIndex ||
+            editingValue.valueIndex !== valueIndex
+          "
+          (dblclick)="startEditValue(value, keyIndex, valueIndex)"
+        >
+          <img src="unfold.png" style="width: 12px; height: 12px" />
+          {{ value }}
+        </span>
+        <button (click)="deleteValue(item.key, value)" class="delete-value-btn">
+          ×
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

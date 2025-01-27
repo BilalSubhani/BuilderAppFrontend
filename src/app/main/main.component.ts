@@ -8,6 +8,7 @@ import { io } from 'socket.io-client';
 import { TemplateComponent } from './template/template.component';
 import { FormsModule } from '@angular/forms';
 import { MenuDropdownComponent } from './menu-dropdown/menu-dropdown.component';
+import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
 
 @Component({
   selector: 'app-main',
@@ -17,6 +18,7 @@ import { MenuDropdownComponent } from './menu-dropdown/menu-dropdown.component';
     RouterModule,
     TemplateComponent,
     MenuDropdownComponent,
+    KanbanBoardComponent,
   ],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less'],
@@ -45,8 +47,8 @@ export class MainComponent implements OnInit {
       name: 'Navbar',
       comp: 'navbar',
       isOpen: false,
-      items: ['Logo', 'List 1', 'List 2', 'List 3', 'CTA Button', 'Menu'],
-      url: ['navLogo', 'navList1', 'navList2', 'navList3', 'navButton', 'Menu'],
+      items: ['Logo', 'CTA Button', 'Menu'],
+      url: ['navLogo', 'navButton', 'Menu'],
       postion: 0,
     },
     {
@@ -408,7 +410,7 @@ export class MainComponent implements OnInit {
     this.isOpen = !this.isOpen;
   }
 
-  receiveNavList(event: any) {
+  receiveNavList(event?: any) {
     this.listItems = event;
 
     this.nav.data.listItems = this.listItems;
@@ -416,5 +418,60 @@ export class MainComponent implements OnInit {
     if (this.updatedData) {
       this.updatedData.components.navbar = this.nav.data;
     }
+  }
+
+  parentListItems: any;
+  isMenuOpen: boolean = false;
+  isCustomization: boolean = true;
+  isSideNavOpen: boolean = false;
+  isFooterMenuOpen: boolean = false;
+
+  footerListItems: any;
+  footerData: any;
+
+  updateListItems(updatedListItems: { key: string; values: string[] }[]) {
+    this.parentListItems = [...updatedListItems];
+
+    if (this.isMenuOpen) {
+      this.nav.data.listItems = this.parentListItems;
+
+      if (this.updatedData) this.updatedData.components.navbar = this.nav.data;
+    } else if (this.isFooterMenuOpen) {
+      this.footerData.data.listItems = this.parentListItems;
+
+      if (this.updatedData)
+        this.updatedData.components.footer = this.footerData.data;
+    }
+  }
+
+  toggleMenu() {
+    this.mainService.getNavData('component/navbar').subscribe((data) => {
+      this.nav = data;
+      this.parentListItems = this.nav.data.listItems;
+    });
+    this.isCustomization = false;
+    this.isFooterMenuOpen = false;
+    this.isCustomization = false;
+    this.isSideNavOpen = false;
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  toggleCustomization() {
+    this.isMenuOpen = false;
+    this.isFooterMenuOpen = false;
+    this.isCustomization = true;
+    this.isSideNavOpen = !this.isSideNavOpen;
+  }
+
+  toggleFooterMenu() {
+    this.mainService.getNavData('component/footer').subscribe((data) => {
+      this.footerData = data;
+      this.parentListItems = this.footerData.data.listItems;
+    });
+
+    this.isMenuOpen = false;
+    this.isCustomization = false;
+    this.isSideNavOpen = false;
+    this.isFooterMenuOpen = !this.isFooterMenuOpen;
   }
 }
