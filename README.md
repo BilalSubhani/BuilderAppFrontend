@@ -1,59 +1,86 @@
-# Burq
+# Builder App Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.5.
+This project is the frontend application for the Builder App, developed using Angular. It offers dynamic pages and extensive customization capabilities for admins, ensuring an interactive and user-friendly experience.
 
-## Development server
+## Features
 
-To start a local development server, run:
+### Normal Users
+- **Landing Page**: Normal users are redirected to a visually appealing main landing page.
+- **Dynamic Data**: Content displayed on the landing page is fetched from the database via APIs.
 
+### Admins
+- **Dashboard**: Admins are redirected to a dedicated dashboard upon login.
+  - **User Management**: View all connected users, toggle admin status, or delete users.
+  - **Customization**: Modify all content displayed on the main landing page:
+    - Change text, button URLs, images, icons, and videos.
+    - Note: Styling and position adjustments are not supported yet but can be implemented in the future.
+  - **Real-Time Updates**: Seamless updates on the main landing page when changes are published, powered by WebSocket integration.
+- **Authentication**: User authentication using JWT tokens from the backend.
+- **Notifications**: Real-time notifications using the `ngx-toastr` npm module.
+- **Media Management**: Media is stored securely on Cloudinary.
+
+### Security
+- **Route Guards**: Routes are protected using Angular Auth Guards.
+
+## Issues
+1. **Admin Status Storage**: Admin status is stored in local storage, which is vulnerable to manipulation.
+
+## Technologies Used
+- **Framework**: Angular
+- **Authentication**: JWT tokens
+- **Notifications**: ngx-toastr
+- **Real-Time Communication**: WebSockets
+- **File Storage**: Cloudinary
+
+## Getting Started
+
+### Prerequisites
+- Node.js and npm installed on your machine.
+- Backend APIs up and running.
+
+### Cloning the Repository
 ```bash
-ng serve
+git clone https://github.com/BilalSubhani/BuilderAppFrontend.git
+cd builder-app-frontend
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Setting Up the Environment
+1. Create a `src/environments/environment.ts` file.
+2. Add the following configuration details:
+    ```typescript
+    export const environment = {
+      production: false,
+      apiUrl: 'your_backend_api_url',
+      cloudinaryUrl: 'your_cloudinary_url'
+    };
+    ```
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### Installing Dependencies
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### Running the Application
 ```bash
-ng generate --help
+npm run start 
+or
+ng serve --open
 ```
+The application will be available at `http://localhost:4200`.
 
-## Building
+## Deployment
+To deploy this Angular application:
+1. Build the project:
+    ```bash
+    ng build --prod
+    ```
+2. Deploy the `dist` folder to your hosting service.
 
-To build the project run:
+## Contact
+For questions, suggestions, or support, please reach out:
+- **Email**: bilalsubhanii@outlook.com
+- **GitHub**: [Bilal Subhani](https://github.com/BilalSubhani)
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Feel free to contribute or report issues to enhance the Builder App Frontend!
